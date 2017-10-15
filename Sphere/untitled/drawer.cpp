@@ -53,19 +53,12 @@ void Drawer::drawVizScelet(MyDisplay &im, const Camera& cam, const Obj &obj)
 }
 void Drawer::drawSphere(GraphicsToDraw &gr)
 {
-    std::list<int>::const_iterator it;
-    auto points = gr.obj.getPoints();
     auto poly = gr.obj.getPoly();
 
     for (int i = 0; i < poly.size(); i++)
     {
-        it = poly[i].begin();
-        Dot3D<double> for_check[3] = {points[*it-1], points[*(++it)-1], points[*(++it)-1]};
-        if (gr.cam.isPolyViz(for_check))
-        {
-            PolyToDraw tmp(gr, i);
-            drawPoly(tmp);
-        }
+        PolyToDraw tmp(gr, i);
+        drawPoly(tmp);
     }
 }
 
