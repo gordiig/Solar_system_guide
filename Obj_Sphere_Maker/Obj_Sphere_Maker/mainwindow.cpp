@@ -161,7 +161,7 @@ void MainWindow::fWriter(int n, const int m)
 
 void MainWindow::on_Dir_Button_clicked()
 {
-    file_dir = QFileDialog::getExistingDirectory(0, "Сохранить в:");
+    file_dir = QFileDialog::getExistingDirectory(this, "Сохранить в:");
     file_dir += "/new.obj";
 }
 
