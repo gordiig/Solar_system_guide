@@ -46,6 +46,7 @@ struct DotForDrawer : public Dot2D<int>
 {
     double z;
     double I;
+    Dot2D texture_coord;
 
     DotForDrawer(const int _x, const int _y, const double _z)
     {
@@ -60,6 +61,14 @@ struct DotForDrawer : public Dot2D<int>
         this->y = _y;
         this->z = _z;
         this->I = _I;
+    }
+    DotForDrawer(const int _x, const int _y, const double _z, const double _I, const Dot2D& _tex)
+    {
+        this->x = _x;
+        this->y = _y;
+        this->z = _z;
+        this->I = _I;
+        texture_coord = _tex;
     }
 
     bool operator > (const DotForDrawer& in) const

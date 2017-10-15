@@ -30,22 +30,25 @@ Obj& Obj::operator = (Obj&& in)
     return *this;
 }
 
-Obj::Obj(const Points3D &in_1, const PolyList &in_2)
+Obj::Obj(const Points3D &in_1, const Points2D &in_2, const PolyList &in_3)
 {
     points = in_1;
-    poly = in_2;
+    texture_coord = in_2;
+    poly = in_3;
 }
-Obj::Obj(Points3D &&in_1, PolyList &&in_2)
+Obj::Obj(Points3D &&in_1, Points2D &&in_2, PolyList &&in_3)
 {
     points = in_1;
-    poly = in_2;
+    texture_coord = in_2;
+    poly = in_3;
 
     in_1.clear();
-    for (auto &x : in_2)
+    in_2.clear();
+    for (auto &x : in_3)
     {
         x.clear();
     }
-    in_2.clear();
+    in_3.clear();
 }
 
 Obj::~Obj()
@@ -68,6 +71,16 @@ Points3D Obj::makeCut(int i) const
     for (auto &x : poly[i])
     {
         ans.push_back(points[x-1]);
+    }
+
+    return ans;
+}
+Points2D Obj::makeTexCut(int i) const
+{
+    Points2D ans;
+    for (auto &x : poly[i])
+    {
+        ans.push_back(texture_coord[x-1]);
     }
 
     return ans;
@@ -110,17 +123,18 @@ Sphere::Sphere(Dot3D<double> &in) : VisibleObject::VisibleObject(in) { }
 Sphere::Sphere(Dot3D<double> &in, int in_1, int in_2) : VisibleObject::VisibleObject(in, in_1, in_2) { }
 Sphere::Sphere(Dot3D<int> &in) : VisibleObject::VisibleObject(in) { }
 Sphere::Sphere(Dot3D<int> &in, int in_1, int in_2) : VisibleObject::VisibleObject(in, in_1, in_2) { }
-Sphere::Sphere(const std::vector<Dot3D<double> > &in_points, const std::vector<std::list<int> > &in_poly)
+Sphere::Sphere(const Points3D &in_points, const Points2D &in_tex, const PolyList &in_poly)
 {
-    Obj tmp(in_points, in_poly);
+    Obj tmp(in_points, in_tex, in_poly);
     obj = tmp;
 }
-Sphere::Sphere(std::vector<Dot3D<double> > &&in_points, std::vector<std::list<int> > &&in_poly)
+Sphere::Sphere(Points3D &&in_points, Points2D &&in_tex, PolyList &&in_poly)
 {
-    Obj tmp(in_points, in_poly);
+    Obj tmp(in_points, in_tex, in_poly);
     obj = tmp;
 
     in_points.clear();
+    in_tex.clear();
     for (auto &x : in_poly)
     {
         x.clear();

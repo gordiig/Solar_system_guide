@@ -23,7 +23,7 @@ void Facade::draw(GraphStruct &gr, InterfaceCommand *caps)
     light.setZ(-120);
 
     Transformer trans;
-    Obj draw_object(trans.transform(planet, cam), planet.getPoly());
+    Obj draw_object(trans.transform(planet, cam), planet.getTexCord(), planet.getPoly());
     light.setByDot(trans.transform(light, cam));
 
     planet.setKa(gr.ka);

@@ -19,12 +19,13 @@ class Obj
     friend class Sphere;
 private:
     Points3D points;
+    Points2D texture_coord;
     PolyList poly;
 
 public:
     Obj() { }
-    Obj(const Points3D&, const PolyList&);
-    Obj(Points3D&&, PolyList&&);
+    Obj(const Points3D&, const Points2D&, const PolyList&);
+    Obj(Points3D&&, Points2D&&, PolyList&&);
     Obj(const Obj&);
     Obj(Obj&&);
     Obj& operator = (const Obj&);
@@ -33,10 +34,12 @@ public:
 
     // Геттеры
     Points3D getPoints() const { return points; }
+    Points2D getTextureCoord() const { return texture_coord; }
     PolyList getPoly() const { return poly; }
 
     void clear();
     Points3D makeCut(int) const;
+    Points2D makeTexCut(int) const;
 
     MathVector calcOutNorm(const int i) const;
     static MathVector calcOutNorm(const Points3D& pts)
@@ -85,8 +88,8 @@ public:
     Sphere();
     Sphere(const Sphere&);
     Sphere(Sphere&&);
-    Sphere(const std::vector<Dot3D<double>>&, const std::vector<std::list<int>>&);
-    Sphere(std::vector<Dot3D<double>>&&, std::vector<std::list<int>>&&);
+    Sphere(const Points3D&, const Points2D&, const PolyList&);
+    Sphere(Points3D&&, Points2D&&, PolyList&&);
     Sphere(const double in_x, const double in_y, const double in_z);
     Sphere(const double in_x, const double in_y, const double in_z,
                   const double in_x_ang, const double in_y_ang, const double in_z_ang);
@@ -104,6 +107,7 @@ public:
     // Геттеры
     Obj& getObj() const { return obj; }
     Points3D getPoints() const { return obj.points; }
+    Points2D getTexCord() const { return obj.texture_coord; }
     PolyList getPoly() const { return obj.poly; }
 
     Dot3D<double>& operator [] (int i) const;
