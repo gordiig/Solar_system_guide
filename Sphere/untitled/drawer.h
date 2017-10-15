@@ -32,11 +32,12 @@ namespace Drwr
     struct PolyToDraw : public BaseGraphcsToDraw
     {
         Points3D poly;
+        Points2D tex_coords;
         std::vector<MathVector> point_vectors;
 
         PolyToDraw(GraphicsToDraw& in_gr, int i) :
             BaseGraphcsToDraw(in_gr.im, in_gr.cam, in_gr.light, in_gr.ka, in_gr.kd),
-            poly(in_gr.obj.makeCut(i)), point_vectors(in_gr.obj.calcPointNorm(i))
+            poly(in_gr.obj.makeCut(i)), tex_coords(in_gr.obj.makeTexCut(i)), point_vectors(in_gr.obj.calcPointNorm(i))
         {}
     };
 
