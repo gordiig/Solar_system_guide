@@ -15,21 +15,21 @@ namespace Drwr
         MyDisplay& im;
         Camera& cam;
         DotLight& light;
+        QImage* texture;
         double ka;
         double kd;
 
-        BaseGraphcsToDraw(MyDisplay& in_im, Camera& in_cam, DotLight& in_light, double in_ka, double in_kd) :
-            im(in_im), cam(in_cam), light(in_light), ka(in_ka), kd(in_kd) { }
+        BaseGraphcsToDraw(MyDisplay& in_im, Camera& in_cam, DotLight& in_light, QImage* in_tex,
+                          double in_ka, double in_kd) :
+            im(in_im), cam(in_cam), light(in_light), texture(in_tex), ka(in_ka), kd(in_kd) { }
     };
     struct GraphicsToDraw : public BaseGraphcsToDraw
     {
         Obj& obj;
-        std::string tex_path;
 
-        GraphicsToDraw(MyDisplay& in_im, Camera& in_cam, DotLight& in_light, Obj& in_obj,
-                       double in_ka, double in_kd, std::string& in_path) :
-            BaseGraphcsToDraw::BaseGraphcsToDraw(in_im, in_cam, in_light, in_ka, in_kd),
-            obj(in_obj), tex_path(in_path) { }
+        GraphicsToDraw(MyDisplay& in_im, Camera& in_cam, DotLight& in_light, Obj& in_obj, QImage* in_tex,
+                       double in_ka, double in_kd) :
+            BaseGraphcsToDraw::BaseGraphcsToDraw(in_im, in_cam, in_light, in_tex, in_ka, in_kd), obj(in_obj) { }
     };
     struct PolyToDraw : public BaseGraphcsToDraw
     {
@@ -38,7 +38,7 @@ namespace Drwr
         std::vector<MathVector> point_vectors;
 
         PolyToDraw(GraphicsToDraw& in_gr, int i) :
-            BaseGraphcsToDraw(in_gr.im, in_gr.cam, in_gr.light, in_gr.ka, in_gr.kd, in_gr.tex_path),
+            BaseGraphcsToDraw(in_gr.im, in_gr.cam, in_gr.light, in_gr.texture, in_gr.ka, in_gr.kd),
             poly(in_gr.obj.makeCut(i)), tex_coords(in_gr.obj.makeTexCut(i)), point_vectors(in_gr.obj.calcPointNorm(i))
         {}
     };
