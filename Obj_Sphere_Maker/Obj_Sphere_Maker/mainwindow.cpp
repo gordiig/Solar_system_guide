@@ -29,7 +29,7 @@ void MainWindow::on_Start_Button_clicked()
     out_file.open(file_dir.toStdString());
 
     vWriter(n, m, radius);
-    vtWriter(n, m);
+    fWriter(n, m);
 
     out_file.close();
     ui->Err_Label->setText("Создание файла прошло успешно!");
@@ -107,7 +107,7 @@ void MainWindow::vWriter(const int n, const int m, const double r)
     out_file << "\n" << vt << "\n";
 }
 
-void MainWindow::vtWriter(int n, const int m)
+void MainWindow::fWriter(int n, const int m)
 {
     out_file << "\no Sphere \n";
     n++;
