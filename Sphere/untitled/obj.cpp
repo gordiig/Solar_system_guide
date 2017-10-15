@@ -14,6 +14,7 @@ Obj& Obj::operator = (const Obj& in)
     clear();
 
     points = in.points;
+    texture_coord = in.texture_coord;
     poly = in.poly;
 
     return *this;
@@ -23,6 +24,7 @@ Obj& Obj::operator = (Obj&& in)
     clear();
 
     points = in.points;
+    texture_coord = in.texture_coord;
     poly = in.poly;
 
     in.clear();
