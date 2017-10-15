@@ -101,6 +101,7 @@ void MainWindow::vWriter(const int n, const int m, const double r)
 
     vt = vt + "vt 0.5 0\n";
     vt = vt + "vt 0.5 1\n";
+    vt = vt + "# " + std::to_string(count) + "dots\n";
 
     out_file << "# " << count << " dots \n";
     out_file << "\n" << vt << "\n";
