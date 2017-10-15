@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    file_dir = "/Users/gordiig/Desktop/Obj_Sphere_Maker/new.obj";
+    file_dir = "/Users/gordiig/Desktop/new.obj";
 }
 
 MainWindow::~MainWindow()
@@ -16,17 +16,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_Start_Button_clicked()
 {
-    out_file.open(file_dir.toStdString());
     double radius = ui->Radius_SpinBox->value();
-    int n = ui->n_SpinBox->value();
-    int m = ui->m_SpinBox->value();
+    int n = ui->mer_SpinBox->value();
+    int m = ui->par_SpinBox->value() + 1;
 
     if ((m % 2) == 1)
     {
         ui->Err_Label->setText("Ошибка!\nНеверно указано количество высот!");
-        out_file.close();
         return;
     }
+
+    out_file.open(file_dir.toStdString());
 
     vWriter(n, m, radius);
     vtWriter(n, m);
