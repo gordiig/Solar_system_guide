@@ -1,6 +1,9 @@
 #include "facade.h"
 
-Facade::Facade() { }
+Facade::Facade()
+{
+    planet.setTexturePath("tex.jpg");
+}
 
 Facade::Facade(const char *name)
 {

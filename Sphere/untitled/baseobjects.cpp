@@ -53,22 +53,35 @@ void BaseObject::clear()
 }
 
 
-VisibleObject::VisibleObject() : BaseObject::BaseObject(), ka(0.3), kd(0.6) { }
+VisibleObject::VisibleObject() : BaseObject::BaseObject(), ka(0.3), kd(0.6), texture_path("NULL") { }
 VisibleObject::VisibleObject(const double in_x, const double in_y, const double in_z) :
-    BaseObject::BaseObject(in_x, in_y, in_z), ka(0.3), kd(0.6) { }
+    BaseObject::BaseObject(in_x, in_y, in_z), ka(0.3), kd(0.6), texture_path("NULL") { }
 VisibleObject::VisibleObject(const double in_x, const double in_y, const double in_z,
                              const double in_x_ang, const double in_y_ang, const double in_z_ang) :
-    BaseObject::BaseObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang), ka(0.3), kd(0.6) { }
+    BaseObject::BaseObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang), ka(0.3), kd(0.6),
+    texture_path("NULL"){ }
 VisibleObject::VisibleObject(const double in_x, const double in_y, const double in_z,
                              const double in_x_ang, const double in_y_ang, const double in_z_ang,
                              const double in_kd, const double in_ka) :
-    BaseObject::BaseObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang), ka(in_ka), kd(in_kd) { }
-VisibleObject::VisibleObject(Dot3D<double> &in) : BaseObject::BaseObject(in), ka(0.3), kd(0.6) { }
+    BaseObject::BaseObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang), ka(in_ka), kd(in_kd),
+    texture_path("NULL") { }
+VisibleObject::VisibleObject(const double in_x, const double in_y, const double in_z,
+                             const double in_x_ang, const double in_y_ang, const double in_z_ang,
+                             const double in_kd, const double in_ka, const char* in_path) :
+    BaseObject::BaseObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang), ka(in_ka), kd(in_kd),
+    texture_path(in_path) { }
+VisibleObject::VisibleObject(Dot3D<double> &in) : BaseObject::BaseObject(in), ka(0.3), kd(0.6),
+    texture_path("NULL") { }
 VisibleObject::VisibleObject(Dot3D<double> &in, double in_kd, double in_ka) : BaseObject::BaseObject(in),
-    kd(in_kd), ka(in_ka) { }
-VisibleObject::VisibleObject(Dot3D<int> &in) : BaseObject::BaseObject(in), ka(0.3), kd(0.6) { }
+    kd(in_kd), ka(in_ka), texture_path("NULL") { }
+VisibleObject::VisibleObject(Dot3D<double> &in, double in_kd, double in_ka, const char* in_path) :
+    BaseObject::BaseObject(in), kd(in_kd), ka(in_ka), texture_path(in_path) { }
+VisibleObject::VisibleObject(Dot3D<int> &in) : BaseObject::BaseObject(in), ka(0.3), kd(0.6),
+    texture_path("NULL") { }
 VisibleObject::VisibleObject(Dot3D<int> &in, double in_kd, double in_ka) : BaseObject::BaseObject(in),
-    kd(in_kd), ka(in_ka) { }
+    kd(in_kd), ka(in_ka), texture_path("NULL") { }
+VisibleObject::VisibleObject(Dot3D<int> &in, double in_kd, double in_ka, const char* in_path) :
+    BaseObject::BaseObject(in), kd(in_kd), ka(in_ka), texture_path(in_path) { }
 
 VisibleObject::VisibleObject(const VisibleObject &in)
 {
@@ -89,6 +102,7 @@ VisibleObject& VisibleObject::operator = (const VisibleObject& in)
     z_ang = in.z_ang;
     kd = in.kd;
     ka = in.ka;
+    texture_path = in.texture_path;
 
     return (*this);
 }
@@ -102,6 +116,7 @@ VisibleObject& VisibleObject::operator = (VisibleObject&& in)
     z_ang = in.z_ang;
     kd = in.kd;
     ka = in.ka;
+    texture_path = in.texture_path;
 
     in.clear();
     return (*this);
@@ -117,4 +132,5 @@ void VisibleObject::clear()
     z_ang = 0;
     kd = 0;
     ka = 0;
+    texture_path.clear();
 }

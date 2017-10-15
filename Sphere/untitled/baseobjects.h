@@ -173,6 +173,7 @@ class VisibleObject : public BaseObject
 protected:
     double ka;
     double kd;
+    std::string texture_path;
 
 public:
     VisibleObject();
@@ -184,10 +185,15 @@ public:
     VisibleObject(const double in_x, const double in_y, const double in_z,
                   const double in_x_ang, const double in_y_ang, const double in_z_ang,
                   const double in_kd, const double in_ka);
+    VisibleObject(const double in_x, const double in_y, const double in_z,
+                  const double in_x_ang, const double in_y_ang, const double in_z_ang,
+                  const double in_kd, const double in_ka, const char* in_path);
     VisibleObject(Dot3D<double>&);
     VisibleObject(Dot3D<double>&, double, double);
+    VisibleObject(Dot3D<double>&, double, double, const char*);
     VisibleObject(Dot3D<int>&);
     VisibleObject(Dot3D<int>&, double, double);
+    VisibleObject(Dot3D<int>&, double, double, const char*);
     virtual ~VisibleObject() { }
 
     VisibleObject& operator = (const VisibleObject&);
@@ -196,10 +202,13 @@ public:
     // Геттеры
     double getKd() const { return kd; }
     double getKa() const { return ka; }
+    std::string getTexturePath() const { return texture_path; }
 
     // Сеттеры
     void setKd(double in) { kd = in; }
     void setKa(double in) { ka = in; }
+    void setTexturePath(const char* in) { texture_path = std::string(in); }
+    void setTexturePath(const std::string& in) { texture_path = in; }
 
     virtual void clear() override;
 };
