@@ -25,6 +25,7 @@ class Facade
 {
 private:
     Sphere planet;
+    QImage* texture;
     Reader reader;
     DotLight light;
     Camera cam;

@@ -3,6 +3,7 @@
 Facade::Facade()
 {
     planet.setTexturePath("tex.jpg");
+    texture = new QImage(QString::fromStdString(planet.getTexturePath()));
 }
 
 Facade::Facade(const char *name)
@@ -13,6 +14,7 @@ Facade::Facade(const char *name)
 Facade::~Facade()
 {
     reader.closeFile();
+    delete texture;
 }
 
 void Facade::draw(GraphStruct &gr, InterfaceCommand *caps)
@@ -34,9 +36,14 @@ void Facade::draw(GraphStruct &gr, InterfaceCommand *caps)
     light.setIa(gr.Ia);
     light.setId(gr.Id);
 
+    if (!texture)
+    {
+        texture = new QImage(QString::fromStdString(planet.getTexturePath()));
+    }
 
-    Drwr::GraphicsToDraw gr_in(gr.im, cam, light, draw_object,
-                   planet.getKa(), planet.getKd(), planet.getTexturePath());
+
+    Drwr::GraphicsToDraw gr_in(gr.im, cam, light, draw_object, texture,
+                   planet.getKa(), planet.getKd());
     gr_in.im.clrZBuf();
     Drawer dr;
     dr.draw(gr_in);
