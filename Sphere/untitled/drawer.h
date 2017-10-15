@@ -24,10 +24,12 @@ namespace Drwr
     struct GraphicsToDraw : public BaseGraphcsToDraw
     {
         Obj& obj;
+        std::string tex_path;
 
         GraphicsToDraw(MyDisplay& in_im, Camera& in_cam, DotLight& in_light, Obj& in_obj,
-                       double in_ka, double in_kd) :
-            BaseGraphcsToDraw::BaseGraphcsToDraw(in_im, in_cam, in_light, in_ka, in_kd), obj(in_obj) { }
+                       double in_ka, double in_kd, std::string& in_path) :
+            BaseGraphcsToDraw::BaseGraphcsToDraw(in_im, in_cam, in_light, in_ka, in_kd),
+            obj(in_obj), tex_path(in_path) { }
     };
     struct PolyToDraw : public BaseGraphcsToDraw
     {
@@ -36,7 +38,7 @@ namespace Drwr
         std::vector<MathVector> point_vectors;
 
         PolyToDraw(GraphicsToDraw& in_gr, int i) :
-            BaseGraphcsToDraw(in_gr.im, in_gr.cam, in_gr.light, in_gr.ka, in_gr.kd),
+            BaseGraphcsToDraw(in_gr.im, in_gr.cam, in_gr.light, in_gr.ka, in_gr.kd, in_gr.tex_path),
             poly(in_gr.obj.makeCut(i)), tex_coords(in_gr.obj.makeTexCut(i)), point_vectors(in_gr.obj.calcPointNorm(i))
         {}
     };

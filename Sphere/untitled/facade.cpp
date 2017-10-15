@@ -36,7 +36,7 @@ void Facade::draw(GraphStruct &gr, InterfaceCommand *caps)
 
 
     Drwr::GraphicsToDraw gr_in(gr.im, cam, light, draw_object,
-                   planet.getKa(), planet.getKd());
+                   planet.getKa(), planet.getKd(), planet.getTexturePath());
     gr_in.im.clrZBuf();
     Drawer dr;
     dr.draw(gr_in);
