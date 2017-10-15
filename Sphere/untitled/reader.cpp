@@ -67,7 +67,7 @@ std::vector<Dot3D<double> > Reader::read_dots()
 
     file.get(com);
 
-    while ((com != 'o') && (!file.eof()))
+    while ((com != '#') && (!file.eof()))
     {
         if (com == 'v')
         {
@@ -75,15 +75,54 @@ std::vector<Dot3D<double> > Reader::read_dots()
             file >> tmp.x >> tmp.y >> tmp.z;
             arr.push_back(tmp);
         }
-        else if (com == '#')
+        else
         {
             file.getline(strcom, 256, '\n');
         }
 
-        file.get(com);
+        do
+        {
+            file.get(com);
+        } while (com == '\n');
     }
 
     return arr;
+}
+
+std::vector<Dot2D<double> > Reader::read_texture()
+{
+    if (!file.is_open())
+    {
+        throw FileOpenErr("\nObjReader::read_texture() in reader.cpp");
+    }
+
+    std::vector<Dot2D<double> > ans;
+    char com;
+    char strcom[256];
+
+    file.get(com);
+
+    while((com != '#') && (!file.eof()))
+    {
+        if (com == 'v')
+        {
+            file.get(com);
+            Dot2D<double> tmp;
+            file >> tmp.x >> tmp.y;
+            ans.push_back(tmp);
+        }
+        else
+        {
+            file.getline(strcom, 256, '\n');
+        }
+
+        do
+        {
+            file.get(com);
+        } while (com == '\n');
+    }
+
+    return ans;
 }
 
 /**
@@ -139,8 +178,9 @@ Obj Reader::read()
 {
 
     std::vector<Dot3D<double> > points = read_dots();
+    std::vector<Dot2D<double> > texture_c = read_texture();
     std::vector<std::list<int> > poly = read_poly();
-    Obj tmp(points, poly);
+    Obj tmp(points, texture_c, poly);
     return tmp;
 }
 

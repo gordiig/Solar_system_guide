@@ -14,6 +14,7 @@ class Reader
 protected:
     std::ifstream file;
     std::vector<Dot3D<double>> read_dots();
+    std::vector<Dot2D<double>> read_texture();
     std::vector<std::list<int>> read_poly();
 
 public:
