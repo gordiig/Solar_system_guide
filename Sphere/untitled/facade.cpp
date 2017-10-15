@@ -18,9 +18,9 @@ void Facade::draw(GraphStruct &gr, InterfaceCommand *caps)
     {
         caps->exec(cam);
     }
-    light.setX(100);
-    light.setY(100);
-    light.setZ(-700);
+    light.setX(50);
+    light.setY(50);
+    light.setZ(-120);
 
     Transformer trans;
     Obj draw_object(trans.transform(planet, cam), planet.getPoly());
