@@ -18,7 +18,7 @@ public:
         return (int) (in + (double)0.5*SIGN(in));
     }
 
-    static double lineInterpolation(const DotForDrawer& st_dot, const DotForDrawer& en_dot, const DotForDrawer& cur_dot)
+    static double lineInterpolationIntens(const DotForDrawer& st_dot, const DotForDrawer& en_dot, const DotForDrawer& cur_dot)
     {
         double l1 = sqrt((st_dot.x - cur_dot.x)*(st_dot.x - cur_dot.x) +
                          (st_dot.y - cur_dot.y)*(st_dot.y - cur_dot.y) +
@@ -29,6 +29,21 @@ public:
         double t = (l2 != 0) ? (l1/l2) : (1);
 
         return st_dot.I*(1-t) + t*en_dot.I;
+    }
+
+    static Dot2D lineInterpolationTex(const DotForDrawer& st_dot, const DotForDrawer& en_dot, const DotForDrawer<double>& cur_dot)
+    {
+        double l1 = abs(cur_dot.x - st_dot.x);
+        double l2 = abs(en_dot.x - st_dot.x);
+        double t = (l2 != 0) ? (l1/l2) : (1);
+        double ans1 = st_dot.texture_coord.x*(1-t) + t*en_dot.texture_coord.x;
+
+        l1 = abs(cur_dot.y - st_dot.y);
+        l2 = abs(en_dot.y - st_dot.y);
+        t = (l2 != 0) ? (l1/l2) : (1);
+        double ans2 = st_dot.texture_coord.y*(1-t) + t*en_dot.texture_coord.y;
+
+        return Dot2D(ans1, ans2);
     }
 };
 

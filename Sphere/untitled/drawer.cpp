@@ -114,8 +114,8 @@ RasteredPoly Drawer::polyRasterization(const PolyToDraw &in)
         double I1 = in.light.getIa()*in.ka + in.light.calcDiffuse(in.poly[i], in.point_vectors[i].getEd())*in.kd;
         double I2 = in.light.getIa()*in.ka + in.light.calcDiffuse(in.poly[j], in.point_vectors[j].getEd())*in.kd;
 
-        DotForDrawer in1(poly[i].x, poly[i].y, poly[i].z, I1);
-        DotForDrawer in2(poly[j].x, poly[j].y, poly[j].z, I2);
+        DotForDrawer in1(poly[i].x, poly[i].y, poly[i].z, I1, in.tex_coords[i]);
+        DotForDrawer in2(poly[j].x, poly[j].y, poly[j].z, I2, in.tex_coords[j]);
         std::list<DotForDrawer> tmp = lineRasterizationBrez(in1, in2);
         if (!tmp.empty())
         {
@@ -278,12 +278,13 @@ std::list<DotForDrawer> Drawer::lineRasterizationBrez(const DotForDrawer& st_dot
 
     double z = st_dot.z;
     double m_z = (en_dot.z - z) / dx;
+    Dot2D<double> tex_c(st_dot.texture_coord);
 
     int e = 2*dy - dx;
 
     for (int i = 0; i <= dx; i++)
     {
-        DotForDrawer tmp(x, y, z, I);
+        DotForDrawer tmp(x, y, z, I, tex_c);
         rastr.push_back(tmp);
 
         while (e >= 0)
@@ -296,7 +297,8 @@ std::list<DotForDrawer> Drawer::lineRasterizationBrez(const DotForDrawer& st_dot
         e = e + 2*dy;
 
         z += m_z;
-        I = MathFunctions::lineInterpolation(st_dot, en_dot, DotForDrawer(x, y, z));
+        I = MathFunctions::lineInterpolationIntens(st_dot, en_dot, DotForDrawer(x, y, z));
+        tex_c = MathFunctions::lineInterpolationTex(st_dot, en_dot, DotForDrawer(x, y, z));
     }
 
     return rastr;
