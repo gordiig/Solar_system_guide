@@ -22,7 +22,7 @@ void MainWindow::on_Start_Button_clicked()
 
     if ((m % 2) == 1)
     {
-        ui->Err_Label->setText("Ошибка!\nНеверно указано количество высот!");
+        ui->Err_Label->setText("Ошибка!\nНеверно указано количество параллелей!");
         return;
     }
 
@@ -45,13 +45,17 @@ void MainWindow::vWriter(const int n, const int m, const double r)
     double z = 0;
     int count = 0;
 
+    std::string vt;
+
     // Экватор
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i <= n; i++)
     {
         x = roundToN(r * cos(alpha*i));
         z = roundToN(r * sin(alpha*i));
         count++;
         out_file << "v " << x << " " << y << " " << z << "\n";
+
+        vt = vt + "vt " + std::to_string(roundToN(alpha*i/2/M_PI)) + " 0.5\n";
     }
 
     // Широты/долготы
@@ -61,7 +65,8 @@ void MainWindow::vWriter(const int n, const int m, const double r)
         y = r * sin(i*beta);
 
         std::vector<Dot> dots;
-        for (int j = 0; j < n; j++)
+        std::vector<Dot> tex;
+        for (int j = 0; j <= n; j++)
         {
             Dot circle;
             circle.x = roundToN(x * cos(alpha*j));
@@ -71,11 +76,18 @@ void MainWindow::vWriter(const int n, const int m, const double r)
             out_file << "v " << circle.x << " " << circle.y << " "
                      << circle.z << "\n";
             dots.push_back(circle);
+
+            Dot texx;
+            texx.x = roundToN(alpha*j/2/M_PI);
+            texx.y = roundToN(0.5*cos(beta*i));
+            vt = vt + "vt " + std::to_string(texx.x) + " " + std::to_string(texx.y) + "\n";
+            tex.push_back(texx);
         }
         for (int j = 0; j < dots.size(); j++)
         {
             out_file << "v " << dots[j].x << " " << -dots[j].y << " "
                      << dots[j].z << "\n";
+            vt = vt + "vt " + std::to_string(tex[j].x) + " " + std::to_string(roundToN(1-tex[j].y)) + "\n";
         }
     }
 
@@ -87,12 +99,17 @@ void MainWindow::vWriter(const int n, const int m, const double r)
     out_file << "v " << x << " " << y << " " << z << " \n";
     out_file << "v " << x << " " << -y << " " << z << " \n";
 
+    vt = vt + "vt 0.5 0\n";
+    vt = vt + "vt 0.5 1\n";
+
     out_file << "# " << count << " dots \n";
+    out_file << "\n" << vt << "\n";
 }
 
-void MainWindow::vtWriter(const int n, const int m)
+void MainWindow::vtWriter(int n, const int m)
 {
     out_file << "\no Sphere \n";
+    n++;
     int dots_num = n + 2 + (m-2)*n; // Экватор + 2 полюса + остальное
     int poly_cnt = 0;
 
