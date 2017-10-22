@@ -222,21 +222,15 @@ void Drawer::guroPolyPainting(PolyToDraw &gr, const RasteredPoly &sorted_rastr)
 
         for (int x = it_beg->x; x <= it_end->x; x++)
         {
-            z += mz;
-
             double l1 = sqrt((it_beg->x - x)*(it_beg->x - x) +
                              (it_beg->z - z)*(it_beg->z - z));
             double l2 = sqrt((it_beg->x - it_end->x)*(it_beg->x - it_end->x) +
                              (it_beg->z - it_end->z)*(it_beg->z - it_end->z));
             double t = (l2 != 0) ? (l1/l2) : (1);
+
             int I = it_beg->I*(1-t) + it_end->I*t;
 
-            l1 = abs(it_end->x - x);
-            l2 = abs(it_end->x - it_beg->x);
-            t = (l2 != 0) ? (l1/l2) : (1);
             double x_for_tex = (it_beg->texture_coord.x*(1-t) + it_end->texture_coord.x*t) * gr.texture->width();
-
-            //double y_for_tex = it_beg->texture_coord.y * gr.texture->height();
             double y_for_tex = (it_beg->texture_coord.y*(1-t) + it_end->texture_coord.y*t) * gr.texture->height();
 
             if (I < 0)
@@ -260,6 +254,8 @@ void Drawer::guroPolyPainting(PolyToDraw &gr, const RasteredPoly &sorted_rastr)
                 gr.im.putPixel(x, it_beg->y, z, QColor(r, g, b));
                 //gr.im.putPixel(x, it_beg->y, z, QColor(I, I, I));
             }
+
+            z += mz;
         }
     }
 }
