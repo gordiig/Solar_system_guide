@@ -37,7 +37,7 @@ private:
     QString file_dir;
 
     void vWriter(const int, const int, const double);
-    void fWriter(int,  const int);
+    void fWriter(const int,  const int);
 
     double roundToN(double, int n = 4);
 };

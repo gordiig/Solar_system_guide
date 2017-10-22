@@ -29,7 +29,7 @@ void MainWindow::on_Start_Button_clicked()
     out_file.open(file_dir.toStdString());
 
     vWriter(n, m, radius);
-    fWriter(n, m);
+    fWriter(n+1, m);
 
     out_file.close();
     ui->Err_Label->setText("Создание файла прошло успешно!");
@@ -58,8 +58,8 @@ void MainWindow::vWriter(const int n, const int m, const double r)
         vt = vt + "vt " + std::to_string(roundToN(1 - alpha*i/2/M_PI)) + " 0.5\n";
     }
 
-    // Широты/долготы
-    for (int i = 1; i <= (m/2)-1; i++)
+    // Широты/долготы (в т.ч. и полюса (последняя итерация цикла))
+    for (int i = 1; i <= (m/2); i++)
     {
         x = r * cos(i*beta); // Это же и новый радиус
         y = r * sin(i*beta);
@@ -79,7 +79,6 @@ void MainWindow::vWriter(const int n, const int m, const double r)
 
             Dot texx;
             texx.x = roundToN(1 - j * alpha/2/M_PI);
-            //texx.y = roundToN(0.5*cos(beta*i));
             texx.y = roundToN((i*beta + (M_PI/2))/M_PI);
             vt = vt + "vt " + std::to_string(texx.x) + " " + std::to_string(texx.y) + "\n";
             tex.push_back(texx);
@@ -92,27 +91,15 @@ void MainWindow::vWriter(const int n, const int m, const double r)
         }
     }
 
-    // Полюса
-    x = 0;
-    y = r;
-    z = 0;
-    count += 2;
-    out_file << "v " << x << " " << y << " " << z << " \n";
-    out_file << "v " << x << " " << -y << " " << z << " \n";
-
-    vt = vt + "vt 0.5 0\n";
-    vt = vt + "vt 0.5 1\n";
     vt = vt + "# " + std::to_string(count) + "dots\n";
-
     out_file << "# " << count << " dots \n";
     out_file << "\n" << vt << "\n";
 }
 
-void MainWindow::fWriter(int n, const int m)
+void MainWindow::fWriter(const int n, const int m)
 {
     out_file << "\no Sphere \n";
-    n++;
-    int dots_num = n + 2 + (m-2)*n; // Экватор + 2 полюса + остальное
+    int dots_num = n + m*n; // Экватор + остальное
     int poly_cnt = 0;
 
     // Связанные с экватором
@@ -127,24 +114,23 @@ void MainWindow::fWriter(int n, const int m)
     }
 
     // Остальные
-    int schet = 1;
-    int i_for_ost = 1;
-    while (schet <= m/2 - 2)
+    int i_up_line = 1;
+    for (int i = 0; i < m/2 - 1; i++)
     {
         for (int j = 0; j < n; j++)
         {
             int k = (j == n-1) ? (0) : (j+1);
 
-            out_file << "f " << n*(i_for_ost+2)+j+1 << " " << n*(i_for_ost+2)+k+1 << " "
-                     << n*i_for_ost+k+1 << " " << n*i_for_ost+j+1 << "\n";
-            out_file << "f " << n*(i_for_ost+1)+j+1 << " " << n*(i_for_ost+1)+k+1 << " "
-                     << n*(i_for_ost+3)+k+1 << " " << n*(i_for_ost+3)+j+1 << "\n";
+            out_file << "f " << n*(i_up_line+2)+j+1 << " " << n*(i_up_line+2)+k+1 << " "
+                     << n*i_up_line+k+1 << " " << n*i_up_line+j+1 << "\n";
+            out_file << "f " << n*(i_up_line+1)+j+1 << " " << n*(i_up_line+1)+k+1 << " "
+                     << n*(i_up_line+3)+k+1 << " " << n*(i_up_line+3)+j+1 << "\n";
             poly_cnt += 2;
         }
-        schet++;
-        i_for_ost += 2;
+        i_up_line += 2;
     }
 
+    /*
     // Полюсные
     for (int i = 0; i < n; i++)
     {
@@ -156,6 +142,7 @@ void MainWindow::fWriter(int n, const int m)
                  << dots_num-1 << "\n";
         poly_cnt += 2;
     }
+    */
 
     out_file << "# " << poly_cnt << " polygons\n";
 }
