@@ -38,8 +38,8 @@ void MainWindow::on_Start_Button_clicked()
 
 void MainWindow::vWriter(const int n, const int m, const double r)
 {
-    double alpha = (double)360/(double)n * M_PI/(double)180;
-    double beta = (double)180/(double)m * M_PI/(double)180;
+    double alpha = (double)360/(double)n * M_PI/(double)180;    // Round circle angle
+    double beta = (double)180/(double)m * M_PI/(double)180;     // Upper semi-circle angle
     double x = 0;
     double y = 0;
     double z = 0;
@@ -78,8 +78,9 @@ void MainWindow::vWriter(const int n, const int m, const double r)
             dots.push_back(circle);
 
             Dot texx;
-            texx.x = roundToN(alpha*j/2/M_PI);
-            texx.y = roundToN(0.5*cos(beta*i));
+            texx.x = roundToN(j * alpha/2/M_PI);
+            //texx.y = roundToN(0.5*cos(beta*i));
+            texx.y = roundToN((i*beta + (M_PI/2))/M_PI);
             vt = vt + "vt " + std::to_string(texx.x) + " " + std::to_string(texx.y) + "\n";
             tex.push_back(texx);
         }
