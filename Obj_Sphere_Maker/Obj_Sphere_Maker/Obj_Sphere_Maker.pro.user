@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.1.0, 2017-10-15T16:39:56. -->
+<!-- Written by QtCreator 4.1.0, 2017-10-15T21:30:59. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -312,7 +312,7 @@
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">Obj_Sphere_Maker.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">/Users/gordiig/University/5_sem/Kursovaya/Obj_Sphere_Maker/Build/Obj_Sphere_Maker.app/Contents/MacOS</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Obj_Sphere_Maker/Build/Obj_Sphere_Maker.app/Contents/MacOS</value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>

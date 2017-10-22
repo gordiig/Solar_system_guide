@@ -236,7 +236,7 @@ void Drawer::guroPolyPainting(PolyToDraw &gr, const RasteredPoly &sorted_rastr)
             t = (l2 != 0) ? (l1/l2) : (1);
             double x_for_tex = (it_beg->texture_coord.x*(1-t) + it_end->texture_coord.x*t) * gr.texture->width();
 
-
+            //double y_for_tex = it_beg->texture_coord.y * gr.texture->height();
             double y_for_tex = (it_beg->texture_coord.y*(1-t) + it_end->texture_coord.y*t) * gr.texture->height();
 
             if (I < 0)
@@ -258,6 +258,7 @@ void Drawer::guroPolyPainting(PolyToDraw &gr, const RasteredPoly &sorted_rastr)
                 b = (double)b/256 * I;
 
                 gr.im.putPixel(x, it_beg->y, z, QColor(r, g, b));
+                //gr.im.putPixel(x, it_beg->y, z, QColor(I, I, I));
             }
         }
     }
@@ -292,6 +293,9 @@ std::list<DotForDrawer> Drawer::lineRasterizationBrez(const DotForDrawer& st_dot
 
     double z = st_dot.z;
     double m_z = (en_dot.z - z) / dx;
+
+    double m_x_tex = (en_dot.texture_coord.x - st_dot.texture_coord.x) / dx;
+    double m_y_tex = (en_dot.texture_coord.y - st_dot.texture_coord.y) / dx;
     Dot2D<double> tex_c(st_dot.texture_coord);
 
     int e = 2*dy - dx;
@@ -311,8 +315,10 @@ std::list<DotForDrawer> Drawer::lineRasterizationBrez(const DotForDrawer& st_dot
         e = e + 2*dy;
 
         z += m_z;
+        tex_c.x += m_x_tex;
+        tex_c.y += m_y_tex;
         I = MathFunctions::lineInterpolationIntens(st_dot, en_dot, DotForDrawer(x, y, z));
-        tex_c = MathFunctions::lineInterpolationTex(st_dot, en_dot, DotForDrawer(x, y, z));
+        //tex_c = MathFunctions::lineInterpolationTex(st_dot, en_dot, DotForDrawer(x, y, z));
     }
 
     return rastr;
