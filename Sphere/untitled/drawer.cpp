@@ -230,8 +230,8 @@ void Drawer::guroPolyPainting(PolyToDraw &gr, const RasteredPoly &sorted_rastr)
 
             int I = it_beg->I*(1-t) + it_end->I*t;
 
-            double x_for_tex = (it_beg->texture_coord.x*(1-t) + it_end->texture_coord.x*t) * gr.texture->width();
-            double y_for_tex = (it_beg->texture_coord.y*(1-t) + it_end->texture_coord.y*t) * gr.texture->height();
+            double x_for_tex = (it_beg->texture_coord.x*(1-t) + it_end->texture_coord.x*t) * (gr.texture->width()-1);
+            double y_for_tex = (it_beg->texture_coord.y*(1-t) + it_end->texture_coord.y*t) * (gr.texture->height()-1);
 
             if (I < 0)
             {
