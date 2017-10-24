@@ -94,6 +94,7 @@ void Drawer::drawPoly(PolyToDraw &gr)
 }
 RasteredPoly Drawer::polyRasterization(const PolyToDraw &in)
 {
+    // Приведение к экранным координатам и проверка на невидимость полигона в окне
     Points3D poly = in.poly;
     double x_l = poly[0].x + in.im.width() / 2;
     double y_l = poly[0].y + in.im.height() / 2;
@@ -111,7 +112,6 @@ RasteredPoly Drawer::polyRasterization(const PolyToDraw &in)
         y_r = (y_r > x.y) ? (x.y) : (y_r);
         z_max = (z_max > x.z) ? (z_max) : (x.z);
     }
-
     if ((!in.im.isOnDisplay(Dot2D<double>(x_l, y_l), Dot2D<double>(x_r, y_r))) || (!in.cam.isOnDisplay(z_max)))
     {
         return RasteredPoly();
