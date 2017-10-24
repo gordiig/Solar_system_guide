@@ -22,6 +22,7 @@ public:
     void fillZBuf(const double);
     void clrZBuf();
 
+    bool isOnDisplay(const Dot2D<double>&, const Dot2D<double>&) const;
     bool isOnDisplay(const DotForDrawer&) const;
     bool isOnDisplay(const int, const int) const;
 

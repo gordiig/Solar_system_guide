@@ -11,6 +11,16 @@ MyDisplay::~MyDisplay()
     z_buf.clear();
 }
 
+bool MyDisplay::isOnDisplay(const Dot2D<double> &left, const Dot2D<double> &right) const
+{
+    bool ans = true;
+    if ((right.x < 0) || (left.y < 0) || (left.x > width()) || (right.y > height()))
+    {
+        ans = false;
+    }
+
+    return ans;
+}
 bool MyDisplay::isOnDisplay(const DotForDrawer &point) const
 {
     return isOnDisplay(point.x, point.y);

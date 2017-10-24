@@ -65,6 +65,10 @@ void Drawer::drawSphere(GraphicsToDraw &gr)
 void Drawer::drawPoly(PolyToDraw &gr)
 {
     RasteredPoly sorted_rastr = polyRasterization(gr);
+    if (sorted_rastr.empty())
+    {
+        return;
+    }
 
     // Рисовка
     try
@@ -91,10 +95,26 @@ void Drawer::drawPoly(PolyToDraw &gr)
 RasteredPoly Drawer::polyRasterization(const PolyToDraw &in)
 {
     Points3D poly = in.poly;
+    double x_l = poly[0].x + in.im.width() / 2;
+    double y_l = poly[0].y + in.im.height() / 2;
+    double x_r = poly[0].x + in.im.width() / 2;
+    double y_r = poly[0].y + in.im.height() / 2;
+    double z_max = poly[0].z;
     for (auto &x : poly)
     {
         x.x += in.im.width() / 2;
         x.y += in.im.height() / 2;
+
+        x_r = (x_r > x.x) ? (x_r) : (x.x);
+        x_l = (x_l > x.x) ? (x.x) : (x_l);
+        y_l = (y_l > x.y) ? (y_l) : (x.y);
+        y_r = (y_r > x.y) ? (x.y) : (y_r);
+        z_max = (z_max > x.z) ? (z_max) : (x.z);
+    }
+
+    if ((!in.im.isOnDisplay(Dot2D<double>(x_l, y_l), Dot2D<double>(x_r, y_r))) || (!in.cam.isOnDisplay(z_max)))
+    {
+        return RasteredPoly();
     }
 
     std::list<DotForDrawer> rastr;

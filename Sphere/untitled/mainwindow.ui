@@ -338,7 +338,7 @@
         <number>10000</number>
        </property>
        <property name="value">
-        <number>720</number>
+        <number>3000</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
