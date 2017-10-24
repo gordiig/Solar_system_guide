@@ -71,7 +71,7 @@ public:
     MathVector calcInNorm(const int i) const;
     static MathVector calcInNorm(const Points3D& pts)
     {
-        return calcInNorm(pts).invert();
+        return calcOutNorm(pts).invert();
     }
 
     std::vector<MathVector> calcPointNorm(const int) const;
