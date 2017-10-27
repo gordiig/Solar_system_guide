@@ -29,3 +29,9 @@ void DzAngCom::exec(BaseObject &in)
 {
     in.setZAng(var);
 }
+
+void PlanetDxAngCom::exec(BaseObject &in)
+{
+    double ang = int((in.getXAng() + 10)) % 360;
+    in.setXAng(ang);
+}

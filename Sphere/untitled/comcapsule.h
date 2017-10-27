@@ -10,6 +10,7 @@ protected:
     double var;
 
 public:
+    InterfaceCommand() : var(0) {}
     InterfaceCommand(double in) : var(in) {}
     virtual ~InterfaceCommand() {}
 
@@ -59,5 +60,12 @@ public:
     virtual void exec(BaseObject&) override;
 };
 
+
+class PlanetDxAngCom : public InterfaceCommand
+{
+public:
+    PlanetDxAngCom() : InterfaceCommand::InterfaceCommand() { }
+    virtual void exec(BaseObject&) override;
+};
 
 #endif // COMCAPSULE_H
