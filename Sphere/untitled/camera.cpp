@@ -2,7 +2,7 @@
 
 Camera::Camera() : BaseObject::BaseObject()
 {
-    view_axis.setZ(-1);
+    view_axis.setZ(1);
     right_axis.setX(1);
     up_axis.setY(1);
     distance_to_screen = 500;
@@ -69,8 +69,13 @@ void Camera::clear()
     z_ang = 0;
 }
 
-bool Camera::isPolyViz(const Dot3D<double> *points) const
+bool Camera::isPolyViz(const Points3D &points) const
 {
+    if (points.size() < 3)
+    {
+        throw NotEnoughPointsForPoly("\nIn file \"Camera.cpp\" in Camera::IsPolyVis()\n");
+    }
+
     /*
     double a = points[0].y * (points[1].z-points[2].z) +
             points[1].y * (points[2].z-points[0].z) +
@@ -84,27 +89,17 @@ bool Camera::isPolyViz(const Dot3D<double> *points) const
     double c = points[0].x * (points[1].y-points[2].y) +
             points[1].x * (points[2].y-points[0].y) +
             points[2].x * (points[0].y-points[1].y);
-    */
 
     double d = points[0].x * (points[1].y*points[2].z - points[2].y*points[1].z) +
             points[1].x * (points[2].y*points[0].z - points[0].y*points[2].z) +
             points[2].x * (points[0].y*points[1].z - points[1].y*points[0].z);
+
     d *= -1;
 
-    bool ans = (d > 10000) ? false : true;
+    return (d > 0) ? false : true;
+    */
 
-    return ans;
-}
-bool Camera::isPolyViz(const Points3D &points) const
-{
-    if (points.size() < 3)
-    {
-        throw NotEnoughPointsForPoly("\nIn file \"Camera.cpp\" in Camera::IsPolyVis()\n");
-    }
-
-    Dot3D<double> arr[] = {points[0], points[1], points[2]};
-
-    return isPolyViz(arr);
+    return true;
 }
 bool Camera::isOnDisplay(const DotForDrawer &point) const
 {
@@ -112,6 +107,6 @@ bool Camera::isOnDisplay(const DotForDrawer &point) const
 }
 bool Camera::isOnDisplay(const double z) const
 {
-    return (z > distance_to_screen) ? true : false;
+    return (z > 100 /*distance_to_screen*/) ? true : false;
 }
 
