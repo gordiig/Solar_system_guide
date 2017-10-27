@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    tmr.stop();
     delete scene;
     delete ui;
 }
@@ -404,6 +405,7 @@ void MainWindow::on_Slider_Ia_valueChanged(int value)
         ui->label->setText(QString(err.what()));
     }
 }
+
 
 void MainWindow::tmrTick()
 {
