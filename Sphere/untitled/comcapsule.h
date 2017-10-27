@@ -61,10 +61,46 @@ public:
 };
 
 
+
+class PlanetDxCom : public InterfaceCommand
+{
+public:
+    PlanetDxCom() : InterfaceCommand::InterfaceCommand() { }
+    virtual void exec(BaseObject&) override;
+};
+
+class PlanetDyCom : public InterfaceCommand
+{
+public:
+    PlanetDyCom() : InterfaceCommand::InterfaceCommand() { }
+    virtual void exec(BaseObject&) override;
+};
+
+class PlanetDzCom : public InterfaceCommand
+{
+public:
+    PlanetDzCom() : InterfaceCommand::InterfaceCommand() { }
+    virtual void exec(BaseObject&) override;
+};
+
 class PlanetDxAngCom : public InterfaceCommand
 {
 public:
     PlanetDxAngCom() : InterfaceCommand::InterfaceCommand() { }
+    virtual void exec(BaseObject&) override;
+};
+
+class PlanetDyAngCom : public InterfaceCommand
+{
+public:
+    PlanetDyAngCom() : InterfaceCommand::InterfaceCommand() { }
+    virtual void exec(BaseObject&) override;
+};
+
+class PlanetDzAngCom : public InterfaceCommand
+{
+public:
+    PlanetDzAngCom() : InterfaceCommand::InterfaceCommand() { }
     virtual void exec(BaseObject&) override;
 };
 
