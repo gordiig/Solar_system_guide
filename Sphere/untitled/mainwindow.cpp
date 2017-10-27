@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     scene = new QGraphicsScene(ui->graphicsView);
     ui->graphicsView->setScene(scene);
 
-    tmr.setInterval(333);
+    tmr.setInterval(33);
     connect(&tmr, SIGNAL(timeout()), this, SLOT(tmrTick()));
 
     gr.Ia = ui->Slider_Ia->value();
