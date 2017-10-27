@@ -30,6 +30,7 @@ void DzAngCom::exec(BaseObject &in)
     in.setZAng(var);
 }
 
+
 void PlanetDxCom::exec(BaseObject &in)
 {
     in.setX(in.getX() + 2);
@@ -47,18 +48,18 @@ void PlanetDzCom::exec(BaseObject &in)
 
 void PlanetDxAngCom::exec(BaseObject &in)
 {
-    double ang = int((in.getXAng() + 10)) % 360;
+    double ang = int((in.getXAng() + 1)) % 360;
     in.setXAng(ang);
 }
 
 void PlanetDyAngCom::exec(BaseObject &in)
 {
-    double ang = int((in.getYAng() + 10)) % 360;
+    double ang = int((in.getYAng() + 1)) % 360;
     in.setYAng(ang);
 }
 
 void PlanetDzAngCom::exec(BaseObject &in)
 {
-    double ang = int((in.getZAng() + 10)) % 360;
+    double ang = int((in.getZAng() + 1)) % 360;
     in.setZAng(ang);
 }
