@@ -56,9 +56,15 @@ void MainWindow::on_But_Up_clicked()
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
+
+        if (!tmr.isActive())
+        {
+            tmr.start();
+        }
     }
     catch(BaseErr& err)
     {
+        tmr.stop();
         ui->label->setText(QString(err.what()));
     }
 
@@ -75,9 +81,15 @@ void MainWindow::on_But_Left_clicked()
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
+
+        if (!tmr.isActive())
+        {
+            tmr.start();
+        }
     }
     catch(BaseErr& err)
     {
+        tmr.stop();
         ui->label->setText(QString(err.what()));
     }
 
@@ -94,9 +106,15 @@ void MainWindow::on_But_Down_clicked()
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
+
+        if (!tmr.isActive())
+        {
+            tmr.start();
+        }
     }
     catch(BaseErr& err)
     {
+        tmr.stop();
         ui->label->setText(QString(err.what()));
     }
 
@@ -113,9 +131,15 @@ void MainWindow::on_But_Right_clicked()
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
+
+        if (!tmr.isActive())
+        {
+            tmr.start();
+        }
     }
     catch(BaseErr& err)
     {
+        tmr.stop();
         ui->label->setText(QString(err.what()));
     }
 
@@ -132,9 +156,15 @@ void MainWindow::on_Slider_xTurn_valueChanged(int value)
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
+
+        if (!tmr.isActive())
+        {
+            tmr.start();
+        }
     }
     catch(BaseErr& err)
     {
+        tmr.stop();
         ui->label->setText(QString(err.what()));
     }
 
@@ -151,9 +181,15 @@ void MainWindow::on_Slider_yTurn_valueChanged(int value)
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
+
+        if (!tmr.isActive())
+        {
+            tmr.start();
+        }
     }
     catch(BaseErr& err)
     {
+        tmr.stop();
         ui->label->setText(QString(err.what()));
     }
 
@@ -170,9 +206,15 @@ void MainWindow::on_Slider_zTurn_valueChanged(int value)
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
+
+        if (!tmr.isActive())
+        {
+            tmr.start();
+        }
     }
     catch(BaseErr& err)
     {
+        tmr.stop();
         ui->label->setText(QString(err.what()));
     }
 
@@ -189,9 +231,15 @@ void MainWindow::on_But_To_clicked()
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
+
+        if (!tmr.isActive())
+        {
+            tmr.start();
+        }
     }
     catch(BaseErr& err)
     {
+        tmr.stop();
         ui->label->setText(QString(err.what()));
     }
 
@@ -208,9 +256,15 @@ void MainWindow::on_But_From_clicked()
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
+
+        if (!tmr.isActive())
+        {
+            tmr.start();
+        }
     }
     catch(BaseErr& err)
     {
+        tmr.stop();
         ui->label->setText(QString(err.what()));
     }
 
@@ -227,12 +281,15 @@ void MainWindow::on_ButOpen_clicked()
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
 
-        tmr.start();
+        if (!tmr.isActive())
+        {
+            tmr.start();
+        }
     }
     catch(BaseErr& err)
     {
-        ui->label->setText(QString(err.what()));
         tmr.stop();
+        ui->label->setText(QString(err.what()));
     }
 }
 
@@ -246,9 +303,15 @@ void MainWindow::on_Slider_Id_valueChanged(int value)
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
+
+        if (!tmr.isActive())
+        {
+            tmr.start();
+        }
     }
     catch(BaseErr& err)
     {
+        tmr.stop();
         ui->label->setText(QString(err.what()));
     }
 
@@ -258,6 +321,7 @@ void MainWindow::on_Slider_kd_valueChanged(int value)
 {
     if ((ui->Slider_kd->value() + ui->Slider_ka->value()) >= 100)
     {
+        tmr.stop();
         ui->Slider_kd->setValue(100 - ui->Slider_ka->value());
         ui->label->setText("Нельзя чтобы коэффициенты световой энергии"
                            " в сумме давали > 100");
@@ -273,9 +337,15 @@ void MainWindow::on_Slider_kd_valueChanged(int value)
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
+
+        if (!tmr.isActive())
+        {
+            tmr.start();
+        }
     }
     catch(BaseErr& err)
     {
+        tmr.stop();
         ui->label->setText(QString(err.what()));
     }
 }
@@ -284,6 +354,7 @@ void MainWindow::on_Slider_ka_valueChanged(int value)
 {
     if ((ui->Slider_kd->value() + ui->Slider_ka->value()) >= 100)
     {
+        tmr.stop();
         ui->Slider_ka->setValue(100 - ui->Slider_kd->value());
         ui->label->setText("Нельзя чтобы коэффициенты световой энергии"
                            " в сумме давали > 100");
@@ -298,9 +369,15 @@ void MainWindow::on_Slider_ka_valueChanged(int value)
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
+
+        if (!tmr.isActive())
+        {
+            tmr.start();
+        }
     }
     catch(BaseErr& err)
     {
+        tmr.stop();
         ui->label->setText(QString(err.what()));
     }
 }
@@ -315,16 +392,22 @@ void MainWindow::on_Slider_Ia_valueChanged(int value)
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
+
+        if (!tmr.isActive())
+        {
+            tmr.start();
+        }
     }
     catch(BaseErr& err)
     {
+        tmr.stop();
         ui->label->setText(QString(err.what()));
     }
 }
 
 void MainWindow::tmrTick()
 {
-    InterfaceCommand *caps = new PlanetDxAngCom;
+    InterfaceCommand *caps = new PlanetDyAngCom;
 
     try
     {
