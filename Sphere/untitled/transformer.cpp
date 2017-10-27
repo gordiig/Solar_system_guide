@@ -2,7 +2,7 @@
 
 Transformer::Transformer()
 {
-    view_vector.setZ(-1);
+    view_vector.setZ(1);
     up_vector.setY(1);
     right_vector.setX(1);
 }
@@ -105,7 +105,7 @@ void Transformer::proectToCam(const Camera& cam)
 
         points[i].x = x*right_vector.getX() + y*right_vector.getY() + z*right_vector.getZ() - cam_dot.scalarMult(right_vector);
         points[i].y = x*up_vector.getX() + y*up_vector.getY() + z*up_vector.getZ() - cam_dot.scalarMult(up_vector);
-        points[i].z = x*view_vector.getX() + y*view_vector.getY() + z*view_vector.getZ() + cam_dot.scalarMult(view_vector);
+        points[i].z = x*view_vector.getX() + y*view_vector.getY() + z*view_vector.getZ() - cam_dot.scalarMult(view_vector);
 
         points[i].x *= (cam.getDistanceToScreen() / points[i].z);
         points[i].y *= (cam.getDistanceToScreen() / points[i].z);
