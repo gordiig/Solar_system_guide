@@ -38,9 +38,7 @@ void Drawer::drawVizScelet(MyDisplay &im, const Camera& cam, const Obj &obj)
 
     for (int i = 0; i < poly.size(); i++)
     {
-        it = poly[i].begin();
-        Dot3D<double> for_check[3] = {points[*it-1], points[*(++it)-1], points[*(++it)-1]};
-        if (cam.isPolyViz(for_check))
+        if (cam.isPolyViz(obj.makeCut(i)))
         {
             for (it = poly[i].begin(), it_nxt = it, it_nxt++; it_nxt != poly[i].end(); it++, it_nxt++)
             {
@@ -57,8 +55,11 @@ void Drawer::drawSphere(GraphicsToDraw &gr)
 
     for (int i = 0; i < poly.size(); i++)
     {
-        PolyToDraw tmp(gr, i);
-        drawPoly(tmp);
+        if (gr.cam.isPolyViz(gr.obj.makeCut(i)))
+        {
+            PolyToDraw tmp(gr, i);
+            drawPoly(tmp);
+        }
     }
 }
 
