@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     mydisplay.cpp \
     camera.cpp \
     math_abstracts.cpp \
-    baseobjects.cpp
+    baseobjects.cpp \
+    spacesystems.cpp
 
 HEADERS  += mainwindow.h \
     reader.h \
@@ -41,6 +42,7 @@ HEADERS  += mainwindow.h \
     mydisplay.h \
     camera.h \
     math_abstracts.h \
-    baseobjects.h
+    baseobjects.h \
+    spacesystems.h
 
 FORMS    += mainwindow.ui
