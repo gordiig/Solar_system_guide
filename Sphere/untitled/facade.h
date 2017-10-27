@@ -39,7 +39,10 @@ public:
     Facade(const char *name);
     ~Facade();
 
-    void draw(GraphStruct& gr, InterfaceCommand *caps = nullptr);
+    void camMove(GraphStruct& gr, InterfaceCommand *caps = nullptr);
+    void planetMove(GraphStruct& gr, InterfaceCommand *caps = nullptr);
+
+    void draw(GraphStruct &gr);
     void read(const char *name = "new.obj");
 };
 

@@ -17,7 +17,7 @@ Facade::~Facade()
     delete texture;
 }
 
-void Facade::draw(GraphStruct &gr, InterfaceCommand *caps)
+void Facade::camMove(GraphStruct &gr, InterfaceCommand *caps)
 {
     if (caps)
     {
@@ -27,6 +27,24 @@ void Facade::draw(GraphStruct &gr, InterfaceCommand *caps)
     light.setY(50);
     light.setZ(-120);
 
+    draw(gr);
+}
+
+void Facade::planetMove(GraphStruct &gr, InterfaceCommand *caps)
+{
+    if (caps)
+    {
+        caps->exec(planet);
+    }
+    light.setX(50);
+    light.setY(50);
+    light.setZ(-120);
+
+    draw(gr);
+}
+
+void Facade::draw(GraphStruct &gr)
+{
     Transformer trans;
     Obj draw_object(trans.transform(planet, cam), planet.getTexCord(), planet.getPoly());
     light.setByDot(trans.transform(light, cam));
