@@ -48,8 +48,6 @@ void MyDisplay::putPixel(const int x, const int y, const double z, const QColor 
         setPixelColor(x, y, col);
         z_buf[y][x] = z;
     }
-
-
 }
 
 void MyDisplay::fillZBuf(const double in)

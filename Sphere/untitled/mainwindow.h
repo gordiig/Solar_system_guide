@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QGraphicsScene>
+#include <QTimer>
 //#include "mydisplay.h"
 //#include "errors.h"
 #include "facade.h"
@@ -53,12 +54,15 @@ private slots:
 
     void on_Slider_ka_valueChanged(int value);
 
+    void tmrTick();
+
 private:
     Ui::MainWindow *ui;
     Facade in_dot;
     MyDisplay im;
     QGraphicsScene *scene;
     GraphStruct gr;
+    QTimer tmr;
 };
 
 #endif // MAINWINDOW_H

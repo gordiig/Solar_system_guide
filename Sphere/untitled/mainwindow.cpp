@@ -13,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
     scene = new QGraphicsScene(ui->graphicsView);
     ui->graphicsView->setScene(scene);
 
+    tmr.setInterval(333);
+    connect(&tmr, SIGNAL(timeout()), this, SLOT(tmrTick()));
+
     gr.Ia = ui->Slider_Ia->value();
     gr.Id = ui->Slider_Id->value();
     gr.kd = (double)ui->Slider_kd->value()/100.;
@@ -49,7 +52,7 @@ void MainWindow::on_But_Up_clicked()
 
     try
     {
-        in_dot.draw(gr, caps);
+        in_dot.camMove(gr, caps);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
@@ -68,7 +71,7 @@ void MainWindow::on_But_Left_clicked()
 
     try
     {
-        in_dot.draw(gr, caps);
+        in_dot.camMove(gr, caps);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
@@ -87,7 +90,7 @@ void MainWindow::on_But_Down_clicked()
 
     try
     {
-        in_dot.draw(gr, caps);
+        in_dot.camMove(gr, caps);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
@@ -106,7 +109,7 @@ void MainWindow::on_But_Right_clicked()
 
     try
     {
-        in_dot.draw(gr, caps);
+        in_dot.camMove(gr, caps);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
@@ -125,7 +128,7 @@ void MainWindow::on_Slider_xTurn_valueChanged(int value)
 
     try
     {
-        in_dot.draw(gr, caps);
+        in_dot.camMove(gr, caps);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
@@ -144,7 +147,7 @@ void MainWindow::on_Slider_yTurn_valueChanged(int value)
 
     try
     {
-        in_dot.draw(gr, caps);
+        in_dot.camMove(gr, caps);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
@@ -163,7 +166,7 @@ void MainWindow::on_Slider_zTurn_valueChanged(int value)
 
     try
     {
-        in_dot.draw(gr, caps);
+        in_dot.camMove(gr, caps);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
@@ -182,7 +185,7 @@ void MainWindow::on_But_To_clicked()
 
     try
     {
-        in_dot.draw(gr, caps);
+        in_dot.camMove(gr, caps);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
@@ -201,7 +204,7 @@ void MainWindow::on_But_From_clicked()
 
     try
     {
-        in_dot.draw(gr, caps);
+        in_dot.camMove(gr, caps);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
@@ -223,10 +226,13 @@ void MainWindow::on_ButOpen_clicked()
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
+
+        tmr.start();
     }
     catch(BaseErr& err)
     {
         ui->label->setText(QString(err.what()));
+        tmr.stop();
     }
 }
 
@@ -236,7 +242,7 @@ void MainWindow::on_Slider_Id_valueChanged(int value)
 
     try
     {
-        in_dot.draw(gr);
+        in_dot.camMove(gr);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
@@ -263,7 +269,7 @@ void MainWindow::on_Slider_kd_valueChanged(int value)
     gr.kd = (double)value/100;
     try
     {
-        in_dot.draw(gr);
+        in_dot.camMove(gr);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
@@ -288,7 +294,7 @@ void MainWindow::on_Slider_ka_valueChanged(int value)
     gr.ka = (double)value/100;
     try
     {
-        in_dot.draw(gr);
+        in_dot.camMove(gr);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
@@ -305,7 +311,7 @@ void MainWindow::on_Slider_Ia_valueChanged(int value)
 
     try
     {
-        in_dot.draw(gr);
+        in_dot.camMove(gr);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
@@ -314,4 +320,23 @@ void MainWindow::on_Slider_Ia_valueChanged(int value)
     {
         ui->label->setText(QString(err.what()));
     }
+}
+
+void MainWindow::tmrTick()
+{
+    InterfaceCommand *caps = new PlanetDxAngCom;
+
+    try
+    {
+        in_dot.planetMove(gr, caps);
+        scene->clear();
+        scene->addPixmap(QPixmap::fromImage(im));
+        ui->label->setText(QString("Все в норме!"));
+    }
+    catch(BaseErr& err)
+    {
+        ui->label->setText(QString(err.what()));
+    }
+
+    delete caps;
 }
