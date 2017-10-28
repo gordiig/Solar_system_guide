@@ -111,38 +111,45 @@ std::vector<MathVector> Obj::calcPointNorm(const int poly_num) const
 
 Obj Sphere::obj;
 
-Sphere::Sphere() : VisibleObject::VisibleObject() { }
+Sphere::Sphere() : VisibleObject::VisibleObject(), texture(nullptr) { }
 Sphere::Sphere(const double in_x, const double in_y, const double in_z) :
-    VisibleObject::VisibleObject(in_x, in_y, in_z) { }
+    VisibleObject::VisibleObject(in_x, in_y, in_z), texture(nullptr) { }
 Sphere::Sphere(const double in_x, const double in_y, const double in_z,
                const double in_x_ang, const double in_y_ang, const double in_z_ang) :
-    VisibleObject::VisibleObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang) { }
+    VisibleObject::VisibleObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang),
+    texture(nullptr) { }
 Sphere::Sphere(const double in_x, const double in_y, const double in_z,
                const double in_x_ang, const double in_y_ang, const double in_z_ang,
                const int in_kd, const int in_ka) :
-    VisibleObject::VisibleObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang, in_kd, in_ka) { }
+    VisibleObject::VisibleObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang, in_kd, in_ka),
+    texture(nullptr){ }
 Sphere::Sphere(const double in_x, const double in_y, const double in_z,
                const double in_x_ang, const double in_y_ang, const double in_z_ang,
                const int in_kd, const int in_ka, const char* in_path) :
-    VisibleObject::VisibleObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang, in_kd, in_ka, in_path) { }
-Sphere::Sphere(Dot3D<double> &in) : VisibleObject::VisibleObject(in) { }
-Sphere::Sphere(Dot3D<double> &in, int in_1, int in_2) : VisibleObject::VisibleObject(in, in_1, in_2) { }
+    VisibleObject::VisibleObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang, in_kd, in_ka, in_path),
+    texture(nullptr){ }
+Sphere::Sphere(Dot3D<double> &in) : VisibleObject::VisibleObject(in), texture(nullptr) { }
+Sphere::Sphere(Dot3D<double> &in, int in_1, int in_2) : VisibleObject::VisibleObject(in, in_1, in_2),
+    texture(nullptr){ }
 Sphere::Sphere(Dot3D<double> &in, int in_1, int in_2, const char* in_path) :
-    VisibleObject::VisibleObject(in, in_1, in_2, in_path) { }
-Sphere::Sphere(Dot3D<int> &in) : VisibleObject::VisibleObject(in) { }
-Sphere::Sphere(Dot3D<int> &in, int in_1, int in_2) : VisibleObject::VisibleObject(in, in_1, in_2) { }
+    VisibleObject::VisibleObject(in, in_1, in_2, in_path), texture(nullptr) { }
+Sphere::Sphere(Dot3D<int> &in) : VisibleObject::VisibleObject(in), texture(nullptr) { }
+Sphere::Sphere(Dot3D<int> &in, int in_1, int in_2) : VisibleObject::VisibleObject(in, in_1, in_2),
+    texture(nullptr){ }
 Sphere::Sphere(Dot3D<int> &in, int in_1, int in_2, const char* in_path) :
-    VisibleObject::VisibleObject(in, in_1, in_2, in_path) { }
+    VisibleObject::VisibleObject(in, in_1, in_2, in_path), texture(nullptr) { }
 
 Sphere::Sphere(const Points3D &in_points, const Points2D &in_tex, const PolyList &in_poly)
 {
     Obj tmp(in_points, in_tex, in_poly);
     obj = tmp;
+    texture = nullptr;
 }
 Sphere::Sphere(Points3D &&in_points, Points2D &&in_tex, PolyList &&in_poly)
 {
     Obj tmp(in_points, in_tex, in_poly);
     obj = tmp;
+    texture = nullptr;
 
     in_points.clear();
     in_tex.clear();
@@ -173,6 +180,8 @@ Sphere& Sphere::operator = (const Sphere& in)
     z_ang = in.z_ang;
     kd = in.kd;
     ka = in.ka;
+    texture_path = in.texture_path;
+    texture = in.texture;
 
     return (*this);
 }
@@ -186,15 +195,52 @@ Sphere &Sphere::operator = (Sphere&& in)
     z_ang = in.z_ang;
     kd = in.kd;
     ka = in.ka;
+    texture = in.texture;
+    texture_path = in.texture_path;
 
     in.clear();
 
     return (*this);
 }
 
+Sphere::~Sphere()
+{
+    clear();
+}
+
 Dot3D<double>& Sphere::operator [] (int i) const
 {
     return obj.points[i];
+}
+
+void Sphere::setTexture(const std::string &path)
+{
+    if (texture)
+    {
+        delete texture;
+    }
+
+    texture = new QImage(QString::fromStdString(path));
+    texture_path = path;
+}
+void Sphere::setTexture(const char *path)
+{
+    if (texture)
+    {
+        delete texture;
+    }
+
+    texture = new QImage(QString(path));
+    texture_path = path;
+}
+void Sphere::setTexture(QImage *image)
+{
+    if (texture)
+    {
+        delete texture;
+    }
+
+    texture = image;
 }
 
 void Sphere::clear()
@@ -207,6 +253,11 @@ void Sphere::clear()
     z_ang = 0;
     ka = 0;
     kd = 0;
+    texture_path.clear();
+    if (texture)
+    {
+        delete texture;
+    }
 }
 
 

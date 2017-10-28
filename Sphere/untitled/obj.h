@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <list>
+#include <QImage>
 #include "baseobjects.h"
 #include "math_abstracts.h"
 #include "errors.h"
@@ -83,6 +84,7 @@ class Sphere : public VisibleObject
 
 protected:
     static Obj obj;
+    QImage* texture;
 
 public:
     Sphere();
@@ -106,6 +108,8 @@ public:
     Sphere(Dot3D<int>&, int, int);
     Sphere(Dot3D<int>&, int, int, const char*);
 
+    ~Sphere();
+
     Sphere& operator = (const Sphere&);
     Sphere& operator = (Sphere&&);
 
@@ -114,6 +118,7 @@ public:
     Points3D getPoints() const { return obj.points; }
     Points2D getTexCord() const { return obj.texture_coord; }
     PolyList getPoly() const { return obj.poly; }
+    QImage* getTexture() const { return texture; }
 
     Dot3D<double>& operator [] (int i) const;
 
@@ -121,6 +126,9 @@ public:
     void setObj(const Obj& in) { obj = in; }
     void setPoints(const Points3D& in) { obj.points = in; }
     void setPoly(const PolyList& in) { obj.poly = in; }
+    void setTexture(const std::string&);
+    void setTexture(const char*);
+    void setTexture(QImage *);
 
     virtual void clear() override;
 
