@@ -66,32 +66,6 @@
      <string>V</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="But_Left">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>580</y>
-      <width>41</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="But_Right">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>580</y>
-      <width>41</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&gt;</string>
-    </property>
-   </widget>
    <widget class="QSlider" name="Slider_yTurn">
     <property name="geometry">
      <rect>
@@ -144,32 +118,6 @@
     </property>
     <property name="maximum">
      <number>180</number>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="But_To">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>540</y>
-      <width>41</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>.</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="But_From">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>580</y>
-      <width>41</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>x</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="LineEdit">
@@ -400,13 +348,9 @@
    <zorder>label</zorder>
    <zorder>But_Up</zorder>
    <zorder>But_Down</zorder>
-   <zorder>But_Left</zorder>
-   <zorder>But_Right</zorder>
    <zorder>Slider_yTurn</zorder>
    <zorder>Slider_xTurn</zorder>
    <zorder>Slider_zTurn</zorder>
-   <zorder>But_To</zorder>
-   <zorder>But_From</zorder>
    <zorder>LineEdit</zorder>
    <zorder>ButOpen</zorder>
    <zorder>Label_Turn_Vert</zorder>
