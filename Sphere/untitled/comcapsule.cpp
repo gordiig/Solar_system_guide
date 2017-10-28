@@ -1,65 +1,49 @@
 #include "comcapsule.h"
 
-void DxCom::exec(BaseObject &in)
+void DxCom::exec(Camera &in)
 {
-    in.setX(in.getX() + var);
+    double x = in.getRightAxisX();
+    double y = in.getRightAxisY();
+    double z = in.getRightAxisZ();
+
+    in.setX(in.getX() + x*var);
+    in.setY(in.getY() + y*var);
+    in.setZ(in.getZ() + z*var);
 }
 
-void DyCom::exec(BaseObject &in)
+void DyCom::exec(Camera &in)
 {
-    in.setY(in.getY() + var);
+    double x = in.getUpAxisX();
+    double y = in.getUpAxisY();
+    double z = in.getUpAxisZ();
+
+    in.setX(in.getX() + x*var);
+    in.setY(in.getY() + y*var);
+    in.setZ(in.getZ() + z*var);
 }
 
-void DzCom::exec(BaseObject &in)
+void DzCom::exec(Camera &in)
 {
-    in.setZ(in.getZ() + var);
+    double x = in.getViewAxisX();
+    double y = in.getViewAxisY();
+    double z = in.getViewAxisZ();
+
+    in.setX(in.getX() + x*var);
+    in.setY(in.getY() + y*var);
+    in.setZ(in.getZ() + z*var);
 }
 
-void DxAngCom::exec(BaseObject &in)
+void DxAngCom::exec(Camera &in)
 {
     in.setXAng(var);
 }
 
-void DyAngCom::exec(BaseObject &in)
+void DyAngCom::exec(Camera &in)
 {
     in.setYAng(var);
 }
 
-void DzAngCom::exec(BaseObject &in)
+void DzAngCom::exec(Camera &in)
 {
     in.setZAng(var);
-}
-
-
-void PlanetDxCom::exec(BaseObject &in)
-{
-    in.setX(in.getX() + 2);
-}
-
-void PlanetDyCom::exec(BaseObject &in)
-{
-    in.setY(in.getY() + 2);
-}
-
-void PlanetDzCom::exec(BaseObject &in)
-{
-    in.setZ(in.getZ() + 2);
-}
-
-void PlanetDxAngCom::exec(BaseObject &in)
-{
-    double ang = int((in.getXAng() + 1)) % 360;
-    in.setXAng(ang);
-}
-
-void PlanetDyAngCom::exec(BaseObject &in)
-{
-    double ang = int((in.getYAng() + 1)) % 360;
-    in.setYAng(ang);
-}
-
-void PlanetDzAngCom::exec(BaseObject &in)
-{
-    double ang = int((in.getZAng() + 1)) % 360;
-    in.setZAng(ang);
 }
