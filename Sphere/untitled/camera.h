@@ -24,20 +24,20 @@ public:
     // Геттеры
     double getDistanceToScreen() const { return distance_to_screen; }
 
-    double getViewAxisX() const { return view_axis.getX(); }
-    double getViewAxisY() const { return view_axis.getY(); }
-    double getViewAxisZ() const { return view_axis.getZ(); }
-    MathVector& getViewAxis() { return view_axis; }
+    double getViewAxisX() const;
+    double getViewAxisY() const;
+    double getViewAxisZ() const;
+    MathVector getViewAxis() const;
 
-    double getRightAxisX() const { return right_axis.getX(); }
-    double getRightAxisY() const { return right_axis.getY(); }
-    double getRightAxisZ() const { return right_axis.getZ(); }
-    MathVector& getRightAxis() { return right_axis; }
+    double getRightAxisX() const;
+    double getRightAxisY() const;
+    double getRightAxisZ() const;
+    MathVector getRightAxis() const;
 
-    double getUpAxisX() const { return up_axis.getX(); }
-    double getUpAxisY() const { return up_axis.getY(); }
-    double getUpAxisZ() const { return up_axis.getZ(); }
-    MathVector& getUpAxis() { return up_axis; }
+    double getUpAxisX() const;
+    double getUpAxisY() const;
+    double getUpAxisZ() const;
+    MathVector getUpAxis() const;
 
     // Сеттеры
     void setDistanceToScreen(double in) { distance_to_screen = in; }
