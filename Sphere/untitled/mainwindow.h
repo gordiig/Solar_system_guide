@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QTimer>
+#include <QKeyEvent>
 //#include "mydisplay.h"
 //#include "errors.h"
 #include "facade.h"
@@ -23,7 +24,7 @@ public:
     ~MainWindow();
 
 protected:
-    //void paintEvent(QPaintEvent*);
+    virtual void keyPressEvent(QKeyEvent *event);
 
 private slots:
     void on_But_Up_clicked();

@@ -421,3 +421,50 @@ void MainWindow::tmrTick()
         ui->label->setText(QString(err.what()));
     }
 }
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    int key = event->key();
+    InterfaceCommand *caps = nullptr;
+
+    if (key == Qt::Key_W)
+    {
+        caps = new DzCom(50);
+    }
+    else if (key == Qt::Key_A)
+    {
+        caps = new DxCom(-50);
+    }
+    else if (key == Qt::Key_D)
+    {
+        caps = new DxCom(50);
+    }
+    else if (key == Qt::Key_S)
+    {
+        caps = new DzCom(-50);
+    }
+
+    try
+    {
+        in_dot.camMove(gr, caps);
+        scene->clear();
+        scene->addPixmap(QPixmap::fromImage(im));
+        ui->label->setText(QString("Все в норме!"));
+
+        if (!tmr.isActive())
+        {
+            tmr.start();
+        }
+    }
+    catch(BaseErr& err)
+    {
+        tmr.stop();
+        ui->label->setText(QString(err.what()));
+    }
+
+    if (caps)
+    {
+        delete caps;
+    }
+
+}
