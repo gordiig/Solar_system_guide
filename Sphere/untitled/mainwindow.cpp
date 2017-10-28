@@ -413,7 +413,7 @@ void MainWindow::tmrTick()
 
     try
     {
-        in_dot.planetMove(gr, caps);
+        in_dot.planetMove(gr);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
         ui->label->setText(QString("Все в норме!"));
