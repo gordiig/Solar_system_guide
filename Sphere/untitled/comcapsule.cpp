@@ -10,7 +10,6 @@ void DxCom::exec(Camera &in)
     in.setY(in.getY() + y*var);
     in.setZ(in.getZ() + z*var);
 }
-
 void DyCom::exec(Camera &in)
 {
     double x = in.getUpAxisX();
@@ -21,7 +20,6 @@ void DyCom::exec(Camera &in)
     in.setY(in.getY() + y*var);
     in.setZ(in.getZ() + z*var);
 }
-
 void DzCom::exec(Camera &in)
 {
     double x = in.getViewAxisX();
@@ -35,15 +33,13 @@ void DzCom::exec(Camera &in)
 
 void DxAngCom::exec(Camera &in)
 {
-    in.setXAng(var);
+    in.setXAng(in.getXAng() + var);
 }
-
 void DyAngCom::exec(Camera &in)
 {
-    in.setYAng(var);
+    in.setYAng(in.getYAng() + var);
 }
-
 void DzAngCom::exec(Camera &in)
 {
-    in.setZAng(var);
+    in.setZAng(in.getZAng() + var);
 }
