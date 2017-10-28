@@ -46,10 +46,12 @@ int PlanetSystem::size() const
 
 void PlanetSystem::setObj(Obj &in)
 {
-    for (auto &planet : planet_system_object)
+    if (planet_system_object.size() == 0)
     {
-        planet->setObj(in);
+        throw VecRangeErr("PlanetSystem::setObj in spacesystems.cpp");
     }
+
+    planet_system_object[0]->setObj(in);
 }
 void PlanetSystem::clear()
 {
@@ -109,10 +111,7 @@ int SolarSystem::size() const
 
 void SolarSystem::setObj(Obj &in)
 {
-    for (auto &sys : planet_systems)
-    {
-        sys->setObj(in);
-    }
+    planet_systems[0]->setObj(in);
 }
 void SolarSystem::clear()
 {
