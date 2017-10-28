@@ -409,8 +409,6 @@ void MainWindow::on_Slider_Ia_valueChanged(int value)
 
 void MainWindow::tmrTick()
 {
-    InterfaceCommand *caps = new PlanetDyAngCom;
-
     try
     {
         in_dot.planetMove(gr);
@@ -422,6 +420,4 @@ void MainWindow::tmrTick()
     {
         ui->label->setText(QString(err.what()));
     }
-
-    delete caps;
 }
