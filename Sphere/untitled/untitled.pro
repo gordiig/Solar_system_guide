@@ -22,7 +22,6 @@ SOURCES += main.cpp\
     transformer.cpp \
     drawer.cpp \
     logger.cpp \
-    singletone.cpp \
     mydisplay.cpp \
     camera.cpp \
     math_abstracts.cpp \
@@ -42,7 +41,6 @@ HEADERS  += mainwindow.h \
     camera.h \
     math_abstracts.h \
     baseobjects.h \
-    spacesystems.h \
-    singletone.h
+    spacesystems.h
 
 FORMS    += mainwindow.ui
