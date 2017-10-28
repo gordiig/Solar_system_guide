@@ -51,10 +51,16 @@ Camera& Camera::operator = (Camera&& in)
 
 double Camera::getRightAxisX() const
 {
+    double _x_ang = x_ang * M_PI/180;
     double _y_ang = y_ang * M_PI/180;
     double _z_ang = z_ang * M_PI/180;
 
     MathVector right_vector = right_axis;
+
+    // Ох
+    double y_pr = right_vector.getY();
+    right_vector.setY(y_pr*cos(_x_ang) + right_vector.getZ()*sin(_x_ang));
+    right_vector.setZ(-y_pr*sin(_x_ang) + right_vector.getZ()*cos(_x_ang));
 
     // Oy
     double x_pr = right_vector.getX();
@@ -71,26 +77,8 @@ double Camera::getRightAxisX() const
 double Camera::getRightAxisY() const
 {
     double _x_ang = x_ang * M_PI/180;
-    double _z_ang = z_ang * M_PI/180;
-
-    MathVector right_vector = right_axis;
-
-    // Ox
-    double y_pr = right_vector.getY();
-    right_vector.setY(y_pr*cos(_x_ang) + right_vector.getZ()*sin(_x_ang));
-    right_vector.setZ(-y_pr*sin(_x_ang) + right_vector.getZ()*cos(_x_ang));
-
-    // Oz
-    double x_pr = right_vector.getX();
-    right_vector.setX(x_pr*cos(_z_ang) - right_vector.getY()*sin(_z_ang));
-    right_vector.setY(x_pr*sin(_z_ang) + right_vector.getY()*cos(_z_ang));
-
-    return right_vector.getY();
-}
-double Camera::getRightAxisZ() const
-{
-    double _x_ang = x_ang * M_PI/180;
     double _y_ang = y_ang * M_PI/180;
+    double _z_ang = z_ang * M_PI/180;
 
     MathVector right_vector = right_axis;
 
@@ -104,6 +92,37 @@ double Camera::getRightAxisZ() const
     right_vector.setX(x_pr*cos(_y_ang) - right_vector.getZ()*sin(_y_ang));
     right_vector.setZ(x_pr*sin(_y_ang) + right_vector.getZ()*cos(_y_ang));
 
+
+    // Oz
+    x_pr = right_vector.getX();
+    right_vector.setX(x_pr*cos(_z_ang) - right_vector.getY()*sin(_z_ang));
+    right_vector.setY(x_pr*sin(_z_ang) + right_vector.getY()*cos(_z_ang));
+
+    return right_vector.getY();
+}
+double Camera::getRightAxisZ() const
+{
+    double _x_ang = x_ang * M_PI/180;
+    double _y_ang = y_ang * M_PI/180;
+    double _z_ang = z_ang * M_PI/180;
+
+    MathVector right_vector = right_axis;
+
+    // Ox
+    double y_pr = right_vector.getY();
+    right_vector.setY(y_pr*cos(_x_ang) + right_vector.getZ()*sin(_x_ang));
+    right_vector.setZ(-y_pr*sin(_x_ang) + right_vector.getZ()*cos(_x_ang));
+
+    // Oy
+    double x_pr = right_vector.getX();
+    right_vector.setX(x_pr*cos(_y_ang) - right_vector.getZ()*sin(_y_ang));
+    right_vector.setZ(x_pr*sin(_y_ang) + right_vector.getZ()*cos(_y_ang));
+
+    // Oz
+    x_pr = right_vector.getX();
+    right_vector.setX(x_pr*cos(_z_ang) - right_vector.getY()*sin(_z_ang));
+    right_vector.setY(x_pr*sin(_z_ang) + right_vector.getY()*cos(_z_ang));
+
     return right_vector.getZ();
 }
 MathVector Camera::getRightAxis() const
@@ -113,10 +132,16 @@ MathVector Camera::getRightAxis() const
 
 double Camera::getUpAxisX() const
 {
+    double _x_ang = x_ang * M_PI/180;
     double _y_ang = y_ang * M_PI/180;
     double _z_ang = z_ang * M_PI/180;
 
     MathVector up_vector = up_axis;
+
+    // Ox
+    double y_pr = up_vector.getY();
+    up_vector.setY(y_pr*cos(_x_ang) + up_vector.getZ()*sin(_x_ang));
+    up_vector.setZ(-y_pr*sin(_x_ang) + up_vector.getZ()*cos(_x_ang));
 
     // Oy
     double x_pr = up_vector.getX();
@@ -133,26 +158,8 @@ double Camera::getUpAxisX() const
 double Camera::getUpAxisY() const
 {
     double _x_ang = x_ang * M_PI/180;
-    double _z_ang = z_ang * M_PI/180;
-
-    MathVector up_vector = up_axis;
-
-    // Ox
-    double y_pr = up_vector.getY();
-    up_vector.setY(y_pr*cos(_x_ang) + up_vector.getZ()*sin(_x_ang));
-    up_vector.setZ(-y_pr*sin(_x_ang) + up_vector.getZ()*cos(_x_ang));
-
-    // Oz
-    double x_pr = up_vector.getX();
-    up_vector.setX(x_pr*cos(_z_ang) - up_vector.getY()*sin(_z_ang));
-    up_vector.setY(x_pr*sin(_z_ang) + up_vector.getY()*cos(_z_ang));
-
-    return up_vector.getY();
-}
-double Camera::getUpAxisZ() const
-{
-    double _x_ang = x_ang * M_PI/180;
     double _y_ang = y_ang * M_PI/180;
+    double _z_ang = z_ang * M_PI/180;
 
     MathVector up_vector = up_axis;
 
@@ -166,6 +173,36 @@ double Camera::getUpAxisZ() const
     up_vector.setX(x_pr*cos(_y_ang) - up_vector.getZ()*sin(_y_ang));
     up_vector.setZ(x_pr*sin(_y_ang) + up_vector.getZ()*cos(_y_ang));
 
+    // Oz
+    x_pr = up_vector.getX();
+    up_vector.setX(x_pr*cos(_z_ang) - up_vector.getY()*sin(_z_ang));
+    up_vector.setY(x_pr*sin(_z_ang) + up_vector.getY()*cos(_z_ang));
+
+    return up_vector.getY();
+}
+double Camera::getUpAxisZ() const
+{
+    double _x_ang = x_ang * M_PI/180;
+    double _y_ang = y_ang * M_PI/180;
+    double _z_ang = z_ang * M_PI/180;
+
+    MathVector up_vector = up_axis;
+
+    // Ox
+    double y_pr = up_vector.getY();
+    up_vector.setY(y_pr*cos(_x_ang) + up_vector.getZ()*sin(_x_ang));
+    up_vector.setZ(-y_pr*sin(_x_ang) + up_vector.getZ()*cos(_x_ang));
+
+    // Oy
+    double x_pr = up_vector.getX();
+    up_vector.setX(x_pr*cos(_y_ang) - up_vector.getZ()*sin(_y_ang));
+    up_vector.setZ(x_pr*sin(_y_ang) + up_vector.getZ()*cos(_y_ang));
+
+    // Oz
+    x_pr = up_vector.getX();
+    up_vector.setX(x_pr*cos(_z_ang) - up_vector.getY()*sin(_z_ang));
+    up_vector.setY(x_pr*sin(_z_ang) + up_vector.getY()*cos(_z_ang));
+
     return up_vector.getZ();
 }
 MathVector Camera::getUpAxis() const
@@ -175,10 +212,16 @@ MathVector Camera::getUpAxis() const
 
 double Camera::getViewAxisX() const
 {
+    double _x_ang = x_ang * M_PI/180;
     double _y_ang = y_ang * M_PI/180;
     double _z_ang = z_ang * M_PI/180;
 
     MathVector view_vector = view_axis;
+
+    // Ox
+    double y_pr = view_vector.getY();
+    view_vector.setY(y_pr*cos(_x_ang) + view_vector.getZ()*sin(_x_ang));
+    view_vector.setZ(-y_pr*sin(_x_ang) + view_vector.getZ()*cos(_x_ang));
 
     // Oy
     double x_pr = view_vector.getX();
@@ -195,26 +238,8 @@ double Camera::getViewAxisX() const
 double Camera::getViewAxisY() const
 {
     double _x_ang = x_ang * M_PI/180;
-    double _z_ang = z_ang * M_PI/180;
-
-    MathVector view_vector = view_axis;
-
-    // Ox
-    double y_pr = view_vector.getY();
-    view_vector.setY(y_pr*cos(_x_ang) + view_vector.getZ()*sin(_x_ang));
-    view_vector.setZ(-y_pr*sin(_x_ang) + view_vector.getZ()*cos(_x_ang));
-
-    // Oz
-    double x_pr = view_vector.getX();
-    view_vector.setX(x_pr*cos(_z_ang) - view_vector.getY()*sin(_z_ang));
-    view_vector.setY(x_pr*sin(_z_ang) + view_vector.getY()*cos(_z_ang));
-
-    return view_vector.getY();
-}
-double Camera::getViewAxisZ() const
-{
-    double _x_ang = x_ang * M_PI/180;
     double _y_ang = y_ang * M_PI/180;
+    double _z_ang = z_ang * M_PI/180;
 
     MathVector view_vector = view_axis;
 
@@ -227,6 +252,36 @@ double Camera::getViewAxisZ() const
     double x_pr = view_vector.getX();
     view_vector.setX(x_pr*cos(_y_ang) - view_vector.getZ()*sin(_y_ang));
     view_vector.setZ(x_pr*sin(_y_ang) + view_vector.getZ()*cos(_y_ang));
+
+    // Oz
+    x_pr = view_vector.getX();
+    view_vector.setX(x_pr*cos(_z_ang) - view_vector.getY()*sin(_z_ang));
+    view_vector.setY(x_pr*sin(_z_ang) + view_vector.getY()*cos(_z_ang));
+
+    return view_vector.getY();
+}
+double Camera::getViewAxisZ() const
+{
+    double _x_ang = x_ang * M_PI/180;
+    double _y_ang = y_ang * M_PI/180;
+    double _z_ang = z_ang * M_PI/180;
+
+    MathVector view_vector = view_axis;
+
+    // Ox
+    double y_pr = view_vector.getY();
+    view_vector.setY(y_pr*cos(_x_ang) + view_vector.getZ()*sin(_x_ang));
+    view_vector.setZ(-y_pr*sin(_x_ang) + view_vector.getZ()*cos(_x_ang));
+
+    // Oy
+    double x_pr = view_vector.getX();
+    view_vector.setX(x_pr*cos(_y_ang) - view_vector.getZ()*sin(_y_ang));
+    view_vector.setZ(x_pr*sin(_y_ang) + view_vector.getZ()*cos(_y_ang));
+
+    // Oz
+    x_pr = view_vector.getX();
+    view_vector.setX(x_pr*cos(_z_ang) - view_vector.getY()*sin(_z_ang));
+    view_vector.setY(x_pr*sin(_z_ang) + view_vector.getY()*cos(_z_ang));
 
     return view_vector.getZ();
 }
