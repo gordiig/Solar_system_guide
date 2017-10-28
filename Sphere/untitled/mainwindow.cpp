@@ -71,60 +71,9 @@ void MainWindow::on_But_Up_clicked()
 
     delete caps;
 }
-
-void MainWindow::on_But_Left_clicked()
-{
-    InterfaceCommand *caps = new DxCom(-50);
-
-    try
-    {
-        in_dot.camMove(gr, caps);
-        scene->clear();
-        scene->addPixmap(QPixmap::fromImage(im));
-        ui->label->setText(QString("Все в норме!"));
-
-        if (!tmr.isActive())
-        {
-            tmr.start();
-        }
-    }
-    catch(BaseErr& err)
-    {
-        tmr.stop();
-        ui->label->setText(QString(err.what()));
-    }
-
-    delete caps;
-}
-
 void MainWindow::on_But_Down_clicked()
 {
     InterfaceCommand *caps = new DyCom(50);
-
-    try
-    {
-        in_dot.camMove(gr, caps);
-        scene->clear();
-        scene->addPixmap(QPixmap::fromImage(im));
-        ui->label->setText(QString("Все в норме!"));
-
-        if (!tmr.isActive())
-        {
-            tmr.start();
-        }
-    }
-    catch(BaseErr& err)
-    {
-        tmr.stop();
-        ui->label->setText(QString(err.what()));
-    }
-
-    delete caps;
-}
-
-void MainWindow::on_But_Right_clicked()
-{
-    InterfaceCommand *caps = new DxCom(50);
 
     try
     {
@@ -171,7 +120,6 @@ void MainWindow::on_Slider_xTurn_valueChanged(int value)
 
     delete caps;
 }
-
 void MainWindow::on_Slider_yTurn_valueChanged(int value)
 {
     InterfaceCommand *caps = new DyAngCom(value);
@@ -196,60 +144,9 @@ void MainWindow::on_Slider_yTurn_valueChanged(int value)
 
     delete caps;
 }
-
 void MainWindow::on_Slider_zTurn_valueChanged(int value)
 {
     InterfaceCommand *caps = new DzAngCom(value);
-
-    try
-    {
-        in_dot.camMove(gr, caps);
-        scene->clear();
-        scene->addPixmap(QPixmap::fromImage(im));
-        ui->label->setText(QString("Все в норме!"));
-
-        if (!tmr.isActive())
-        {
-            tmr.start();
-        }
-    }
-    catch(BaseErr& err)
-    {
-        tmr.stop();
-        ui->label->setText(QString(err.what()));
-    }
-
-    delete caps;
-}
-
-void MainWindow::on_But_To_clicked()
-{
-    InterfaceCommand *caps = new DzCom(-50);
-
-    try
-    {
-        in_dot.camMove(gr, caps);
-        scene->clear();
-        scene->addPixmap(QPixmap::fromImage(im));
-        ui->label->setText(QString("Все в норме!"));
-
-        if (!tmr.isActive())
-        {
-            tmr.start();
-        }
-    }
-    catch(BaseErr& err)
-    {
-        tmr.stop();
-        ui->label->setText(QString(err.what()));
-    }
-
-    delete caps;
-}
-
-void MainWindow::on_But_From_clicked()
-{
-    InterfaceCommand *caps = new DzCom(50);
 
     try
     {
@@ -317,7 +214,6 @@ void MainWindow::on_Slider_Id_valueChanged(int value)
     }
 
 }
-
 void MainWindow::on_Slider_kd_valueChanged(int value)
 {
     if ((ui->Slider_kd->value() + ui->Slider_ka->value()) >= 100)
@@ -350,7 +246,6 @@ void MainWindow::on_Slider_kd_valueChanged(int value)
         ui->label->setText(QString(err.what()));
     }
 }
-
 void MainWindow::on_Slider_ka_valueChanged(int value)
 {
     if ((ui->Slider_kd->value() + ui->Slider_ka->value()) >= 100)
@@ -382,7 +277,6 @@ void MainWindow::on_Slider_ka_valueChanged(int value)
         ui->label->setText(QString(err.what()));
     }
 }
-
 void MainWindow::on_Slider_Ia_valueChanged(int value)
 {
     gr.Ia = value;
