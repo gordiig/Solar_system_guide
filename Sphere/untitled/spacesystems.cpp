@@ -87,11 +87,11 @@ void SolarSystem::tickMove()
 
 std::vector<PlanetSystem*>::iterator SolarSystem::begin()
 {
-    planet_systems.begin();
+    return planet_systems.begin();
 }
 std::vector<PlanetSystem*>::iterator SolarSystem::end()
 {
-    planet_systems.end();
+    return planet_systems.end();
 }
 
 PlanetSystem* SolarSystem::operator [](int i) const
