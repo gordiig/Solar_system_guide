@@ -8,6 +8,8 @@
 class BaseSystem
 {
 public:
+    virtual ~BaseSystem() {}
+
     virtual void remove(int) = 0;
     virtual void tickMove() = 0;
 };
