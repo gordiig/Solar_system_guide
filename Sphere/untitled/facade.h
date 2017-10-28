@@ -6,6 +6,7 @@
 #include "reader.h"
 #include "comcapsule.h"
 #include "mydisplay.h"
+#include "spacesystems.h"
 
 #include "transformer.h"
 #include "drawer.h"
@@ -24,7 +25,7 @@ struct GraphStruct
 class Facade
 {
 private:
-    Sphere planet;
+    SolarSystem solar_system;
     QImage* texture;
     Reader reader;
     DotLight light;
@@ -40,7 +41,7 @@ public:
     ~Facade();
 
     void camMove(GraphStruct& gr, InterfaceCommand *caps = nullptr);
-    void planetMove(GraphStruct& gr, InterfaceCommand *caps = nullptr);
+    void planetMove(GraphStruct& gr);
 
     void draw(GraphStruct &gr);
     void read(const char *name = "new.obj");

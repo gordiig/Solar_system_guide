@@ -2,8 +2,14 @@
 
 Facade::Facade()
 {
-    planet.setTexturePath("tex.jpg");
-    texture = new QImage(QString::fromStdString(planet.getTexturePath()));
+    std::string path("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/textures");
+
+    PlanetSystem* sys = new PlanetSystem;
+    Sphere* pl = new Sphere;
+    pl->setTexturePath(path+std::string("/earth.jpg"));
+
+    sys->add(pl);
+    solar_system.add(sys);
 }
 
 Facade::Facade(const char *name)
@@ -14,7 +20,6 @@ Facade::Facade(const char *name)
 Facade::~Facade()
 {
     reader.closeFile();
-    delete texture;
 }
 
 void Facade::camMove(GraphStruct &gr, InterfaceCommand *caps)
@@ -30,12 +35,9 @@ void Facade::camMove(GraphStruct &gr, InterfaceCommand *caps)
     draw(gr);
 }
 
-void Facade::planetMove(GraphStruct &gr, InterfaceCommand *caps)
+void Facade::planetMove(GraphStruct &gr)
 {
-    if (caps)
-    {
-        caps->exec(planet);
-    }
+    solar_system.tickMove();
     light.setX(50);
     light.setY(50);
     light.setZ(-120);
@@ -45,30 +47,40 @@ void Facade::planetMove(GraphStruct &gr, InterfaceCommand *caps)
 
 void Facade::draw(GraphStruct &gr)
 {
-    Transformer trans;
-    Obj draw_object(trans.transform(planet, cam), planet.getTexCord(), planet.getPoly());
-    light.setByDot(trans.transform(light, cam));
-
-    planet.setKa(gr.ka);
-    planet.setKd(gr.kd);
-    light.setIa(gr.Ia);
-    light.setId(gr.Id);
-
-    if (!texture)
+    for (int i = 0; i < solar_system.size(); i++)
     {
-        texture = new QImage(QString::fromStdString(planet.getTexturePath()));
+        for (int j = 0; j < solar_system[i]->size(); j++)
+        {
+            Sphere* planet = (*solar_system[i])[j];
+            Transformer trans;
+            Obj draw_object(trans.transform(*planet, cam), planet->getTexCord(), planet->getPoly());
+            light.setByDot(trans.transform(light, cam));
+
+            planet->setKa(gr.ka);
+            planet->setKd(gr.kd);
+            light.setIa(gr.Ia);
+            light.setId(gr.Id);
+
+            if (!texture)
+            {
+                texture = new QImage(QString::fromStdString(planet->getTexturePath()));
+            }
+
+
+            Drwr::GraphicsToDraw gr_in(gr.im, cam, light, draw_object, texture,
+                           planet->getKa(), planet->getKd());
+            gr_in.im.clrZBuf();
+            Drawer dr;
+            dr.draw(gr_in);
+        }
+        delete texture;
+        texture = nullptr;
     }
-
-
-    Drwr::GraphicsToDraw gr_in(gr.im, cam, light, draw_object, texture,
-                   planet.getKa(), planet.getKd());
-    gr_in.im.clrZBuf();
-    Drawer dr;
-    dr.draw(gr_in);
 }
 
 void Facade::read(const char *name)
 {
     reader.openFile(name);
-    planet.setObj(reader.read());
+    Obj tmp = reader.read();
+    solar_system.setObj(tmp);
 }
