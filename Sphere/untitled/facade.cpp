@@ -6,7 +6,7 @@ Facade::Facade()
 
     PlanetSystem* sys = new PlanetSystem;
     Sphere* pl = new Sphere;
-    pl->setTexturePath(path+std::string("/earth.jpg"));
+    pl->setTexture(path+std::string("/earth.jpg"));
 
     sys->add(pl);
     solar_system.add(sys);
@@ -61,11 +61,7 @@ void Facade::draw(GraphStruct &gr)
             light.setIa(gr.Ia);
             light.setId(gr.Id);
 
-            if (!texture)
-            {
-                texture = new QImage(QString::fromStdString(planet->getTexturePath()));
-            }
-
+            texture = planet->getTexture();
 
             Drwr::GraphicsToDraw gr_in(gr.im, cam, light, draw_object, texture,
                            planet->getKa(), planet->getKd());
@@ -73,8 +69,6 @@ void Facade::draw(GraphStruct &gr)
             Drawer dr;
             dr.draw(gr_in);
         }
-        delete texture;
-        texture = nullptr;
     }
 }
 
