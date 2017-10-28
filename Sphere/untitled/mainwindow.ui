@@ -40,86 +40,6 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="But_Up">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>540</y>
-      <width>41</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>^</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="But_Down">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>580</y>
-      <width>41</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>V</string>
-    </property>
-   </widget>
-   <widget class="QSlider" name="Slider_yTurn">
-    <property name="geometry">
-     <rect>
-      <x>820</x>
-      <y>340</y>
-      <width>271</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="minimum">
-     <number>-180</number>
-    </property>
-    <property name="maximum">
-     <number>180</number>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QSlider" name="Slider_xTurn">
-    <property name="geometry">
-     <rect>
-      <x>900</x>
-      <y>30</y>
-      <width>16</width>
-      <height>291</height>
-     </rect>
-    </property>
-    <property name="minimum">
-     <number>-180</number>
-    </property>
-    <property name="maximum">
-     <number>180</number>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Vertical</enum>
-    </property>
-   </widget>
-   <widget class="QDial" name="Slider_zTurn">
-    <property name="geometry">
-     <rect>
-      <x>960</x>
-      <y>80</y>
-      <width>131</width>
-      <height>161</height>
-     </rect>
-    </property>
-    <property name="minimum">
-     <number>-180</number>
-    </property>
-    <property name="maximum">
-     <number>180</number>
-    </property>
-   </widget>
    <widget class="QLineEdit" name="LineEdit">
     <property name="geometry">
      <rect>
@@ -144,57 +64,6 @@
     </property>
     <property name="text">
      <string>Открыть</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="Label_Turn_Vert">
-    <property name="geometry">
-     <rect>
-      <x>850</x>
-      <y>30</y>
-      <width>51</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="autoFillBackground">
-     <bool>true</bool>
-    </property>
-    <property name="text">
-     <string>0</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="Label_Turn_Round">
-    <property name="geometry">
-     <rect>
-      <x>1020</x>
-      <y>70</y>
-      <width>60</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="autoFillBackground">
-     <bool>true</bool>
-    </property>
-    <property name="text">
-     <string>0</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="Label_Turn_Hor">
-    <property name="geometry">
-     <rect>
-      <x>1010</x>
-      <y>310</y>
-      <width>60</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="autoFillBackground">
-     <bool>true</bool>
-    </property>
-    <property name="text">
-     <string>0</string>
     </property>
    </widget>
    <widget class="QWidget" name="gridLayoutWidget">
@@ -346,16 +215,8 @@
    </widget>
    <zorder>graphicsView</zorder>
    <zorder>label</zorder>
-   <zorder>But_Up</zorder>
-   <zorder>But_Down</zorder>
-   <zorder>Slider_yTurn</zorder>
-   <zorder>Slider_xTurn</zorder>
-   <zorder>Slider_zTurn</zorder>
    <zorder>LineEdit</zorder>
    <zorder>ButOpen</zorder>
-   <zorder>Label_Turn_Vert</zorder>
-   <zorder>Label_Turn_Round</zorder>
-   <zorder>Label_Turn_Hor</zorder>
    <zorder>gridLayoutWidget</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -363,54 +224,6 @@
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections>
-  <connection>
-   <sender>Slider_xTurn</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>Label_Turn_Vert</receiver>
-   <slot>setNum(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>907</x>
-     <y>299</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>849</x>
-     <y>255</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>Slider_yTurn</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>Label_Turn_Hor</receiver>
-   <slot>setNum(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>949</x>
-     <y>197</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>899</x>
-     <y>155</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>Slider_zTurn</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>Label_Turn_Round</receiver>
-   <slot>setNum(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1050</x>
-     <y>295</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>969</x>
-     <y>255</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>Slider_Ia</sender>
    <signal>valueChanged(int)</signal>

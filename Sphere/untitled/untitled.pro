@@ -38,11 +38,11 @@ HEADERS  += mainwindow.h \
     transformer.h \
     drawer.h \
     logger.h \
-    singletone.h \
     mydisplay.h \
     camera.h \
     math_abstracts.h \
     baseobjects.h \
-    spacesystems.h
+    spacesystems.h \
+    singletone.h
 
 FORMS    += mainwindow.ui

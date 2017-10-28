@@ -21,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
     gr.kd = (double)ui->Slider_kd->value()/100.;
     gr.ka = (double)ui->Slider_ka->value()/100.;
 
+    ui->graphicsView->grabMouse();
+
     im.fill(Qt::black);
     on_ButOpen_clicked();
 
@@ -47,128 +49,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_But_Up_clicked()
-{
-    InterfaceCommand *caps = new DyCom(-50);
-
-    try
-    {
-        in_dot.camMove(gr, caps);
-        scene->clear();
-        scene->addPixmap(QPixmap::fromImage(im));
-        ui->label->setText(QString("Все в норме!"));
-
-        if (!tmr.isActive())
-        {
-            tmr.start();
-        }
-    }
-    catch(BaseErr& err)
-    {
-        tmr.stop();
-        ui->label->setText(QString(err.what()));
-    }
-
-    delete caps;
-}
-void MainWindow::on_But_Down_clicked()
-{
-    InterfaceCommand *caps = new DyCom(50);
-
-    try
-    {
-        in_dot.camMove(gr, caps);
-        scene->clear();
-        scene->addPixmap(QPixmap::fromImage(im));
-        ui->label->setText(QString("Все в норме!"));
-
-        if (!tmr.isActive())
-        {
-            tmr.start();
-        }
-    }
-    catch(BaseErr& err)
-    {
-        tmr.stop();
-        ui->label->setText(QString(err.what()));
-    }
-
-    delete caps;
-}
-
-void MainWindow::on_Slider_xTurn_valueChanged(int value)
-{
-    InterfaceCommand *caps = new DxAngCom(value);
-
-    try
-    {
-        in_dot.camMove(gr, caps);
-        scene->clear();
-        scene->addPixmap(QPixmap::fromImage(im));
-        ui->label->setText(QString("Все в норме!"));
-
-        if (!tmr.isActive())
-        {
-            tmr.start();
-        }
-    }
-    catch(BaseErr& err)
-    {
-        tmr.stop();
-        ui->label->setText(QString(err.what()));
-    }
-
-    delete caps;
-}
-void MainWindow::on_Slider_yTurn_valueChanged(int value)
-{
-    InterfaceCommand *caps = new DyAngCom(value);
-
-    try
-    {
-        in_dot.camMove(gr, caps);
-        scene->clear();
-        scene->addPixmap(QPixmap::fromImage(im));
-        ui->label->setText(QString("Все в норме!"));
-
-        if (!tmr.isActive())
-        {
-            tmr.start();
-        }
-    }
-    catch(BaseErr& err)
-    {
-        tmr.stop();
-        ui->label->setText(QString(err.what()));
-    }
-
-    delete caps;
-}
-void MainWindow::on_Slider_zTurn_valueChanged(int value)
-{
-    InterfaceCommand *caps = new DzAngCom(value);
-
-    try
-    {
-        in_dot.camMove(gr, caps);
-        scene->clear();
-        scene->addPixmap(QPixmap::fromImage(im));
-        ui->label->setText(QString("Все в норме!"));
-
-        if (!tmr.isActive())
-        {
-            tmr.start();
-        }
-    }
-    catch(BaseErr& err)
-    {
-        tmr.stop();
-        ui->label->setText(QString(err.what()));
-    }
-
-    delete caps;
-}
-
 void MainWindow::on_ButOpen_clicked()
 {
     try
@@ -177,7 +57,6 @@ void MainWindow::on_ButOpen_clicked()
         in_dot.draw(gr);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
-        ui->label->setText(QString("Все в норме!"));
 
         if (!tmr.isActive())
         {
@@ -200,7 +79,6 @@ void MainWindow::on_Slider_Id_valueChanged(int value)
         in_dot.camMove(gr);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
-        ui->label->setText(QString("Все в норме!"));
 
         if (!tmr.isActive())
         {
@@ -233,7 +111,6 @@ void MainWindow::on_Slider_kd_valueChanged(int value)
         in_dot.camMove(gr);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
-        ui->label->setText(QString("Все в норме!"));
 
         if (!tmr.isActive())
         {
@@ -264,7 +141,6 @@ void MainWindow::on_Slider_ka_valueChanged(int value)
         in_dot.camMove(gr);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
-        ui->label->setText(QString("Все в норме!"));
 
         if (!tmr.isActive())
         {
@@ -286,7 +162,6 @@ void MainWindow::on_Slider_Ia_valueChanged(int value)
         in_dot.camMove(gr);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
-        ui->label->setText(QString("Все в норме!"));
 
         if (!tmr.isActive())
         {
@@ -308,7 +183,6 @@ void MainWindow::tmrTick()
         in_dot.planetMove(gr);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
-        ui->label->setText(QString("Все в норме!"));
     }
     catch(BaseErr& err)
     {
@@ -337,13 +211,20 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     {
         caps = new DzCom(-50);
     }
+    else if (key == Qt::Key_U)
+    {
+        caps = new DyCom(-50);
+    }
+    else if (key == Qt::Key_J)
+    {
+        caps = new DyCom(50);
+    }
 
     try
     {
         in_dot.camMove(gr, caps);
         scene->clear();
         scene->addPixmap(QPixmap::fromImage(im));
-        ui->label->setText(QString("Все в норме!"));
 
         if (!tmr.isActive())
         {
@@ -361,4 +242,45 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         delete caps;
     }
 
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        last_x = event->pos().x();
+        last_y = event->pos().y();
+    }
+}
+void MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    double dx = (event->pos().x() - last_x) * MOUSE_SENS;
+    last_x = event->pos().x();
+
+    double dy = (event->pos().y() - last_y) * MOUSE_SENS;
+    last_y = event->pos().y();
+
+    InterfaceCommand *caps = new DyAngCom(dx);
+    InterfaceCommand *caps2 = new DxAngCom(-dy);
+
+    try
+    {
+        in_dot.camMove(gr, caps);
+        in_dot.camMove(gr, caps2);
+        scene->clear();
+        scene->addPixmap(QPixmap::fromImage(im));
+
+        if (!tmr.isActive())
+        {
+            tmr.start();
+        }
+    }
+    catch(BaseErr& err)
+    {
+        tmr.stop();
+        ui->label->setText(QString(err.what()));
+    }
+
+    delete caps;
+    delete caps2;
 }

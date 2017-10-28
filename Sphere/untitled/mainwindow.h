@@ -5,11 +5,12 @@
 #include <QGraphicsScene>
 #include <QTimer>
 #include <QKeyEvent>
+#include <QMouseEvent>
 //#include "mydisplay.h"
 //#include "errors.h"
 #include "facade.h"
-//#include "singletone.h"
 
+#define MOUSE_SENS 0.3
 
 namespace Ui {
 class MainWindow;
@@ -26,14 +27,10 @@ public:
 protected:
     virtual void keyPressEvent(QKeyEvent *event);
 
+    virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseMoveEvent(QMouseEvent *event);
+
 private slots:
-    void on_But_Up_clicked();
-    void on_But_Down_clicked();
-
-    void on_Slider_xTurn_valueChanged(int value);
-    void on_Slider_yTurn_valueChanged(int value);
-    void on_Slider_zTurn_valueChanged(int value);
-
     void on_ButOpen_clicked();
 
     void on_Slider_Id_valueChanged(int value);
@@ -50,6 +47,9 @@ private:
     QGraphicsScene *scene;
     GraphStruct gr;
     QTimer tmr;
+
+    int last_x;
+    int last_y;
 };
 
 #endif // MAINWINDOW_H
