@@ -5,10 +5,17 @@ Facade::Facade()
     std::string path("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/textures");
 
     PlanetSystem* sys = new PlanetSystem;
+
     Sphere* pl = new Sphere;
     pl->setTexture(path+std::string("/earth.jpg"));
-
     sys->add(pl);
+
+    pl = new Sphere;
+    pl->setTexture(path+std::string("/testcat.jpg"));
+    pl->setX(200);
+    pl->setZ(-100);
+    sys->add(pl);
+
     solar_system.add(sys);
 }
 
@@ -47,11 +54,15 @@ void Facade::planetMove(GraphStruct &gr)
 
 void Facade::draw(GraphStruct &gr)
 {
+    Drawer dr;
+    gr.im.clrZBuf();
+    gr.im.fill(Qt::black);
     for (int i = 0; i < solar_system.size(); i++)
     {
         for (int j = 0; j < solar_system[i]->size(); j++)
         {
             Sphere* planet = (*solar_system[i])[j];
+
             Transformer trans;
             Obj draw_object(trans.transform(*planet, cam), planet->getTexCord(), planet->getPoly());
             light.setByDot(trans.transform(light, cam));
@@ -65,8 +76,6 @@ void Facade::draw(GraphStruct &gr)
 
             Drwr::GraphicsToDraw gr_in(gr.im, cam, light, draw_object, texture,
                            planet->getKa(), planet->getKd());
-            gr_in.im.clrZBuf();
-            Drawer dr;
             dr.draw(gr_in);
         }
     }

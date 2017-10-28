@@ -399,8 +399,6 @@ void Drawer::drawLineBrez(MyDisplay &im, const Dot2D<double> &st, const Dot2D<do
 
 void Drawer::draw(GraphicsToDraw& gr)
 {
-    gr.im.fill(Qt::black);
-
     //drawScelet(gr.im, gr.obj);
     drawSphere(gr);
     //drawVizScelet(gr.im, gr.cam, gr.obj);
