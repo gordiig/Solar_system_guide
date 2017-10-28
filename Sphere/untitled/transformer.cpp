@@ -1,11 +1,7 @@
 #include "transformer.h"
 
 Transformer::Transformer()
-{
-    view_vector.setZ(1);
-    up_vector.setY(1);
-    right_vector.setX(1);
-}
+{}
 
 Transformer::~Transformer()
 {
@@ -54,6 +50,7 @@ void Transformer::turn(const Sphere &obj)
     }
 }
 
+/*
 void Transformer::turn(const Camera &cam)
 {
     double x_ang = cam.getXAng() * M_PI/180;
@@ -93,15 +90,19 @@ void Transformer::turn(const Camera &cam)
     view_vector.setX(x_pr*cos(z_ang) - view_vector.getY()*sin(z_ang));
     view_vector.setY(x_pr*sin(z_ang) + view_vector.getY()*cos(z_ang));
 }
+*/
 
 void Transformer::proectToCam(const Camera& cam)
 {
+    MathVector right_vector = cam.getRightAxis();
+    MathVector up_vector = cam.getUpAxis();
+    MathVector view_vector = cam.getViewAxis();
+    MathVector cam_dot(cam.getX(), cam.getY(), cam.getZ());
     for (int i = 0; i < points.size(); i++)
     {
         double x = points[i].x;
         double y = points[i].y;
         double z = points[i].z;
-        MathVector cam_dot(cam.getX(), cam.getY(), cam.getZ());
 
         points[i].x = x*right_vector.getX() + y*right_vector.getY() + z*right_vector.getZ() - cam_dot.scalarMult(right_vector);
         points[i].y = x*up_vector.getX() + y*up_vector.getY() + z*up_vector.getZ() - cam_dot.scalarMult(up_vector);
@@ -123,7 +124,7 @@ Points3D& Transformer::transform(const Sphere &obj, const Camera &cam)
 
     move(obj);
     turn(obj);
-    turn(cam);
+    //turn(cam);
     proectToCam(cam);
 
     return points;
@@ -136,6 +137,9 @@ Dot3D<double> Transformer::transform(const DotLight &light, const Camera &cam)
     double x = light.getX();
     double y = light.getY();
     double z = light.getZ();
+    MathVector right_vector = cam.getRightAxis();
+    MathVector up_vector = cam.getUpAxis();
+    MathVector view_vector = cam.getViewAxis();
     MathVector cam_dot(cam.getX(), cam.getY(), cam.getZ());
 
     ans.x = x*right_vector.getX() + y*right_vector.getX() + z*right_vector.getZ() - cam_dot.scalarMult(right_vector);

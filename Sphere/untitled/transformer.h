@@ -15,9 +15,8 @@ public:
 
 private:
     Points3D points;
-    MathVector view_vector, up_vector, right_vector;
     void turn(const Sphere& obj);
-    void turn(const Camera& cam);
+    //void turn(const Camera& cam);
     void move(const Sphere& obj);
     void proectToCam(const Camera& cam);
 };
