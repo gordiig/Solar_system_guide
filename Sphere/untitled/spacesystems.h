@@ -12,6 +12,9 @@ public:
 
     virtual void remove(int) = 0;
     virtual void tickMove() = 0;
+    virtual void setObj(Obj&) = 0;
+
+    virtual int size() const = 0;
 };
 
 
@@ -32,9 +35,9 @@ public:
     std::vector<Sphere*>::iterator end();
 
     Sphere* operator [] (int) const;
-    int size() const;
+    virtual int size() const override;
 
-    void setObj(Obj&);
+    virtual void setObj(Obj&) override;
     void clear();
 };
 
@@ -55,9 +58,9 @@ public:
     std::vector<PlanetSystem*>::iterator end();
 
     PlanetSystem* operator [] (int) const;
-    int size() const;
+    virtual int size() const override;
 
-    void setObj(Obj&);
+    virtual void setObj(Obj&) override;
     void clear();
 };
 
