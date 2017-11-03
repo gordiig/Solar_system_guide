@@ -220,7 +220,7 @@ void Sphere::setTexture(const std::string &path)
         delete texture;
     }
 
-    texture = new QImage(QString::fromStdString(path));
+    texture = new QImage(path.c_str());
     texture_path = path;
 }
 void Sphere::setTexture(const char *path)
