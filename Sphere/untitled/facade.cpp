@@ -2,22 +2,177 @@
 
 Facade::Facade()
 {
+
+    radius_koef = {{'m', 0.383},
+                   {'v', 0.950},
+                   {'e', 1.000},
+                   {'M', 0.532},
+                   {'j', 10.97},
+                   {'s', 9.140},
+                   {'u', 3.981},
+                   {'n', 3.865},
+                   {'S', 20.5}};
+
+    distance_koef = {{'m', 0.387},
+                     {'v', 0.723},
+                     {'e', 1.000},
+                     {'M', 1.524},
+                     {'j', 5.204},
+                     {'s', 9.552},
+                     {'u', 19.19},
+                     {'n', 30.07}};
+
     std::string path("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/textures");
+    PlanetSystem* sys = nullptr;
+    Sphere* pl = nullptr;
 
-    PlanetSystem* sys = new PlanetSystem;
 
-    Sphere* pl = new Sphere;
-    pl->setTexture(path+std::string("/earth/earth.jpg"));
-    sys->add(pl);
+    ////////////////////////////// Солнце //////////////////////////////
+    sys = new PlanetSystem;
 
     pl = new Sphere;
-    pl->setTexture(path+std::string("/mars/mars.jpg"));
-    pl->setScale(0.5);
-    pl->setX(200);
-    pl->setZ(-100);
+    pl->setScale(radius_koef['S']);
+    pl->setTexture(path+std::string("/sun.jpg"));
     sys->add(pl);
 
     solar_system.add(sys);
+    ////////////////////////////// !Солнце //////////////////////////////
+
+
+    ////////////////////////////// Меркурий //////////////////////////////
+    sys = new PlanetSystem;
+
+    pl = new Sphere;
+    pl->setScale(radius_koef['m']);
+    pl->setZ(EARTH_DISTANCE_FROM_SUN*distance_koef['m']);
+    //pl->setX(2000);
+    pl->setTexture(path+std::string("/mercury/mercury.jpg"));
+    sys->add(pl);
+
+    solar_system.add(sys);
+    ////////////////////////////// !Меркурий //////////////////////////////
+
+    /*
+
+    ////////////////////////////// Венера //////////////////////////////
+    sys = new PlanetSystem;
+
+    pl = new Sphere;
+    pl->setScale(radius_koef['v']);
+    //pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['v']);
+    pl->setX(-2000);
+    pl->setTexture(path+std::string("/venus/venus.jpg"));
+    sys->add(pl);
+
+    solar_system.add(sys);
+    ////////////////////////////// !Венера //////////////////////////////
+
+
+    ////////////////////////////// Земля //////////////////////////////
+    sys = new PlanetSystem;
+
+    pl = new Sphere;
+    pl->setScale(radius_koef['e']);
+    //pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['v']);
+    pl->setX(4000);
+    pl->setTexture(path+std::string("/earth/earth.jpg"));
+    sys->add(pl);
+
+    solar_system.add(sys);
+    ////////////////////////////// !Земля //////////////////////////////
+
+
+    ////////////////////////////// Марс //////////////////////////////
+    sys = new PlanetSystem;
+
+    pl = new Sphere;
+    pl->setScale(radius_koef['M']);
+    //pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['M']);
+    pl->setX(-4000);
+    pl->setTexture(path+std::string("/mars/mars.jpg"));
+    sys->add(pl);
+
+    solar_system.add(sys);
+    ////////////////////////////// !Марс //////////////////////////////
+
+
+    ////////////////////////////// Юпитер //////////////////////////////
+    sys = new PlanetSystem;
+
+    pl = new Sphere;
+    pl->setScale(radius_koef['j']);
+    //pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['j']);
+    pl->setX(6000);
+    pl->setTexture(path+std::string("/jupiter/jupiter.jpg"));
+    sys->add(pl);
+
+    solar_system.add(sys);
+    ////////////////////////////// !Юпитер //////////////////////////////
+
+
+
+    ////////////////////////////// Сатурн //////////////////////////////
+    sys = new PlanetSystem;
+
+    pl = new Sphere;
+    pl->setScale(radius_koef['s']);
+    //pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['s']);
+    pl->setX(-6000);
+    pl->setTexture(path+std::string("/saturn/saturn.jpg"));
+    sys->add(pl);
+
+    solar_system.add(sys);
+    ////////////////////////////// !Сатурн //////////////////////////////
+
+
+    ////////////////////////////// Уран //////////////////////////////
+    sys = new PlanetSystem;
+
+    pl = new Sphere;
+    pl->setScale(radius_koef['u']);
+    //pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['u']);
+    pl->setX(8000);
+    pl->setTexture(path+std::string("/uranus/uranus.jpg"));
+    sys->add(pl);
+
+    solar_system.add(sys);
+    ////////////////////////////// !Уран //////////////////////////////
+
+
+    ////////////////////////////// Нептун //////////////////////////////
+    sys = new PlanetSystem;
+
+    pl = new Sphere;
+    pl->setScale(radius_koef['n']);
+    //pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['n']);
+    pl->setX(-8000);
+    pl->setTexture(path+std::string("/neptune/neptune.jpg"));
+    sys->add(pl);
+
+    solar_system.add(sys);
+    ////////////////////////////// !Нептун //////////////////////////////
+*/
+
+    cam.setZ(-100000);
+
+
+    /*
+    sys = new PlanetSystem;
+
+    pl = new Sphere;
+    pl->setTexture(path+std::string("/sun.jpg"));
+    sys->add(pl);
+
+    pl = new Sphere;
+    pl->setScale(0.5);
+    pl->setX(200);
+    pl->setTexture(path+std::string("/earth/earth.jpg"));
+    sys->add(pl);
+
+    solar_system.add(sys);
+
+    cam.setZ(-250);
+    */
 }
 
 Facade::Facade(const char *name)

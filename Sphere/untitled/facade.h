@@ -1,6 +1,8 @@
 #ifndef FACADE_H
 #define FACADE_H
 
+#include <map>
+
 #include "errors.h"
 #include "obj.h"
 #include "reader.h"
@@ -30,6 +32,12 @@ private:
     Reader reader;
     DotLight light;
     Camera cam;
+
+    std::map<char, double> radius_koef;
+    std::map<char, double> distance_koef;
+
+    const double EARTH_DISTANCE_FROM_SUN = 450000;
+    const double CAMERA_DISTANCE = 1353494.5;
 
     Facade(const Facade&);
     Facade(Facade&&);
