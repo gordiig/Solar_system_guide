@@ -211,11 +211,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     {
         caps = new DzCom(-50);
     }
-    else if (key == Qt::Key_U)
+    else if (key == Qt::Key_Space)
     {
         caps = new DyCom(-50);
     }
-    else if (key == Qt::Key_J)
+    else if (key == Qt::Key_Control)
     {
         caps = new DyCom(50);
     }
