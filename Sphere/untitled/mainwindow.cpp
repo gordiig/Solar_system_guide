@@ -193,31 +193,32 @@ void MainWindow::tmrTick()
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     int key = event->key();
+    double d = 5000;
     InterfaceCommand *caps = nullptr;
 
     if (key == Qt::Key_W)
     {
-        caps = new DzCom(50);
+        caps = new DzCom(d);
     }
     else if (key == Qt::Key_A)
     {
-        caps = new DxCom(-50);
+        caps = new DxCom(-d);
     }
     else if (key == Qt::Key_D)
     {
-        caps = new DxCom(50);
+        caps = new DxCom(d);
     }
     else if (key == Qt::Key_S)
     {
-        caps = new DzCom(-50);
+        caps = new DzCom(-d);
     }
     else if (key == Qt::Key_Space)
     {
-        caps = new DyCom(-50);
+        caps = new DyCom(-d);
     }
     else if (key == Qt::Key_Control)
     {
-        caps = new DyCom(50);
+        caps = new DyCom(d);
     }
 
     try
