@@ -50,6 +50,18 @@ void Transformer::turn(const Sphere &obj)
     }
 }
 
+void Transformer::scale(const int sc)
+{
+    for (auto &x : points)
+    {
+        x.x *= scale;
+        x.y *= scale;
+        x.z *= scale;
+    }
+
+
+}
+
 /*
 void Transformer::turn(const Camera &cam)
 {
@@ -124,6 +136,7 @@ Points3D& Transformer::transform(const Sphere &obj, const Camera &cam)
 
     move(obj);
     turn(obj);
+    scale(obj.getScale());
     //turn(cam);
     proectToCam(cam);
 

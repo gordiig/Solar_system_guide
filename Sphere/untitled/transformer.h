@@ -18,6 +18,7 @@ private:
     void turn(const Sphere& obj);
     //void turn(const Camera& cam);
     void move(const Sphere& obj);
+    void scale(const int);
     void proectToCam(const Camera& cam);
 };
 
