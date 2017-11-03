@@ -53,35 +53,35 @@ void BaseObject::clear()
 }
 
 
-VisibleObject::VisibleObject() : BaseObject::BaseObject(), ka(0.3), kd(0.6), texture_path("NULL") { }
+VisibleObject::VisibleObject() : BaseObject::BaseObject(), ka(0.3), kd(0.6), texture_path("NULL"), scale(1) { }
 VisibleObject::VisibleObject(const double in_x, const double in_y, const double in_z) :
-    BaseObject::BaseObject(in_x, in_y, in_z), ka(0.3), kd(0.6), texture_path("NULL") { }
+    BaseObject::BaseObject(in_x, in_y, in_z), ka(0.3), kd(0.6), texture_path("NULL"), scale(1) { }
 VisibleObject::VisibleObject(const double in_x, const double in_y, const double in_z,
                              const double in_x_ang, const double in_y_ang, const double in_z_ang) :
     BaseObject::BaseObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang), ka(0.3), kd(0.6),
-    texture_path("NULL"){ }
+    texture_path("NULL"), scale(1){ }
 VisibleObject::VisibleObject(const double in_x, const double in_y, const double in_z,
                              const double in_x_ang, const double in_y_ang, const double in_z_ang,
                              const double in_kd, const double in_ka) :
     BaseObject::BaseObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang), ka(in_ka), kd(in_kd),
-    texture_path("NULL") { }
+    texture_path("NULL"), scale(1) { }
 VisibleObject::VisibleObject(const double in_x, const double in_y, const double in_z,
                              const double in_x_ang, const double in_y_ang, const double in_z_ang,
                              const double in_kd, const double in_ka, const char* in_path) :
     BaseObject::BaseObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang), ka(in_ka), kd(in_kd),
-    texture_path(in_path) { }
+    texture_path(in_path), scale(1) { }
 VisibleObject::VisibleObject(Dot3D<double> &in) : BaseObject::BaseObject(in), ka(0.3), kd(0.6),
-    texture_path("NULL") { }
+    texture_path("NULL"), scale(1) { }
 VisibleObject::VisibleObject(Dot3D<double> &in, double in_kd, double in_ka) : BaseObject::BaseObject(in),
-    kd(in_kd), ka(in_ka), texture_path("NULL") { }
+    kd(in_kd), ka(in_ka), texture_path("NULL"), scale(1) { }
 VisibleObject::VisibleObject(Dot3D<double> &in, double in_kd, double in_ka, const char* in_path) :
-    BaseObject::BaseObject(in), kd(in_kd), ka(in_ka), texture_path(in_path) { }
+    BaseObject::BaseObject(in), kd(in_kd), ka(in_ka), texture_path(in_path), scale(1) { }
 VisibleObject::VisibleObject(Dot3D<int> &in) : BaseObject::BaseObject(in), ka(0.3), kd(0.6),
-    texture_path("NULL") { }
+    texture_path("NULL"), scale(1) { }
 VisibleObject::VisibleObject(Dot3D<int> &in, double in_kd, double in_ka) : BaseObject::BaseObject(in),
-    kd(in_kd), ka(in_ka), texture_path("NULL") { }
+    kd(in_kd), ka(in_ka), texture_path("NULL"), scale(1) { }
 VisibleObject::VisibleObject(Dot3D<int> &in, double in_kd, double in_ka, const char* in_path) :
-    BaseObject::BaseObject(in), kd(in_kd), ka(in_ka), texture_path(in_path) { }
+    BaseObject::BaseObject(in), kd(in_kd), ka(in_ka), texture_path(in_path), scale(1) { }
 
 VisibleObject::VisibleObject(const VisibleObject &in)
 {

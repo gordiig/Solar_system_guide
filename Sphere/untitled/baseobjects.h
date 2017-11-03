@@ -171,6 +171,7 @@ public:
 class VisibleObject : public BaseObject
 {
 protected:
+    double scale;
     double ka;
     double kd;
     std::string texture_path;
@@ -202,11 +203,13 @@ public:
     // Геттеры
     double getKd() const { return kd; }
     double getKa() const { return ka; }
+    double getScale() const { return scale; }
     std::string getTexturePath() const { return texture_path; }
 
     // Сеттеры
     void setKd(double in) { kd = in; }
     void setKa(double in) { ka = in; }
+    void setScale(double in) { scale = in; }
     void setTexturePath(const char* in) { texture_path = std::string(in); }
     void setTexturePath(const std::string& in) { texture_path = in; }
 
