@@ -48,8 +48,9 @@ void Transformer::turn(const Sphere &obj)
     }
 }
 
-void Transformer::scale(const double sc)
+void Transformer::scale(const Sphere &obj)
 {
+    double sc = obj.scale;
     for (auto &x : points)
     {
         x.x *= sc;
@@ -130,7 +131,7 @@ Points3D& Transformer::transform(const Sphere &obj, const Camera &cam)
 {
     points = obj.obj.getPoints();
 
-    scale(obj.getScale());
+    scale(obj);
     move(obj);
     turn(obj);
     //turn(cam);

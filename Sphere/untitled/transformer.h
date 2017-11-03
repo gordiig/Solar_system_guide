@@ -16,7 +16,7 @@ public:
 private:
     Points3D points;
 
-    void scale(const double);
+    void scale(const Sphere& obj);
     void turn(const Sphere& obj);
     //void turn(const Camera& cam);
     void move(const Sphere& obj);
