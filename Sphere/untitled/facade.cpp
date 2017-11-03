@@ -12,6 +12,7 @@ Facade::Facade()
 
     pl = new Sphere;
     pl->setTexture(path+std::string("/mars/mars.jpg"));
+    pl->setScale(0.5);
     pl->setX(200);
     pl->setZ(-100);
     sys->add(pl);

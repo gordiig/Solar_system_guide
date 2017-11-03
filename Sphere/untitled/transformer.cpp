@@ -16,12 +16,10 @@ void Transformer::move(const Sphere &obj)
 {
     for (int i = 0; i < points.size(); i++)
     {
-        points[i].x = obj[i].x + obj.x;
-        points[i].y = obj[i].y + obj.y;
-        points[i].z = obj[i].z + obj.z;
+        points[i].x += obj.x;
+        points[i].y += obj.y;
+        points[i].z += obj.z;
     }
-
-    //return points;
 }
 
 /**
@@ -50,16 +48,14 @@ void Transformer::turn(const Sphere &obj)
     }
 }
 
-void Transformer::scale(const int sc)
+void Transformer::scale(const double sc)
 {
     for (auto &x : points)
     {
-        x.x *= scale;
-        x.y *= scale;
-        x.z *= scale;
+        x.x *= sc;
+        x.y *= sc;
+        x.z *= sc;
     }
-
-
 }
 
 /*
@@ -134,9 +130,9 @@ Points3D& Transformer::transform(const Sphere &obj, const Camera &cam)
 {
     points = obj.obj.getPoints();
 
+    scale(obj.getScale());
     move(obj);
     turn(obj);
-    scale(obj.getScale());
     //turn(cam);
     proectToCam(cam);
 
