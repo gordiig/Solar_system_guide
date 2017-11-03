@@ -29,3 +29,8 @@ const char* NotEnoughPointsForPoly::what() const
 {
     return std::string(std::string("\nERROR\nNot enough dots for make polygon!") + where).c_str();
 }
+
+const char* ImgOpenErr::what() const
+{
+    return std::string(std::string("\nERROR\nError with opening the image !") + where).c_str();
+}

@@ -56,4 +56,11 @@ public:
     const char* what() const;
 };
 
+class ImgOpenErr : public BaseErr
+{
+public:
+    ImgOpenErr(const char *where) : BaseErr(where) { }
+    const char* what() const;
+};
+
 #endif // ERRORS_H
