@@ -7,11 +7,11 @@ Facade::Facade()
     PlanetSystem* sys = new PlanetSystem;
 
     Sphere* pl = new Sphere;
-    pl->setTexture(path+std::string("/earth.jpg"));
+    pl->setTexture(path+std::string("/earth/earth.jpg"));
     sys->add(pl);
 
     pl = new Sphere;
-    pl->setTexture(path+std::string("/testcat.jpg"));
+    pl->setTexture(path+std::string("/mars/mars.jpg"));
     pl->setX(200);
     pl->setZ(-100);
     sys->add(pl);
