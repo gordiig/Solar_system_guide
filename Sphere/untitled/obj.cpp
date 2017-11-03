@@ -244,6 +244,18 @@ void Sphere::setTexture(QImage *image)
     texture = image;
 }
 
+Points3D Sphere::getScaledPoints() const
+{
+    Points3D ans;
+
+    for (auto &x : obj.points)
+    {
+        ans.push_back(Dot3D<double>(x.x*scale, x.y*scale, x.z*scale));
+    }
+
+    return ans;
+}
+
 void Sphere::clear()
 {
     x = 0;

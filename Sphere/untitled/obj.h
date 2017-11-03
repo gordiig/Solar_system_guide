@@ -116,6 +116,7 @@ public:
     // Геттеры
     Obj& getObj() const { return obj; }
     Points3D getPoints() const { return obj.points; }
+    Points3D getScaledPoints() const;
     Points2D getTexCord() const { return obj.texture_coord; }
     PolyList getPoly() const { return obj.poly; }
     QImage* getTexture() const { return texture; }
