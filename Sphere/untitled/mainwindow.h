@@ -40,6 +40,8 @@ private slots:
 
     void tmrTick();
 
+    void on_LineEdit_returnPressed();
+
 private:
     Ui::MainWindow *ui;
     Facade in_dot;

@@ -284,3 +284,9 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
     delete caps;
     delete caps2;
 }
+
+void MainWindow::on_LineEdit_returnPressed()
+{
+    on_ButOpen_clicked();
+}
+
