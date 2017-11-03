@@ -101,7 +101,7 @@ RasteredPoly Drawer::polyRasterization(const PolyToDraw &in)
     double y_l = poly[0].y + in.im.height() / 2;
     double x_r = poly[0].x + in.im.width() / 2;
     double y_r = poly[0].y + in.im.height() / 2;
-    double z_max = poly[0].z;
+    double z_min = poly[0].z;
     for (auto &x : poly)
     {
         x.x += in.im.width() / 2;
@@ -111,9 +111,9 @@ RasteredPoly Drawer::polyRasterization(const PolyToDraw &in)
         x_l = (x_l > x.x) ? (x.x) : (x_l);
         y_l = (y_l > x.y) ? (y_l) : (x.y);
         y_r = (y_r > x.y) ? (x.y) : (y_r);
-        z_max = (z_max > x.z) ? (z_max) : (x.z);
+        z_min = (z_min > x.z) ? (x.z) : (z_min);
     }
-    if ((!in.im.isOnDisplay(Dot2D<double>(x_l, y_l), Dot2D<double>(x_r, y_r))) || (!in.cam.isOnDisplay(z_max)))
+    if ((!in.im.isOnDisplay(Dot2D<double>(x_l, y_l), Dot2D<double>(x_r, y_r))) || (!in.cam.isOnDisplay(z_min)))
     {
         return RasteredPoly();
     }
