@@ -215,13 +215,7 @@ Dot3D<double>& Sphere::operator [] (int i) const
 
 void Sphere::setTexture(const std::string &path)
 {
-    if (texture)
-    {
-        delete texture;
-    }
-
-    texture = new QImage(path.c_str());
-    texture_path = path;
+    setTexture(path.c_str());
 }
 void Sphere::setTexture(const char *path)
 {
@@ -231,6 +225,13 @@ void Sphere::setTexture(const char *path)
     }
 
     texture = new QImage(QString(path));
+    if (texture->isNull())
+    {
+        setTexture("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/"
+                   "Sphere/Contents/textures/testcat.jpg");
+        throw ImgOpenErr("Sphere::setTexture() from obj.cpp\n");
+    }
+
     texture_path = path;
 }
 void Sphere::setTexture(QImage *image)
