@@ -14,7 +14,7 @@ MyDisplay::~MyDisplay()
 bool MyDisplay::isOnDisplay(const Dot2D<double> &left, const Dot2D<double> &right) const
 {
     bool ans = true;
-    if ((right.x < 0) || (left.y < 0) || (left.x > width()) || (right.y > height()))
+    if ((right.x < 0) || (left.y < 0) || (left.x >= width()) || (right.y >= height()))
     {
         ans = false;
     }
