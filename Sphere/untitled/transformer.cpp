@@ -154,10 +154,10 @@ Dot3D<double> Transformer::transform(const DotLight &light, const Camera &cam)
 
     ans.x = x*right_vector.getX() + y*right_vector.getX() + z*right_vector.getZ() - cam_dot.scalarMult(right_vector);
     ans.y = x*up_vector.getX() + y*up_vector.getX() + z*up_vector.getZ() - cam_dot.scalarMult(up_vector);
-    ans.z = x*view_vector.getX() + y*view_vector.getX() + z*view_vector.getZ() + cam_dot.scalarMult(view_vector);
+    ans.z = x*view_vector.getX() + y*view_vector.getX() + z*view_vector.getZ() - cam_dot.scalarMult(view_vector);
 
-    //ans.x *= (cam.getDistanceToScreen() / ans.z);
-    //ans.y *= (cam.getDistanceToScreen() / ans.z);
+    ans.x *= (cam.getDistanceToScreen() / ans.z);
+    ans.y *= (cam.getDistanceToScreen() / ans.z);
 
     return ans;
 }
