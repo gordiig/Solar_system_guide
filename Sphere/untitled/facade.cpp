@@ -166,6 +166,9 @@ Facade::Facade()
 
     cam.setZ(-50000);
 
+    light.setIa(255);
+    light.setId(255);
+
 
     /*
     sys = new PlanetSystem;
@@ -221,11 +224,6 @@ void Facade::planetMove(GraphStruct &gr)
 
 void Facade::draw(GraphStruct &gr)
 {
-//    light.setIa(gr.Ia);
-//    light.setId(gr.Id);
-    light.setIa(255);
-    light.setId(255);
-
     Drawer dr;
     gr.im.clrZBuf();
     gr.im.fill(Qt::black);
@@ -238,9 +236,6 @@ void Facade::draw(GraphStruct &gr)
             Transformer trans;
             Obj draw_object(trans.transform(*planet, cam), planet->getTexCord(), planet->getPoly());
             light.setByDot(trans.transform(light, cam));
-
-            //    planet->setKa(gr.ka);
-            //    planet->setKd(gr.kd);
 
             texture = planet->getTexture();
 
