@@ -117,8 +117,11 @@ void Transformer::proectToCam(const Camera& cam)
         points[i].y = x*up_vector.getX() + y*up_vector.getY() + z*up_vector.getZ() - cam_dot.scalarMult(up_vector);
         points[i].z = x*view_vector.getX() + y*view_vector.getY() + z*view_vector.getZ() - cam_dot.scalarMult(view_vector);
 
-        points[i].x *= (cam.getDistanceToScreen() / points[i].z);
-        points[i].y *= (cam.getDistanceToScreen() / points[i].z);
+        if (points[i].z != 0)
+        {
+            points[i].x *= (cam.getDistanceToScreen() / points[i].z);
+            points[i].y *= (cam.getDistanceToScreen() / points[i].z);
+        }
     }
 }
 
@@ -152,12 +155,15 @@ Dot3D<double> Transformer::transform(const DotLight &light, const Camera &cam)
     MathVector view_vector = cam.getViewAxis();
     MathVector cam_dot(cam.getX(), cam.getY(), cam.getZ());
 
-    ans.x = x*right_vector.getX() + y*right_vector.getX() + z*right_vector.getZ() - cam_dot.scalarMult(right_vector);
-    ans.y = x*up_vector.getX() + y*up_vector.getX() + z*up_vector.getZ() - cam_dot.scalarMult(up_vector);
-    ans.z = x*view_vector.getX() + y*view_vector.getX() + z*view_vector.getZ() - cam_dot.scalarMult(view_vector);
+    ans.x = x*right_vector.getX() + y*right_vector.getY() + z*right_vector.getZ() - cam_dot.scalarMult(right_vector);
+    ans.y = x*up_vector.getX() + y*up_vector.getY() + z*up_vector.getZ() - cam_dot.scalarMult(up_vector);
+    ans.z = x*view_vector.getX() + y*view_vector.getY() + z*view_vector.getZ() - cam_dot.scalarMult(view_vector);
 
-    ans.x *= (cam.getDistanceToScreen() / ans.z);
-    ans.y *= (cam.getDistanceToScreen() / ans.z);
+    if (ans.z != 0)
+    {
+        ans.x *= (cam.getDistanceToScreen() / ans.z);
+        ans.y *= (cam.getDistanceToScreen() / ans.z);
+    }
 
     return ans;
 }
