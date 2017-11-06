@@ -33,11 +33,6 @@ protected:
 private slots:
     void on_ButOpen_clicked();
 
-    void on_Slider_Id_valueChanged(int value);
-    void on_Slider_kd_valueChanged(int value);
-    void on_Slider_Ia_valueChanged(int value);
-    void on_Slider_ka_valueChanged(int value);
-
     void tmrTick();
 
     void on_LineEdit_returnPressed();

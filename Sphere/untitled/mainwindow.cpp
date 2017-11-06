@@ -16,11 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
     tmr.setInterval(33);
     connect(&tmr, SIGNAL(timeout()), this, SLOT(tmrTick()));
 
-    gr.Ia = ui->Slider_Ia->value();
-    gr.Id = ui->Slider_Id->value();
-    gr.kd = (double)ui->Slider_kd->value()/100.;
-    gr.ka = (double)ui->Slider_ka->value()/100.;
-
     ui->graphicsView->grabMouse();
 
     im.fill(Qt::black);
@@ -70,112 +65,6 @@ void MainWindow::on_ButOpen_clicked()
     }
 }
 
-void MainWindow::on_Slider_Id_valueChanged(int value)
-{
-    gr.Id = value;
-
-    try
-    {
-        in_dot.camMove(gr);
-        scene->clear();
-        scene->addPixmap(QPixmap::fromImage(im));
-
-        if (!tmr.isActive())
-        {
-            tmr.start();
-        }
-    }
-    catch(BaseErr& err)
-    {
-        tmr.stop();
-        ui->label->setText(QString(err.what()));
-    }
-
-}
-void MainWindow::on_Slider_kd_valueChanged(int value)
-{
-    if ((ui->Slider_kd->value() + ui->Slider_ka->value()) >= 100)
-    {
-        tmr.stop();
-        ui->Slider_kd->setValue(100 - ui->Slider_ka->value());
-        ui->label->setText("Нельзя чтобы коэффициенты световой энергии"
-                           " в сумме давали > 100");
-
-        return;
-    }
-
-
-    gr.kd = (double)value/100;
-    try
-    {
-        in_dot.camMove(gr);
-        scene->clear();
-        scene->addPixmap(QPixmap::fromImage(im));
-
-        if (!tmr.isActive())
-        {
-            tmr.start();
-        }
-    }
-    catch(BaseErr& err)
-    {
-        tmr.stop();
-        ui->label->setText(QString(err.what()));
-    }
-}
-void MainWindow::on_Slider_ka_valueChanged(int value)
-{
-    if ((ui->Slider_kd->value() + ui->Slider_ka->value()) >= 100)
-    {
-        tmr.stop();
-        ui->Slider_ka->setValue(100 - ui->Slider_kd->value());
-        ui->label->setText("Нельзя чтобы коэффициенты световой энергии"
-                           " в сумме давали > 100");
-
-        return;
-    }
-
-    gr.ka = (double)value/100;
-    try
-    {
-        in_dot.camMove(gr);
-        scene->clear();
-        scene->addPixmap(QPixmap::fromImage(im));
-
-        if (!tmr.isActive())
-        {
-            tmr.start();
-        }
-    }
-    catch(BaseErr& err)
-    {
-        tmr.stop();
-        ui->label->setText(QString(err.what()));
-    }
-}
-void MainWindow::on_Slider_Ia_valueChanged(int value)
-{
-    gr.Ia = value;
-
-    try
-    {
-        in_dot.camMove(gr);
-        scene->clear();
-        scene->addPixmap(QPixmap::fromImage(im));
-
-        if (!tmr.isActive())
-        {
-            tmr.start();
-        }
-    }
-    catch(BaseErr& err)
-    {
-        tmr.stop();
-        ui->label->setText(QString(err.what()));
-    }
-}
-
-
 void MainWindow::tmrTick()
 {
     try
@@ -193,7 +82,7 @@ void MainWindow::tmrTick()
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     int key = event->key();
-    double d = 5000;
+    double d = 1000;
     InterfaceCommand *caps = nullptr;
 
     if (key == Qt::Key_W)
