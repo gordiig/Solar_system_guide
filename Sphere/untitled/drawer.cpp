@@ -120,7 +120,7 @@ RasteredPoly Drawer::polyRasterization(const PolyToDraw &in)
 
     std::list<DotForDrawer> rastr;
     int max_y = MathFunctions::doubleToInt(poly[0].y);
-    int min_y = MathFunctions::doubleToInt(poly[0].y);;
+    int min_y = MathFunctions::doubleToInt(poly[0].y);
 
     // Растеризация полигона
     // С помощью алгоритма Брезенхема создается список точек для каждого отрезка
