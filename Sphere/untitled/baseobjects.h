@@ -3,6 +3,9 @@
 
 #include "errors.h"
 
+#define BASE_KA 0.6
+#define BASE_KD 0.35
+
 template <typename T>
 struct Dot2D
 {
