@@ -348,6 +348,6 @@ bool Camera::isOnDisplay(const DotForDrawer &point) const
 }
 bool Camera::isOnDisplay(const double z) const
 {
-    return (z > 100 /*distance_to_screen*/) ? true : false;
+    return (z > 500 /*distance_to_screen*/) ? true : false;
 }
 
