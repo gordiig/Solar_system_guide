@@ -147,6 +147,7 @@ public:
     DotLight(const DotLight&);
     DotLight(DotLight&&);
     DotLight(Dot3D<double>&, double, double);
+    DotLight(Dot3D<double>&&, double, double);
 
     DotLight& operator = (const DotLight&);
     DotLight& operator = (DotLight&&);

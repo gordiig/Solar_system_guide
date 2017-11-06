@@ -205,20 +205,12 @@ void Facade::camMove(GraphStruct &gr, InterfaceCommand *caps)
     {
         caps->exec(cam);
     }
-    light.setX(0);
-    light.setY(0);
-    light.setZ(0);
-
     draw(gr);
 }
 
 void Facade::planetMove(GraphStruct &gr)
 {
     solar_system.tickMove();
-    light.setX(0);
-    light.setY(0);
-    light.setZ(0);
-
     draw(gr);
 }
 
@@ -235,11 +227,11 @@ void Facade::draw(GraphStruct &gr)
 
             Transformer trans;
             Obj draw_object(trans.transform(*planet, cam), planet->getTexCord(), planet->getPoly());
-            light.setByDot(trans.transform(light, cam));
+            DotLight draw_light(trans.transform(light, cam), 255, 255);
 
             texture = planet->getTexture();
 
-            Drwr::GraphicsToDraw gr_in(gr.im, cam, light, draw_object, texture,
+            Drwr::GraphicsToDraw gr_in(gr.im, cam, draw_light, draw_object, texture,
                            planet->getKa(), planet->getKd());
             dr.draw(gr_in);
         }
