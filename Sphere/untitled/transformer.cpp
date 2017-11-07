@@ -101,26 +101,26 @@ void Transformer::turn(const Camera &cam)
 }
 */
 
-void Transformer::proectToCam(const Camera& cam)
+void Transformer::proectToCam(Obj& obj, const Camera& cam)
 {
     MathVector right_vector = cam.getRightAxis();
     MathVector up_vector = cam.getUpAxis();
     MathVector view_vector = cam.getViewAxis();
     MathVector cam_dot(cam.getX(), cam.getY(), cam.getZ());
-    for (int i = 0; i < points.size(); i++)
+    for (int i = 0; i < obj.points.size(); i++)
     {
-        double x = points[i].x;
-        double y = points[i].y;
-        double z = points[i].z;
+        double x = obj.points[i].x;
+        double y = obj.points[i].y;
+        double z = obj.points[i].z;
 
-        points[i].x = x*right_vector.getX() + y*right_vector.getY() + z*right_vector.getZ() - cam_dot.scalarMult(right_vector);
-        points[i].y = x*up_vector.getX() + y*up_vector.getY() + z*up_vector.getZ() - cam_dot.scalarMult(up_vector);
-        points[i].z = x*view_vector.getX() + y*view_vector.getY() + z*view_vector.getZ() - cam_dot.scalarMult(view_vector);
+        obj.points[i].x = x*right_vector.getX() + y*right_vector.getY() + z*right_vector.getZ() - cam_dot.scalarMult(right_vector);
+        obj.points[i].y = x*up_vector.getX() + y*up_vector.getY() + z*up_vector.getZ() - cam_dot.scalarMult(up_vector);
+        obj.points[i].z = x*view_vector.getX() + y*view_vector.getY() + z*view_vector.getZ() - cam_dot.scalarMult(view_vector);
 
-        if (points[i].z != 0)
+        if (obj.points[i].z != 0)
         {
-            points[i].x *= (cam.getDistanceToScreen() / points[i].z);
-            points[i].y *= (cam.getDistanceToScreen() / points[i].z);
+            obj.points[i].x *= (cam.getDistanceToScreen() / obj.points[i].z);
+            obj.points[i].y *= (cam.getDistanceToScreen() / obj.points[i].z);
         }
     }
 }
@@ -130,15 +130,13 @@ void Transformer::proectToCam(const Camera& cam)
  * @param obj -- Трансформирующийся объект
  * @return Массив преобразованных точек
  */
-Points3D& Transformer::transform(const Sphere &obj, const Camera &cam)
+Points3D& Transformer::transform(const Sphere &obj)
 {
     points = obj.obj.getPoints();
 
     scale(obj);
     move(obj);
     turn(obj);
-    //turn(cam);
-    proectToCam(cam);
 
     return points;
 }

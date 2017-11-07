@@ -10,7 +10,8 @@ class Transformer
 public:
     Transformer();
     ~Transformer();
-    Points3D& transform(const Sphere& obj, const Camera &cam);
+    Points3D& transform(const Sphere& obj);
+    void proectToCam(Obj&, const Camera&);
     Dot3D<double> transform(const DotLight&, const Camera &cam);
 
 private:
@@ -20,7 +21,6 @@ private:
     void turn(const Sphere& obj);
     //void turn(const Camera& cam);
     void move(const Sphere& obj);
-    void proectToCam(const Camera& cam);
 };
 
 #endif // TRANSFORMER_H
