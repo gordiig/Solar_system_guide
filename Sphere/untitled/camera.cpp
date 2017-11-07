@@ -293,7 +293,7 @@ MathVector Camera::getViewAxis() const
 void Camera::moveToWorldCenter()
 {
     clear();
-    view_axis.setZ(-1);
+    view_axis.setZ(1);
     up_axis.setY(1);
     right_axis.setX(1);
 }
