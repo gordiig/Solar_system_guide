@@ -18,18 +18,20 @@ namespace Drwr
         QImage* texture;
         double ka;
         double kd;
+        Dot3D<double> pl_cent;
 
         BaseGraphcsToDraw(MyDisplay& in_im, Camera& in_cam, DotLight& in_light, QImage* in_tex,
-                          double in_ka, double in_kd) :
-            im(in_im), cam(in_cam), light(in_light), texture(in_tex), ka(in_ka), kd(in_kd) { }
+                          double in_ka, double in_kd, Dot3D<double>& in_c) :
+            im(in_im), cam(in_cam), light(in_light), texture(in_tex), ka(in_ka), kd(in_kd),
+            pl_cent(in_c){ }
     };
     struct GraphicsToDraw : public BaseGraphcsToDraw
     {
         Obj& obj;
 
         GraphicsToDraw(MyDisplay& in_im, Camera& in_cam, DotLight& in_light, Obj& in_obj, QImage* in_tex,
-                       double in_ka, double in_kd) :
-            BaseGraphcsToDraw::BaseGraphcsToDraw(in_im, in_cam, in_light, in_tex, in_ka, in_kd), obj(in_obj) { }
+                       double in_ka, double in_kd, Dot3D<double>& in_c) :
+            BaseGraphcsToDraw::BaseGraphcsToDraw(in_im, in_cam, in_light, in_tex, in_ka, in_kd, in_c), obj(in_obj) { }
     };
     struct PolyToDraw : public BaseGraphcsToDraw
     {
@@ -38,7 +40,7 @@ namespace Drwr
         std::vector<MathVector> point_vectors;
 
         PolyToDraw(GraphicsToDraw& in_gr, int i) :
-            BaseGraphcsToDraw(in_gr.im, in_gr.cam, in_gr.light, in_gr.texture, in_gr.ka, in_gr.kd),
+            BaseGraphcsToDraw(in_gr.im, in_gr.cam, in_gr.light, in_gr.texture, in_gr.ka, in_gr.kd, in_gr.pl_cent),
             poly(in_gr.obj.makeCut(i)), tex_coords(in_gr.obj.makeTexCut(i)), point_vectors(in_gr.obj.calcPointNorm(i))
         {}
     };

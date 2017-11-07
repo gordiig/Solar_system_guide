@@ -131,9 +131,12 @@ RasteredPoly Drawer::polyRasterization(const PolyToDraw &in)
 
         int j = (i == poly.size()-1) ? (0) : (i+1);
 
+        MathVector norm1(in.poly[i].x - in.pl_cent.x, in.poly[i].y - in.pl_cent.y, in.poly[i].z - in.pl_cent.z);
+        MathVector norm2(in.poly[j].x - in.pl_cent.x, in.poly[j].y - in.pl_cent.y, in.poly[j].z - in.pl_cent.z);
+
         // Тут in.poly[i].x потому что камеру мы не двигаем в коорд экрана
-        double I1 = in.light.getIa()*in.ka + in.light.calcDiffuse(in.poly[i], in.point_vectors[i].getEd())*in.kd;
-        double I2 = in.light.getIa()*in.ka + in.light.calcDiffuse(in.poly[j], in.point_vectors[j].getEd())*in.kd;
+        double I1 = in.light.getIa()*in.ka + in.light.calcDiffuse(in.poly[i], norm1.getEd())*in.kd;
+        double I2 = in.light.getIa()*in.ka + in.light.calcDiffuse(in.poly[j], norm2.getEd())*in.kd;
 
         DotForDrawer in1(poly[i].x, poly[i].y, poly[i].z, I1, in.tex_coords[i]);
         DotForDrawer in2(poly[j].x, poly[j].y, poly[j].z, I2, in.tex_coords[j]);
