@@ -14,21 +14,23 @@ namespace Drwr
     {
         MyDisplay& im;
         Camera& cam;
-        DotLight& light;
         QImage* texture;
         std::vector<double> I;
 
-        BaseGraphcsToDraw(MyDisplay& in_im, Camera& in_cam, DotLight& in_light, QImage* in_tex,
+        BaseGraphcsToDraw(MyDisplay& in_im, Camera& in_cam, QImage* in_tex,
                           std::vector<double>& in_I) :
-            im(in_im), cam(in_cam), light(in_light), texture(in_tex), I(in_I){ }
+            im(in_im), cam(in_cam), texture(in_tex), I(in_I){ }
+
+        BaseGraphcsToDraw(MyDisplay& in_im, Camera& in_cam, QImage* in_tex) :
+            im(in_im), cam(in_cam), texture(in_tex){ }
     };
     struct GraphicsToDraw : public BaseGraphcsToDraw
     {
         Obj& obj;
 
-        GraphicsToDraw(MyDisplay& in_im, Camera& in_cam, DotLight& in_light, Obj& in_obj, QImage* in_tex,
+        GraphicsToDraw(MyDisplay& in_im, Camera& in_cam, Obj& in_obj, QImage* in_tex,
                        std::vector<double> in_I) :
-            BaseGraphcsToDraw::BaseGraphcsToDraw(in_im, in_cam, in_light, in_tex, in_I), obj(in_obj) { }
+            BaseGraphcsToDraw::BaseGraphcsToDraw(in_im, in_cam, in_tex, in_I), obj(in_obj) { }
     };
     struct PolyToDraw : public BaseGraphcsToDraw
     {
@@ -37,14 +39,13 @@ namespace Drwr
         std::vector<MathVector> point_vectors;
 
         PolyToDraw(GraphicsToDraw& in_gr, int i) :
-            BaseGraphcsToDraw(in_gr.im, in_gr.cam, in_gr.light, in_gr.texture, in_gr.I),
+            BaseGraphcsToDraw(in_gr.im, in_gr.cam, in_gr.texture),
             poly(in_gr.obj.makeCut(i)), tex_coords(in_gr.obj.makeTexCut(i)), point_vectors(in_gr.obj.calcPointNorm(i))
         {
-            this->I.clear();
             PolyList poly = in_gr.obj.getPoly();
-            for (auto &i : poly[i])
+            for (auto &pt_n : poly[i])
             {
-                this->I.push_back(in_gr.I[i-1]);
+                this->I.push_back(in_gr.I[pt_n-1]);
             }
         }
     };
