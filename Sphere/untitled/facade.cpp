@@ -224,6 +224,7 @@ void Facade::draw(GraphStruct &gr)
         for (int j = 0; j < solar_system[i]->size(); j++)
         {
             Sphere* planet = (*solar_system[i])[j];
+            Dot3D<double> pl_cent = planet->getPosDot();
 
             Transformer trans;
             Obj draw_object(trans.transform(*planet, cam), planet->getTexCord(), planet->getPoly());
@@ -232,7 +233,7 @@ void Facade::draw(GraphStruct &gr)
             texture = planet->getTexture();
 
             Drwr::GraphicsToDraw gr_in(gr.im, cam, draw_light, draw_object, texture,
-                           planet->getKa(), planet->getKd());
+                           planet->getKa(), planet->getKd(), pl_cent);
             dr.draw(gr_in);
         }
     }

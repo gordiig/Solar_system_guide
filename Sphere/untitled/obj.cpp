@@ -344,7 +344,7 @@ void DotLight::clear()
 
 double DotLight::calcDiffuse(const Dot3D<double> &dot, const MathVector &norm) const
 {
-    MathVector light_beam(x-dot.x, y-dot.y, z-dot.z);
+    MathVector light_beam(dot.x-x, dot.y-y, dot.z-z);
 
     double d = light_beam.len();
     light_beam.Ed();
@@ -353,6 +353,10 @@ double DotLight::calcDiffuse(const Dot3D<double> &dot, const MathVector &norm) c
     //norm2.invert();
 
     double cos_O = norm.scalarMult(light_beam);
+    if (cos_O <= 0)
+    {
+        return 0;
+    }
 
-    return Id*cos_O/(d);
+    return Id*cos_O/(1);
 }
