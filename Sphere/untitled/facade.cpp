@@ -235,7 +235,7 @@ void Facade::draw(GraphStruct &gr)
 
             texture = planet->getTexture();
 
-            Drwr::GraphicsToDraw gr_in(gr.im, cam, light, draw_object, texture, I);
+            Drwr::GraphicsToDraw gr_in(gr.im, cam, draw_object, texture, I);
             dr.draw(gr_in);
         }
     }
