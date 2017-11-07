@@ -213,6 +213,26 @@ Dot3D<double>& Sphere::operator [] (int i) const
     return obj.points[i];
 }
 
+MathVector Sphere::getPointNorm(int pt_n) const
+{
+    if (pt_n >= obj.points.size())
+    {
+        throw VecRangeErr("From getPointNorm() in obj.cpp");
+    }
+
+    return MathVector(obj.points[pt_n].x-x, obj.points[pt_n].y-y, obj.points[pt_n].z-z);
+}
+std::vector<MathVector> Sphere::getAllNorm() const
+{
+    std::vector<MathVector> ans;
+    for (int i = 0; i < obj.points.size(); i++)
+    {
+        ans.push_back(MathVector(obj.points[i].x-x, obj.points[i].y-y, obj.points[i].z-z));
+    }
+
+    return ans;
+}
+
 void Sphere::setTexture(const std::string &path)
 {
     setTexture(path.c_str());
@@ -342,9 +362,26 @@ void DotLight::clear()
     Ia = 0;
 }
 
+std::vector<double> DotLight::calcI(const Obj &planet, const Dot3D<double>& c_d,
+                                    double ka, double kd)
+{
+    std::vector<double> ans;
+    Points3D points = planet.getPoints();
+    double I = 0;
+
+    for (int i = 0; i < points.size(); i++)
+    {
+        MathVector norm(points[i].x - c_d.x, points[i].y - c_d.y, points[i].z - c_d.z);
+        I = Ia*ka + calcDiffuse(points[i], norm.getEd())*kd;
+        ans.push_back(I);
+    }
+
+    return ans;
+}
+
 double DotLight::calcDiffuse(const Dot3D<double> &dot, const MathVector &norm) const
 {
-    MathVector light_beam(dot.x-x, dot.y-y, dot.z-z);
+    MathVector light_beam(x-dot.x, y-dot.y, z-dot.z);
 
     double d = light_beam.len();
     light_beam.Ed();

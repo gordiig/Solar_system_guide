@@ -18,6 +18,7 @@ typedef std::vector<std::list<int> > PolyList;
 class Obj
 {
     friend class Sphere;
+    friend class Transformer;
 private:
     Points3D points;
     Points2D texture_coord;
@@ -120,6 +121,8 @@ public:
     Points2D getTexCord() const { return obj.texture_coord; }
     PolyList getPoly() const { return obj.poly; }
     QImage* getTexture() const { return texture; }
+    MathVector getPointNorm(int) const;
+    std::vector<MathVector> getAllNorm() const;
 
     Dot3D<double>& operator [] (int i) const;
 
@@ -161,6 +164,8 @@ public:
     void setIa(double in) { Ia = in; }
 
     virtual void clear() override;
+
+    std::vector<double> calcI(const Obj&, const Dot3D<double>&, double, double);
 
     double calcDiffuse(const Dot3D<double>&, const MathVector&) const;
 };
