@@ -131,12 +131,11 @@ RasteredPoly Drawer::polyRasterization(const PolyToDraw &in)
 
         int j = (i == poly.size()-1) ? (0) : (i+1);
 
-        MathVector norm1(in.poly[i].x - in.pl_cent.x, in.poly[i].y - in.pl_cent.y, in.poly[i].z - in.pl_cent.z);
-        MathVector norm2(in.poly[j].x - in.pl_cent.x, in.poly[j].y - in.pl_cent.y, in.poly[j].z - in.pl_cent.z);
-
-        // Тут in.poly[i].x потому что камеру мы не двигаем в коорд экрана
-        double I1 = in.light.getIa()*in.ka + in.light.calcDiffuse(in.poly[i], norm1.getEd())*in.kd;
-        double I2 = in.light.getIa()*in.ka + in.light.calcDiffuse(in.poly[j], norm2.getEd())*in.kd;
+//        // Тут in.poly[i].x потому что камеру мы не двигаем в коорд экрана
+//        double I1 = in.light.getIa()*in.ka + in.light.calcDiffuse(in.poly[i], norm1.getEd())*in.kd;
+//        double I2 = in.light.getIa()*in.ka + in.light.calcDiffuse(in.poly[j], norm2.getEd())*in.kd;
+        double I1 = in.I[i];
+        double I2 = in.I[j];
 
         DotForDrawer in1(poly[i].x, poly[i].y, poly[i].z, I1, in.tex_coords[i]);
         DotForDrawer in2(poly[j].x, poly[j].y, poly[j].z, I2, in.tex_coords[j]);
@@ -186,6 +185,7 @@ RasteredPoly Drawer::polyRasterization(const PolyToDraw &in)
     return sorted_rastr;
 }
 
+
 void Drawer::solidPolyPainting(PolyToDraw &gr, const RasteredPoly &sorted_rastr)
 {
     MathVector norm = Obj::calcOutNorm(gr.poly);
@@ -198,13 +198,15 @@ void Drawer::solidPolyPainting(PolyToDraw &gr, const RasteredPoly &sorted_rastr)
         z_c += gr.poly[i].z / gr.poly.size();
     }
 
-    double Id = gr.light.calcDiffuse(Dot3D<double>(x_c, y_c, z_c), norm) * gr.kd;
+    //double Id = gr.light.calcDiffuse(Dot3D<double>(x_c, y_c, z_c), norm) * gr.kd;
+    double Id = 255;
     if (Id < 0)
     {
         Id = 0;
     }
 
-    double I_total = Id + gr.light.getIa()*gr.ka;
+    //double I_total = Id + gr.light.getIa()*gr.ka;
+    double I_total = 255;
     if (I_total > 255)
     {
         throw ColorIntenseErr("\nDrawer::drawPoly() in drawer.cpp");

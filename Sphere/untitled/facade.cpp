@@ -227,13 +227,15 @@ void Facade::draw(GraphStruct &gr)
             Dot3D<double> pl_cent = planet->getPosDot();
 
             Transformer trans;
-            Obj draw_object(trans.transform(*planet, cam), planet->getTexCord(), planet->getPoly());
-            DotLight draw_light(trans.transform(light, cam), 255, 255);
+            Obj draw_object(trans.transform(*planet), planet->getTexCord(), planet->getPoly());
+            std::vector<double> I = light.calcI(draw_object, pl_cent, planet->getKa(), planet->getKd());
+            trans.proectToCam(draw_object, cam);
+
+            //DotLight draw_light(trans.transform(light, cam), 255, 255);
 
             texture = planet->getTexture();
 
-            Drwr::GraphicsToDraw gr_in(gr.im, cam, draw_light, draw_object, texture,
-                           planet->getKa(), planet->getKd(), pl_cent);
+            Drwr::GraphicsToDraw gr_in(gr.im, cam, light, draw_object, texture, I);
             dr.draw(gr_in);
         }
     }
