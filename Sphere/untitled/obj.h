@@ -83,6 +83,10 @@ class Sphere : public VisibleObject
 {
     friend class Transformer;
 
+private:
+    double ANG_PER_TICK_ROUND_SUN;
+    double ANG_PER_TICK_ROUND_ORBITE;
+
 protected:
     static Obj obj;
     QImage* texture;
@@ -123,6 +127,8 @@ public:
     QImage* getTexture() const { return texture; }
     MathVector getPointNorm(int) const;
     std::vector<MathVector> getAllNorm() const;
+    double getANG_PER_TICK_ROUND_SUN() const { return ANG_PER_TICK_ROUND_SUN; }
+    double getANG_PER_TICK_ROUND_ORBITE() const { return ANG_PER_TICK_ROUND_ORBITE; }
 
     Dot3D<double>& operator [] (int i) const;
 
@@ -133,6 +139,8 @@ public:
     void setTexture(const std::string&);
     void setTexture(const char*);
     void setTexture(QImage *);
+    void setANG_PER_TICK_ROUND_SUN(double in) { ANG_PER_TICK_ROUND_SUN = in; }
+    void setANG_PER_TICK_ROUND_ORBITE(double in) { ANG_PER_TICK_ROUND_ORBITE = in; }
 
     virtual void clear() override;
 

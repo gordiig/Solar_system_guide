@@ -111,33 +111,39 @@ std::vector<MathVector> Obj::calcPointNorm(const int poly_num) const
 
 Obj Sphere::obj;
 
-Sphere::Sphere() : VisibleObject::VisibleObject(), texture(nullptr) { }
+Sphere::Sphere() : VisibleObject::VisibleObject(), texture(nullptr),
+    ANG_PER_TICK_ROUND_SUN(1), ANG_PER_TICK_ROUND_ORBITE(1){ }
 Sphere::Sphere(const double in_x, const double in_y, const double in_z) :
-    VisibleObject::VisibleObject(in_x, in_y, in_z), texture(nullptr) { }
+    VisibleObject::VisibleObject(in_x, in_y, in_z), texture(nullptr),
+    ANG_PER_TICK_ROUND_SUN(1), ANG_PER_TICK_ROUND_ORBITE(1) { }
 Sphere::Sphere(const double in_x, const double in_y, const double in_z,
                const double in_x_ang, const double in_y_ang, const double in_z_ang) :
     VisibleObject::VisibleObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang),
-    texture(nullptr) { }
+    texture(nullptr), ANG_PER_TICK_ROUND_SUN(1), ANG_PER_TICK_ROUND_ORBITE(1) { }
 Sphere::Sphere(const double in_x, const double in_y, const double in_z,
                const double in_x_ang, const double in_y_ang, const double in_z_ang,
                const int in_kd, const int in_ka) :
     VisibleObject::VisibleObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang, in_kd, in_ka),
-    texture(nullptr){ }
+    texture(nullptr), ANG_PER_TICK_ROUND_SUN(1), ANG_PER_TICK_ROUND_ORBITE(1){ }
 Sphere::Sphere(const double in_x, const double in_y, const double in_z,
                const double in_x_ang, const double in_y_ang, const double in_z_ang,
                const int in_kd, const int in_ka, const char* in_path) :
     VisibleObject::VisibleObject(in_x, in_y, in_z, in_x_ang, in_y_ang, in_z_ang, in_kd, in_ka, in_path),
-    texture(nullptr){ }
-Sphere::Sphere(Dot3D<double> &in) : VisibleObject::VisibleObject(in), texture(nullptr) { }
+    texture(nullptr), ANG_PER_TICK_ROUND_SUN(1), ANG_PER_TICK_ROUND_ORBITE(1){ }
+Sphere::Sphere(Dot3D<double> &in) : VisibleObject::VisibleObject(in), texture(nullptr),
+    ANG_PER_TICK_ROUND_SUN(1), ANG_PER_TICK_ROUND_ORBITE(1) { }
 Sphere::Sphere(Dot3D<double> &in, int in_1, int in_2) : VisibleObject::VisibleObject(in, in_1, in_2),
-    texture(nullptr){ }
+    texture(nullptr), ANG_PER_TICK_ROUND_SUN(1), ANG_PER_TICK_ROUND_ORBITE(1){ }
 Sphere::Sphere(Dot3D<double> &in, int in_1, int in_2, const char* in_path) :
-    VisibleObject::VisibleObject(in, in_1, in_2, in_path), texture(nullptr) { }
-Sphere::Sphere(Dot3D<int> &in) : VisibleObject::VisibleObject(in), texture(nullptr) { }
+    VisibleObject::VisibleObject(in, in_1, in_2, in_path), texture(nullptr),
+    ANG_PER_TICK_ROUND_SUN(1), ANG_PER_TICK_ROUND_ORBITE(1) { }
+Sphere::Sphere(Dot3D<int> &in) : VisibleObject::VisibleObject(in), texture(nullptr),
+    ANG_PER_TICK_ROUND_SUN(1), ANG_PER_TICK_ROUND_ORBITE(1) { }
 Sphere::Sphere(Dot3D<int> &in, int in_1, int in_2) : VisibleObject::VisibleObject(in, in_1, in_2),
-    texture(nullptr){ }
+    texture(nullptr), ANG_PER_TICK_ROUND_SUN(1), ANG_PER_TICK_ROUND_ORBITE(1){ }
 Sphere::Sphere(Dot3D<int> &in, int in_1, int in_2, const char* in_path) :
-    VisibleObject::VisibleObject(in, in_1, in_2, in_path), texture(nullptr) { }
+    VisibleObject::VisibleObject(in, in_1, in_2, in_path), texture(nullptr),
+    ANG_PER_TICK_ROUND_SUN(1), ANG_PER_TICK_ROUND_ORBITE(1) { }
 
 Sphere::Sphere(const Points3D &in_points, const Points2D &in_tex, const PolyList &in_poly)
 {
