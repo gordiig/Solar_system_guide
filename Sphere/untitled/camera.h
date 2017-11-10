@@ -64,6 +64,7 @@ public:
     void moveToWorldCenter();
     virtual void clear() override;
 
+    bool isPolyViz(const Points3D&, Dot3D<double>&) const;
     bool isPolyViz(const Points3D&) const;
     bool isOnDisplay(const DotForDrawer&) const;
     bool isOnDisplay(const double) const;

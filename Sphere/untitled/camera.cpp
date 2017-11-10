@@ -312,35 +312,30 @@ void Camera::clear()
 
 bool Camera::isPolyViz(const Points3D &points) const
 {
+    return true;
+}
+bool Camera::isPolyViz(const Points3D &points, Dot3D<double> &cent_dot) const
+{
     if (points.size() < 3)
     {
         throw NotEnoughPointsForPoly("\nIn file \"Camera.cpp\" in Camera::IsPolyVis()\n");
     }
 
-    /*
-    double a = points[0].y * (points[1].z-points[2].z) +
-            points[1].y * (points[2].z-points[0].z) +
-            points[2].y * (points[0].z-points[1].z);
+    int num = 0;
+    double min_z = points[0].z;
+    for (int i = 0; i < points.size(); i++)
+    {
+        if (points[i].z < min_z)
+        {
+            num = i;
+            min_z = points[i].z;
+        }
+    }
 
-    double b = points[0].z * (points[1].x-points[2].x) +
-            points[1].z * (points[2].x-points[0].x) +
-            points[2].z * (points[0].x-points[1].x);
+    MathVector poly_norm(points[num].x-cent_dot.x, points[num].y-cent_dot.y, points[num].z-cent_dot.z);
+    MathVector cam_vector(points[num].x, points[num].y, points[num].z);
 
-
-    double c = points[0].x * (points[1].y-points[2].y) +
-            points[1].x * (points[2].y-points[0].y) +
-            points[2].x * (points[0].y-points[1].y);
-
-    double d = points[0].x * (points[1].y*points[2].z - points[2].y*points[1].z) +
-            points[1].x * (points[2].y*points[0].z - points[0].y*points[2].z) +
-            points[2].x * (points[0].y*points[1].z - points[1].y*points[0].z);
-
-    d *= -1;
-
-    return (d > 0) ? false : true;
-    */
-
-    return true;
+    return (poly_norm.scalarMult(cam_vector) > 0) ? (false) : (true);
 }
 bool Camera::isOnDisplay(const DotForDrawer &point) const
 {
