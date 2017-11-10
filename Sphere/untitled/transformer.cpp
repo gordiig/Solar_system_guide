@@ -125,6 +125,28 @@ void Transformer::proectToCam(Obj& obj, const Camera& cam)
     }
 }
 
+void Transformer::proectToCam(Dot3D<double> &in_dot, const Camera &cam)
+{
+    MathVector right_vector = cam.getRightAxis();
+    MathVector up_vector = cam.getUpAxis();
+    MathVector view_vector = cam.getViewAxis();
+    MathVector cam_dot(cam.getX(), cam.getY(), cam.getZ());
+
+    double x = in_dot.x;
+    double y = in_dot.y;
+    double z = in_dot.z;
+
+    in_dot.x = x*right_vector.getX() + y*right_vector.getY() + z*right_vector.getZ() - cam_dot.scalarMult(right_vector);
+    in_dot.y = x*up_vector.getX() + y*up_vector.getY() + z*up_vector.getZ() - cam_dot.scalarMult(up_vector);
+    in_dot.z = x*view_vector.getX() + y*view_vector.getY() + z*view_vector.getZ() - cam_dot.scalarMult(view_vector);
+
+    if (in_dot.z != 0)
+    {
+        in_dot.x *= (cam.getDistanceToScreen() / in_dot.z);
+        in_dot.y *= (cam.getDistanceToScreen() / in_dot.z);
+    }
+}
+
 /**
  * @brief Transformer::transform -- Функция трансформации точек для вывода на экран
  * @param obj -- Трансформирующийся объект

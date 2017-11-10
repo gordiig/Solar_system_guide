@@ -12,6 +12,7 @@ public:
     ~Transformer();
     Points3D& transform(const Sphere& obj);
     void proectToCam(Obj&, const Camera&);
+    void proectToCam(Dot3D<double>&, const Camera&);
     Dot3D<double> transform(const DotLight&, const Camera &cam);
 
 private:
