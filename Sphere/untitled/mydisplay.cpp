@@ -45,7 +45,9 @@ void MyDisplay::putPixel(const int x, const int y, const double z, const QColor 
 {
     if (z <= z_buf[y][x])
     {
-        setPixelColor(x, y, col);
+        //setPixelColor(x, y, col);
+        QRgb* pix = (QRgb*) this->bits();
+        pix[y*width()+x] = qRgb(col.red(), col.green(), col.blue());
         z_buf[y][x] = z;
     }
 }
