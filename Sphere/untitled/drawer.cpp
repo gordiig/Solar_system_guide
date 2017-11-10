@@ -55,7 +55,7 @@ void Drawer::drawSphere(GraphicsToDraw &gr)
 
     for (int i = 0; i < poly.size(); i++)
     {
-        if (gr.cam.isPolyViz(gr.obj.makeCut(i)))
+        if (gr.cam.isPolyViz(gr.obj.makeCut(i), gr.c_d))
         {
             PolyToDraw tmp(gr, i);
             drawPoly(tmp);
@@ -184,7 +184,6 @@ RasteredPoly Drawer::polyRasterization(const PolyToDraw &in)
 
     return sorted_rastr;
 }
-
 
 void Drawer::solidPolyPainting(PolyToDraw &gr, const RasteredPoly &sorted_rastr)
 {
