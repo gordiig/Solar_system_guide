@@ -50,6 +50,7 @@ void MainWindow::on_ButOpen_clicked()
     {
         std::string dir = "/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/";
         dir += ui->LineEdit->text().toStdString();
+        //dir += "new_med.obj";
         in_dot.read(dir.c_str());
         in_dot.draw(gr);
         scene->clear();
