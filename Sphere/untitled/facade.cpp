@@ -234,6 +234,7 @@ Facade::Facade(const char *name)
 
 Facade::~Facade()
 {
+    solar_system.clear();
     reader.closeFile();
 }
 
@@ -257,18 +258,24 @@ void Facade::draw(GraphStruct &gr)
     Drawer dr;
     gr.im.clrZBuf();
     gr.im.fill(Qt::black);
+    Sphere* planet = nullptr;
+    Dot3D<double> pl_cent;
     for (int i = 0; i < solar_system.size(); i++)
     {
         for (int j = 0; j < solar_system[i]->size(); j++)
         {
-            Sphere* planet = (*solar_system[i])[j];
-            Dot3D<double> pl_cent = planet->getPosDot();
+            planet = (*solar_system[i])[j];
+            pl_cent = planet->getPosDot();
 
             Transformer trans;
             Obj draw_object(trans.transform(*planet), planet->getTexCord(), planet->getPoly());
             std::vector<double> I = light.calcI(draw_object, pl_cent, planet->getKa(), planet->getKd());
             trans.proectToCam(draw_object, cam);
             trans.proectToCam(pl_cent, cam);
+            if (pl_cent.z <= 0)
+            {
+                continue;
+            }
 
             //DotLight draw_light(trans.transform(light, cam), 255, 255);
 

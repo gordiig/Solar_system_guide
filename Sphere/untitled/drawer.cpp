@@ -86,12 +86,6 @@ void Drawer::drawPoly(PolyToDraw &gr)
 
         throw ColorIntenseErr("\nDrawer::drawPoly() in drawer.cpp");
     }
-
-    // Очистка
-    for (auto &x : sorted_rastr)
-    {
-        x.clear();
-    }
 }
 RasteredPoly Drawer::polyRasterization(const PolyToDraw &in)
 {
