@@ -55,7 +55,7 @@ void MainWindow::vWriter(const int n, const int m, const double r)
         count++;
         out_file << "v " << x << " " << y << " " << z << "\n";
 
-        vt = vt + "vt " + std::to_string(roundToN(1 - alpha*i/2/M_PI)) + " 0.5\n";
+        vt = vt + "vt " + std::to_string(roundToN(alpha*i/2/M_PI)) + " 0.5\n";
     }
 
     // Широты/долготы (в т.ч. и полюса (последняя итерация цикла))
@@ -78,7 +78,7 @@ void MainWindow::vWriter(const int n, const int m, const double r)
             dots.push_back(circle);
 
             Dot texx;
-            texx.x = roundToN(1 - j * alpha/2/M_PI);
+            texx.x = roundToN(j * alpha/2/M_PI);
             texx.y = roundToN((i*beta + (M_PI/2))/M_PI);
             vt = vt + "vt " + std::to_string(texx.x) + " " + std::to_string(texx.y) + "\n";
             tex.push_back(texx);
