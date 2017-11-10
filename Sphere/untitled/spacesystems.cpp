@@ -20,10 +20,12 @@ void PlanetSystem::tickMove()
     {
         planet->setYAng(planet->getYAng() + planet->getANG_PER_TICK_ROUND_ORBITE());
 
+
         Dot3D<double> cent = planet->getPosDot();
         double a = planet->getANG_PER_TICK_ROUND_SUN()*M_PI/180;
         planet->setX(cent.x*cos(a) - cent.z*sin(a));
         planet->setZ(cent.z*cos(a) + cent.x*sin(a));
+
     }
 }
 

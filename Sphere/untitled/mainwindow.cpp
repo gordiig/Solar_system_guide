@@ -82,7 +82,7 @@ void MainWindow::tmrTick()
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     int key = event->key();
-    double d = 1000;
+    double d = 5000;
     InterfaceCommand *caps = nullptr;
 
     if (key == Qt::Key_W)

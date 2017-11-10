@@ -29,9 +29,6 @@ private:
     DotLight light;
     Camera cam;
 
-    std::map<char, double> radius_koef;
-    std::map<char, double> distance_koef;
-
     const double EARTH_DISTANCE_FROM_SUN = 90000;
     const double CAMERA_DISTANCE = 1353494.5;
 
