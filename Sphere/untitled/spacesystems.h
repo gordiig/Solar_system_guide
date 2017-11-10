@@ -45,8 +45,11 @@ class SolarSystem : public BaseSystem
 {
 protected:
     std::vector<PlanetSystem*> planet_systems;
+    double ORBIT_BASE_ROT_ANG;
+    double SUN_BASE_ROT_ANG;
 
 public:
+    SolarSystem() : ORBIT_BASE_ROT_ANG(3), SUN_BASE_ROT_ANG(1){}
     ~SolarSystem();
 
     void add(PlanetSystem*);
@@ -62,6 +65,12 @@ public:
 
     virtual void setObj(Obj&) override;
     void clear();
+
+    double getOrbitBaseAng() const { return ORBIT_BASE_ROT_ANG; }
+    double getSunBaseAng() const { return SUN_BASE_ROT_ANG; }
+
+    void setOrbitBaseAng(double in) { ORBIT_BASE_ROT_ANG = in; }
+    void setSunBaseAng(double in) { SUN_BASE_ROT_ANG = in; }
 };
 
 #endif // SPACESYSTEMS_H
