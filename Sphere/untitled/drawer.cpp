@@ -65,6 +65,8 @@ void Drawer::drawSphere(GraphicsToDraw &gr)
 
 void Drawer::drawPoly(PolyToDraw &gr)
 {
+    //gr.
+
     RasteredPoly sorted_rastr = polyRasterization(gr);
     if (sorted_rastr.empty())
     {

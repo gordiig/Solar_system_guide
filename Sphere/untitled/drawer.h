@@ -37,11 +37,10 @@ namespace Drwr
     {
         Points3D poly;
         Points2D tex_coords;
-        std::vector<MathVector> point_vectors;
 
         PolyToDraw(GraphicsToDraw& in_gr, int i) :
             BaseGraphcsToDraw(in_gr.im, in_gr.cam, in_gr.texture, in_gr.c_d),
-            poly(in_gr.obj.makeCut(i)), tex_coords(in_gr.obj.makeTexCut(i)), point_vectors(in_gr.obj.calcPointNorm(i))
+            poly(in_gr.obj.makeCut(i)), tex_coords(in_gr.obj.makeTexCut(i))
         {
             PolyList poly = in_gr.obj.getPoly();
             for (auto &pt_n : poly[i])
