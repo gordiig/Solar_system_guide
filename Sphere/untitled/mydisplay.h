@@ -2,6 +2,7 @@
 #define MYDISPLAY_H
 
 #include <QImage>
+#include "obj.h"
 #include "math_abstracts.h"
 
 class MyDisplay : public QImage
@@ -22,12 +23,25 @@ public:
     void fillZBuf(const double);
     void clrZBuf();
 
+    void screenCut(Points3D&, std::vector<double>&, Points2D&);
+
     bool isOnDisplay(const Dot2D<double>&, const Dot2D<double>&) const;
     bool isOnDisplay(const DotForDrawer&) const;
     bool isOnDisplay(const int, const int) const;
 
     void putPixel(const DotForDrawer&, const QColor&);
     void putPixel(const int, const int, const double, const QColor&);
+
+private:
+    enum ScrSide
+    {
+        left = 0,
+        top,
+        right,
+        bottom
+    };
+
+    void screenCut(Points3D&, std::vector<double>&, Points2D&, int);
 };
 
 #endif // MYDISPLAY_H
