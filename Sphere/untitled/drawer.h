@@ -66,7 +66,7 @@ private:
     void drawSphere(Drwr::GraphicsToDraw&);
 
     void drawPoly(Drwr::PolyToDraw& gr);
-    Drwr::RasteredPoly polyRasterization(const Drwr::PolyToDraw&);
+    Drwr::RasteredPoly polyRasterization(Drwr::PolyToDraw &);
 
     void solidPolyPainting(Drwr::PolyToDraw&, const Drwr::RasteredPoly&);
     void guroPolyPainting(Drwr::PolyToDraw&, const Drwr::RasteredPoly&);

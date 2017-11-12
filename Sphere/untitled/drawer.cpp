@@ -65,8 +65,6 @@ void Drawer::drawSphere(GraphicsToDraw &gr)
 
 void Drawer::drawPoly(PolyToDraw &gr)
 {
-    //gr.
-
     RasteredPoly sorted_rastr = polyRasterization(gr);
     if (sorted_rastr.empty())
     {
@@ -89,43 +87,36 @@ void Drawer::drawPoly(PolyToDraw &gr)
         throw ColorIntenseErr("\nDrawer::drawPoly() in drawer.cpp");
     }
 }
-RasteredPoly Drawer::polyRasterization(const PolyToDraw &in)
+RasteredPoly Drawer::polyRasterization(PolyToDraw &in)
 {
     // Приведение к экранным координатам и проверка на невидимость полигона в окне
-    Points3D poly = in.poly;
-    double x_l = poly[0].x + in.im.width() / 2;
-    double y_l = poly[0].y + in.im.height() / 2;
-    double x_r = poly[0].x + in.im.width() / 2;
-    double y_r = poly[0].y + in.im.height() / 2;
-    double z_min = poly[0].z;
-    for (auto &x : poly)
+    double z_min = in.poly[0].z;
+    for (auto &x : in.poly)
     {
         x.x += in.im.width() / 2;
         x.y += in.im.height() / 2;
 
-        x_r = (x_r > x.x) ? (x_r) : (x.x);
-        x_l = (x_l > x.x) ? (x.x) : (x_l);
-        y_l = (y_l > x.y) ? (y_l) : (x.y);
-        y_r = (y_r > x.y) ? (x.y) : (y_r);
         z_min = (z_min > x.z) ? (x.z) : (z_min);
     }
-    if ((!in.im.isOnDisplay(Dot2D<double>(x_l, y_l), Dot2D<double>(x_r, y_r))) || (!in.cam.isOnDisplay(z_min)))
+
+    in.im.screenCut(in.poly, in.I, in.tex_coords);
+    if (in.poly.empty() || (!in.cam.isOnDisplay(z_min)))
     {
         return RasteredPoly();
     }
 
     std::list<DotForDrawer> rastr;
-    int max_y = MathFunctions::doubleToInt(poly[0].y);
-    int min_y = MathFunctions::doubleToInt(poly[0].y);
+    int max_y = MathFunctions::doubleToInt(in.poly[0].y);
+    int min_y = MathFunctions::doubleToInt(in.poly[0].y);
 
     // Растеризация полигона
     // С помощью алгоритма Брезенхема создается список точек для каждого отрезка
-    for (int i = 0; i < poly.size(); i++)
+    for (int i = 0; i < in.poly.size(); i++)
     {
-        max_y = (max_y < poly[i].y) ? (MathFunctions::doubleToInt(poly[i].y)) : (max_y);
-        min_y = (min_y > poly[i].y) ? (MathFunctions::doubleToInt(poly[i].y)) : (min_y);
+        max_y = (max_y < in.poly[i].y) ? (MathFunctions::doubleToInt(in.poly[i].y)) : (max_y);
+        min_y = (min_y > in.poly[i].y) ? (MathFunctions::doubleToInt(in.poly[i].y)) : (min_y);
 
-        int j = (i == poly.size()-1) ? (0) : (i+1);
+        int j = (i == in.poly.size()-1) ? (0) : (i+1);
 
 //        // Тут in.poly[i].x потому что камеру мы не двигаем в коорд экрана
 //        double I1 = in.light.getIa()*in.ka + in.light.calcDiffuse(in.poly[i], norm1.getEd())*in.kd;
@@ -133,8 +124,8 @@ RasteredPoly Drawer::polyRasterization(const PolyToDraw &in)
         double I1 = in.I[i];
         double I2 = in.I[j];
 
-        DotForDrawer in1(poly[i].x, poly[i].y, poly[i].z, I1, in.tex_coords[i]);
-        DotForDrawer in2(poly[j].x, poly[j].y, poly[j].z, I2, in.tex_coords[j]);
+        DotForDrawer in1(in.poly[i].x, in.poly[i].y, in.poly[i].z, I1, in.tex_coords[i]);
+        DotForDrawer in2(in.poly[j].x, in.poly[j].y, in.poly[j].z, I2, in.tex_coords[j]);
         std::list<DotForDrawer> tmp = lineRasterizationBrez(in1, in2);
         if (!tmp.empty())
         {
@@ -263,18 +254,16 @@ void Drawer::guroPolyPainting(PolyToDraw &gr, const RasteredPoly &sorted_rastr)
                 throw ColorIntenseErr("\nHIGH\nDrawer::drawPoly() in drawer.cpp");
             }
 
-            if (gr.im.isOnDisplay(x-gr.im.width()/2, it_beg->y-gr.im.height()/2) &&
-                    gr.cam.isOnDisplay(z))
-            {
-                int r, g, b;
-                gr.texture->pixelColor(x_for_tex, y_for_tex).getRgb(&r, &g, &b);
-                r = (double)r/256 * I;
-                g = (double)g/256 * I;
-                b = (double)b/256 * I;
 
-                gr.im.putPixel(x, it_beg->y, z, QColor(r, g, b));
-                //gr.im.putPixel(x, it_beg->y, z, QColor(I, I, I));
-            }
+            int r, g, b;
+            gr.texture->pixelColor(x_for_tex, y_for_tex).getRgb(&r, &g, &b);
+            r = (double)r/256 * I;
+            g = (double)g/256 * I;
+            b = (double)b/256 * I;
+
+            gr.im.putPixel(x, it_beg->y, z, QColor(r, g, b));
+            //gr.im.putPixel(x, it_beg->y, z, QColor(I, I, I));
+
 
             z += mz;
         }
