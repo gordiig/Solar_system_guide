@@ -4,6 +4,17 @@
 #include "baseobjects.h"
 #include <math.h>
 
+template <typename T>
+struct Line
+{
+    Dot3D<T> beg;
+    Dot3D<T> end;
+
+    Line(const Dot3D<T>& in_beg, const Dot3D<T>& in_en) :
+        beg(in_beg), end(in_en){}
+};
+
+
 class MathFunctions
 {
 public:
@@ -46,6 +57,21 @@ public:
 
         return Dot2D<double>(ans1, ans2);
     }
+
+    static double lineIntersection2D(Line<double> ln1, Line<double> ln2)
+    {
+        double chis = (ln2.beg.y - ln1.beg.y)*(ln2.end.x - ln2.beg.x) +
+                (ln2.end.y - ln2.beg.y)*(ln1.beg.x - ln2.beg.x);
+
+        double znam = (ln1.end.y - ln1.beg.y)*(ln2.end.x - ln2.beg.x) -
+                (ln1.end.x - ln1.beg.x)*(ln2.end.y - ln2.beg.y);
+        if (fabs(znam) <= 1e-5)
+        {
+            return -1;
+        }
+
+        return chis/znam;
+    }
 };
 
 class MathVector : public BaseObject
@@ -64,6 +90,7 @@ public:
 
     double len() const;
     double scalarMult(const MathVector&) const;
+    MathVector vectMult(const MathVector&) const;
 
     MathVector& invert();
     MathVector getInvert() const;

@@ -55,6 +55,10 @@ double MathVector::scalarMult(const MathVector &in) const
 {
     return x*in.x + y*in.y + z*in.z;
 }
+MathVector MathVector::vectMult(const MathVector &in) const
+{
+    return MathVector(y*in.z - z*in.y, z*in.x - x*in.z, x*in.y - y*in.x);
+}
 
 MathVector& MathVector::invert()
 {
