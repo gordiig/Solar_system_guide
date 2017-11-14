@@ -15,6 +15,8 @@ public:
     void proectToCam(Dot3D<double>&, const Camera&);
     Dot3D<double> transform(const DotLight&, const Camera &cam);
 
+    void clear();
+
 private:
     Points3D points;
 

@@ -256,6 +256,7 @@ void Facade::planetMove(GraphStruct &gr)
 void Facade::draw(GraphStruct &gr)
 {
     Drawer dr;
+    Transformer trans;
     gr.im.clrZBuf();
     gr.im.fill(Qt::black);
     Sphere* planet = nullptr;
@@ -267,7 +268,6 @@ void Facade::draw(GraphStruct &gr)
             planet = (*solar_system[i])[j];
             pl_cent = planet->getPosDot();
 
-            Transformer trans;
             Obj draw_object(trans.transform(*planet), planet->getTexCord(), planet->getPoly());
             std::vector<double> I = light.calcI(draw_object, pl_cent, planet->getKa(), planet->getKd());
             trans.proectToCam(draw_object, cam);
@@ -283,6 +283,8 @@ void Facade::draw(GraphStruct &gr)
 
             Drwr::GraphicsToDraw gr_in(gr.im, cam, draw_object, texture, pl_cent, I);
             dr.draw(gr_in);
+
+            trans.clear();
         }
     }
 }

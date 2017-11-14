@@ -187,3 +187,8 @@ Dot3D<double> Transformer::transform(const DotLight &light, const Camera &cam)
 
     return ans;
 }
+
+void Transformer::clear()
+{
+    points.clear();
+}

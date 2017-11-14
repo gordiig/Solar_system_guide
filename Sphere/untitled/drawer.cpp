@@ -247,19 +247,17 @@ void Drawer::guroPolyPainting(PolyToDraw &gr, const RasteredPoly &sorted_rastr)
             double t = (l2 != 0) ? (l1/l2) : (1);
 
             int I = it_beg->I*(1-t) + it_end->I*t;
-
-            double x_for_tex = (it_beg->texture_coord.x*(1-t) + it_end->texture_coord.x*t) * (gr.texture->width()-1);
-            double y_for_tex = (it_beg->texture_coord.y*(1-t) + it_end->texture_coord.y*t) * (gr.texture->height()-1);
-
             if (I < 0)
             {
                 I = 0;
             }
             else if (I > 255)
             {
-                throw ColorIntenseErr("\nHIGH\nDrawer::drawPoly() in drawer.cpp");
+                I = 255;
             }
 
+            double x_for_tex = (it_beg->texture_coord.x*(1-t) + it_end->texture_coord.x*t) * (gr.texture->width()-1);
+            double y_for_tex = (it_beg->texture_coord.y*(1-t) + it_end->texture_coord.y*t) * (gr.texture->height()-1);
 
             int r, g, b;
             gr.texture->pixelColor(x_for_tex, y_for_tex).getRgb(&r, &g, &b);
