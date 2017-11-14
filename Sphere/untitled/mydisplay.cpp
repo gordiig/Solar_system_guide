@@ -88,12 +88,6 @@ void MyDisplay::screenCut(Points3D &in_poly, std::vector<double>& in_I, Points2D
             Dot2D<double> to_push_tex(beg_tex.x + t*(end_tex.x - beg_tex.x),
                                       beg_tex.y + t*(end_tex.y - beg_tex.y));
 
-            if (!isDotOnScreen(to_push))
-            {
-                int asss;
-                asss = 0;
-            }
-
             ans.push_back(to_push);
             ans_tex.push_back(to_push_tex);
             ans_I.push_back(beg_I + t*(end_I - beg_I));
@@ -106,12 +100,6 @@ void MyDisplay::screenCut(Points3D &in_poly, std::vector<double>& in_I, Points2D
                                   beg_dot.z + t*(end_dot.z - beg_dot.z));
             Dot2D<double> to_push_tex(beg_tex.x + t*(end_tex.x - beg_tex.x),
                                       beg_tex.y + t*(end_tex.y - beg_tex.y));
-
-            if (!isDotOnScreen(to_push))
-            {
-                int asss;
-                asss = 0;
-            }
 
             ans.push_back(to_push);
             ans_tex.push_back(to_push_tex);
