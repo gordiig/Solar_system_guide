@@ -85,8 +85,9 @@ void MyDisplay::screenCut(Points3D &in_poly, std::vector<double>& in_I, Points2D
             Dot3D<double> to_push(beg_dot.x + t*(end_dot.x - beg_dot.x),
                                   beg_dot.y + t*(end_dot.y - beg_dot.y),
                                   beg_dot.z + t*(end_dot.z - beg_dot.z));
-            Dot2D<double> to_push_tex(beg_tex.x + t*(end_tex.x - beg_tex.x),
-                                      beg_tex.y + t*(end_tex.y - beg_tex.y));
+            Dot2D<double> to_push_tex(fabs(beg_tex.x + t*(end_tex.x - beg_tex.x)),
+                                      fabs(beg_tex.y + t*(end_tex.y - beg_tex.y)));
+
 
             ans.push_back(to_push);
             ans_tex.push_back(to_push_tex);
@@ -98,8 +99,8 @@ void MyDisplay::screenCut(Points3D &in_poly, std::vector<double>& in_I, Points2D
             Dot3D<double> to_push(beg_dot.x + t*(end_dot.x - beg_dot.x),
                                   beg_dot.y + t*(end_dot.y - beg_dot.y),
                                   beg_dot.z + t*(end_dot.z - beg_dot.z));
-            Dot2D<double> to_push_tex(beg_tex.x + t*(end_tex.x - beg_tex.x),
-                                      beg_tex.y + t*(end_tex.y - beg_tex.y));
+            Dot2D<double> to_push_tex(fabs(beg_tex.x + t*(end_tex.x - beg_tex.x)),
+                                      fabs(beg_tex.y + t*(end_tex.y - beg_tex.y)));
 
             ans.push_back(to_push);
             ans_tex.push_back(to_push_tex);
