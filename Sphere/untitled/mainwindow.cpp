@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     im = MyDisplay(ui->graphicsView->width()-2, ui->graphicsView->height()-2,
-                QImage::Format_ARGB32);
+                QImage::Format_RGB32);
     scene = new QGraphicsScene(ui->graphicsView);
     ui->graphicsView->setScene(scene);
 
