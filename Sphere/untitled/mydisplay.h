@@ -29,6 +29,9 @@ public:
     bool isOnDisplay(const DotForDrawer&) const;
     bool isOnDisplay(const int, const int) const;
 
+    bool isDotOnScreen(const Dot3D<double>&) const;
+    bool isDotOnScreen(const Dot2D<double>&) const;
+
     void putPixel(const DotForDrawer&, const QColor&);
     void putPixel(const int, const int, const double, const QColor&);
 
@@ -42,6 +45,7 @@ private:
     };
 
     void screenCut(Points3D&, std::vector<double>&, Points2D&, int);
+    bool isDotInSide(const Dot3D<double>&, int) const;
 };
 
 #endif // MYDISPLAY_H

@@ -10,6 +10,7 @@ struct Line
     Dot3D<T> beg;
     Dot3D<T> end;
 
+    Line() {}
     Line(const Dot3D<T>& in_beg, const Dot3D<T>& in_en) :
         beg(in_beg), end(in_en){}
 };

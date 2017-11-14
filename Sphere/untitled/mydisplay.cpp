@@ -28,39 +28,26 @@ void MyDisplay::screenCut(Points3D &in_poly, std::vector<double>& in_I, Points2D
     Points3D ans;
     std::vector<double> ans_I;
     Points2D ans_tex;
-    MathVector side_vector, beg_point_vector, end_point_vector;
-    Dot3D<double> scr_beg_dot, scr_end_dot;
+    Line<double> scr_line, poly_line;
     if (side == left)
     {
-        side_vector.setY(-height());
-        end_point_vector.setY(-height());
-        beg_point_vector.setY(-height());
-        scr_beg_dot.y = height();
+        scr_line.beg = Dot3D<double>(0, height()-1, 0);
+        scr_line.end = Dot3D<double>(0, 0, 0);
     }
     else if (side == top)
     {
-        side_vector.setX(width());
-        scr_end_dot.x = width();
+        scr_line.beg = Dot3D<double>(0, 0, 0);
+        scr_line.end = Dot3D<double>(width()-1, 0, 0);
     }
     else if (side == right)
     {
-        side_vector.setY(height());
-        end_point_vector.setX(-width());
-        beg_point_vector.setX(-width());
-        scr_beg_dot.x = width();
-        scr_end_dot.x = width();
-        scr_end_dot.y = height();
+        scr_line.beg = Dot3D<double>(width()-1, 0, 0);
+        scr_line.end = Dot3D<double>(width()-1, height()-1, 0);
     }
     else if (side == bottom)
     {
-        side_vector.setX(-width());
-        end_point_vector.setX(-width());
-        end_point_vector.setY(-height());
-        beg_point_vector.setX(-width());
-        beg_point_vector.setY(-height());
-        scr_beg_dot.x = width();
-        scr_beg_dot.y = height();
-        scr_end_dot.y = height();
+        scr_line.beg = Dot3D<double>(width()-1, height()-1, 0);
+        scr_line.end = Dot3D<double>(0, height()-1, 0);
     }
     else
     {
@@ -83,68 +70,56 @@ void MyDisplay::screenCut(Points3D &in_poly, std::vector<double>& in_I, Points2D
         beg_I = in_I[i];
         end_I = (i == (in_poly.size() - 1)) ? (first_I) : (in_I[i+1]);
 
-        end_point_vector.setX(end_point_vector.getX() + end_dot.x);
-        end_point_vector.setY(end_point_vector.getY() + end_dot.y);
-        beg_point_vector.setX(beg_point_vector.getX() + beg_dot.x);
-        beg_point_vector.setY(beg_point_vector.getY() + beg_dot.y);
+        poly_line.beg = beg_dot;
+        poly_line.end = end_dot;
 
-        double beg_mult = side_vector.vectMult(beg_point_vector).len();
-        double end_mult = side_vector.vectMult(end_point_vector).len();
-
-        if ((beg_mult > 0) && (end_mult > 0)) // Обе внутри
+        if (isDotInSide(beg_dot, side) && isDotInSide(end_dot, side))
         {
             ans.push_back(end_dot);
             ans_tex.push_back(end_tex);
             ans_I.push_back(end_I);
         }
-        else if ((beg_mult > 0) && (end_mult <= 0)) // Рассматриваемая вне
+        else if (isDotInSide(beg_dot, side) && !isDotInSide(end_dot, side))
         {
-            double t = MathFunctions::lineIntersection2D(Line<double>(beg_dot, end_dot),
-                                                         Line<double>(scr_beg_dot, scr_end_dot));
-            if ((t < 0) || (t > 1))
+            double t = MathFunctions::lineIntersection2D(poly_line, scr_line);
+            Dot3D<double> to_push(beg_dot.x + t*(end_dot.x - beg_dot.x),
+                                  beg_dot.y + t*(end_dot.y - beg_dot.y),
+                                  beg_dot.z + t*(end_dot.z - beg_dot.z));
+            Dot2D<double> to_push_tex(beg_tex.x + t*(end_tex.x - beg_tex.x),
+                                      beg_tex.y + t*(end_tex.y - beg_tex.y));
+
+            if (!isDotOnScreen(to_push))
             {
-                continue;
+                int asss;
+                asss = 0;
             }
 
-            Dot3D<double> cut_dot(beg_dot.x + (end_dot.x-beg_dot.x)*t,
-                                  beg_dot.y + (end_dot.y-beg_dot.y)*t,
-                                  beg_dot.z + (end_dot.z-beg_dot.z)*t);
-
-            Dot2D<double> cut_tex(beg_tex.x + (end_tex.x-beg_tex.x)*t,
-                                  beg_tex.y + (end_tex.y-beg_tex.y)*t);
-
-            double cut_I = beg_I + (end_I-beg_I)*t;
-
-            ans.push_back(cut_dot);
-            ans_tex.push_back(cut_tex);
-            ans_I.push_back(cut_I);
+            ans.push_back(to_push);
+            ans_tex.push_back(to_push_tex);
+            ans_I.push_back(beg_I + t*(end_I - beg_I));
         }
-        else if ((beg_mult <= 0) && (end_mult > 0)) // Начальная вне
+        else if (!isDotInSide(beg_dot, side) && isDotInSide(end_dot, side))
         {
-            double t = MathFunctions::lineIntersection2D(Line<double>(beg_dot, end_dot),
-                                                         Line<double>(scr_beg_dot, scr_end_dot));
-            if ((t < 0) || (t > 1))
+            double t = MathFunctions::lineIntersection2D(poly_line, scr_line);
+            Dot3D<double> to_push(beg_dot.x + t*(end_dot.x - beg_dot.x),
+                                  beg_dot.y + t*(end_dot.y - beg_dot.y),
+                                  beg_dot.z + t*(end_dot.z - beg_dot.z));
+            Dot2D<double> to_push_tex(beg_tex.x + t*(end_tex.x - beg_tex.x),
+                                      beg_tex.y + t*(end_tex.y - beg_tex.y));
+
+            if (!isDotOnScreen(to_push))
             {
-                continue;
+                int asss;
+                asss = 0;
             }
 
-            Dot3D<double> cut_dot(beg_dot.x + (end_dot.x-beg_dot.x)*t,
-                                  beg_dot.y + (end_dot.y-beg_dot.y)*t,
-                                  beg_dot.z + (end_dot.z-beg_dot.z)*t);
-
-            Dot2D<double> cut_tex(beg_tex.x + (end_tex.x-beg_tex.x)*t,
-                                  beg_tex.y + (end_tex.y-beg_tex.y)*t);
-
-            double cut_I = beg_I + (end_I-beg_I)*t;
-
-            ans.push_back(cut_dot);
+            ans.push_back(to_push);
+            ans_tex.push_back(to_push_tex);
+            ans_I.push_back(beg_I + t*(end_I - beg_I));
             ans.push_back(end_dot);
-            ans_tex.push_back(cut_tex);
             ans_tex.push_back(end_tex);
-            ans_I.push_back(cut_I);
             ans_I.push_back(end_I);
         }
-
     }
 
     in_poly = ans;
@@ -173,6 +148,39 @@ bool MyDisplay::isOnDisplay(const int x, const int y) const
             (y + height()/2 < height()) && (y + height()/2 > 0))
     {
         ans = true;
+    }
+
+    return ans;
+}
+
+bool MyDisplay::isDotOnScreen(const Dot3D<double> &in) const
+{
+    Dot2D<double> tmp(in.x, in.y);
+    return isDotOnScreen(tmp);
+}
+bool MyDisplay::isDotOnScreen(const Dot2D<double> &in) const
+{
+    return ((in.x >= 0) && (in.x < width()) && (in.y >= 0) && (in.y < height()));
+}
+
+bool MyDisplay::isDotInSide(const Dot3D<double> & dot, int side) const
+{
+    bool ans = false;
+    if (side == left)
+    {
+        ans = dot.x >= 0;
+    }
+    else if (side == top)
+    {
+        ans = dot.y >= 0;
+    }
+    else if (side == right)
+    {
+        ans = dot.x < width();
+    }
+    else if (side == bottom)
+    {
+        ans = dot.y < height();
     }
 
     return ans;
