@@ -300,7 +300,7 @@ void Sphere::clear()
 }
 
 
-DotLight::DotLight() : BaseObject::BaseObject(), Id(255), Ia(255) { }
+DotLight::DotLight() : BaseObject::BaseObject(), Id(250), Ia(250) { }
 DotLight::DotLight(Dot3D<double> &in, double in_Id, double in_Ia)
 {
     x = in.x;
