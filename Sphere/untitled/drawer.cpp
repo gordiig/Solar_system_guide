@@ -93,6 +93,12 @@ RasteredPoly Drawer::polyRasterization(PolyToDraw &in)
     double z_min = in.poly[0].z;
     for (auto &x : in.poly)
     {
+        if (x.z != 0)
+        {
+            x.x *= (in.cam.getDistanceToScreen() / x.z);
+            x.y *= (in.cam.getDistanceToScreen() / x.z);
+        }
+
         x.x += in.im.width() / 2;
         x.y += in.im.height() / 2;
 

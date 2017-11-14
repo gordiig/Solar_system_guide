@@ -117,11 +117,11 @@ void Transformer::proectToCam(Obj& obj, const Camera& cam)
         obj.points[i].y = x*up_vector.getX() + y*up_vector.getY() + z*up_vector.getZ() - cam_dot.scalarMult(up_vector);
         obj.points[i].z = x*view_vector.getX() + y*view_vector.getY() + z*view_vector.getZ() - cam_dot.scalarMult(view_vector);
 
-        if (obj.points[i].z != 0)
-        {
-            obj.points[i].x *= (cam.getDistanceToScreen() / obj.points[i].z);
-            obj.points[i].y *= (cam.getDistanceToScreen() / obj.points[i].z);
-        }
+//        if (obj.points[i].z != 0)
+//        {
+//            obj.points[i].x *= (cam.getDistanceToScreen() / obj.points[i].z);
+//            obj.points[i].y *= (cam.getDistanceToScreen() / obj.points[i].z);
+//        }
     }
 }
 
@@ -140,11 +140,11 @@ void Transformer::proectToCam(Dot3D<double> &in_dot, const Camera &cam)
     in_dot.y = x*up_vector.getX() + y*up_vector.getY() + z*up_vector.getZ() - cam_dot.scalarMult(up_vector);
     in_dot.z = x*view_vector.getX() + y*view_vector.getY() + z*view_vector.getZ() - cam_dot.scalarMult(view_vector);
 
-    if (in_dot.z != 0)
-    {
-        in_dot.x *= (cam.getDistanceToScreen() / in_dot.z);
-        in_dot.y *= (cam.getDistanceToScreen() / in_dot.z);
-    }
+//    if (in_dot.z != 0)
+//    {
+//        in_dot.x *= (cam.getDistanceToScreen() / in_dot.z);
+//        in_dot.y *= (cam.getDistanceToScreen() / in_dot.z);
+//    }
 }
 
 /**
