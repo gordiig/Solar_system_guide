@@ -177,24 +177,30 @@ void MainWindow::ringVWriter(const double in_r, const double out_r, const int p_
     double x = in_r;
     double z = 0;
 
-    for (int i = 0; i <= p_num; i++)
+    for (int k = 0; k < 2; k++)
     {
-        x = roundToN(in_r * cos(alpha*i));
-        z = roundToN(in_r * sin(alpha*i));
-        out_file << "v " << x << " " << y << " " << z << "\n";
+        x = in_r;
+        z = 0;
+        alpha *= -1;
+        for (int i = 0; i <= p_num; i++)
+        {
+            x = roundToN(in_r * cos(alpha*i));
+            z = roundToN(in_r * sin(alpha*i));
+            out_file << "v " << x << " " << y << " " << z << "\n";
 
-        count++;
-    }
+            count++;
+        }
 
-    x = out_r;
-    z = 0;
-    for (int i = 0; i <= p_num; i++)
-    {
-        x = roundToN(out_r * cos(alpha*i));
-        z = roundToN(out_r * sin(alpha*i));
-        out_file << "v " << x << " " << y << " " << z << "\n";
+        x = out_r;
+        z = 0;
+        for (int i = 0; i <= p_num; i++)
+        {
+            x = roundToN(out_r * cos(alpha*i));
+            z = roundToN(out_r * sin(alpha*i));
+            out_file << "v " << x << " " << y << " " << z << "\n";
 
-        count++;
+            count++;
+        }
     }
 
     out_file << "# " << count << " dots \n";
@@ -209,9 +215,15 @@ void MainWindow::ringFWriter(const int p_num)
 
     for (int i = 0; i < p_num; i++)
     {
-        out_file << "f " << i+1 << " " << i+point_num+1 << " " << i+point_num+1+1 << " " << i+1+1 << "\n";
-        cnt++;
+        out_file << "f " << i+1 << " " << i+point_num+1 << " "
+                 << i+point_num+1+1 << " " << i+1+1 << "\n";
+
+        out_file << "f " << i+1+point_num*2 << " " << i+point_num+1+point_num*2 << " "
+                 << i+point_num+1+1+point_num*2 << " " << i+1+1+point_num*2 << "\n";
+        cnt += 2;
     }
+
+
 
     out_file << "# " << cnt << " polygons\n";
 }
