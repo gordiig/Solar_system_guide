@@ -81,8 +81,6 @@ public:
 
 class Sphere : public VisibleObject
 {
-    friend class Transformer;
-
 private:
     double ANG_PER_TICK_ROUND_SUN;
     double ANG_PER_TICK_ROUND_ORBITE;

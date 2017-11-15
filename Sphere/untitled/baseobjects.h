@@ -182,6 +182,8 @@ public:
 
 class VisibleObject : public BaseObject
 {
+    friend class Transformer;
+
 protected:
     double scale;
     double ka;
