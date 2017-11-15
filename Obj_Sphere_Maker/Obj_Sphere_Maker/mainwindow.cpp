@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     file_dir = "/Users/gordiig/Desktop/new.obj";
+    ui->tabWidget->setTabText(0, "Sphere");
+    ui->tabWidget->setTabText(1, "Ring");
 }
 
 MainWindow::~MainWindow()
