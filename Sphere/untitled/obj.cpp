@@ -300,6 +300,169 @@ void Sphere::clear()
 }
 
 
+Obj Ring::obj;
+Ring::Ring() : VisibleObject::VisibleObject(), texture(nullptr) {}
+
+Ring::Ring(const Points3D &in_points, const Points2D &in_tex, const PolyList &in_poly)
+{
+    Obj tmp(in_points, in_tex, in_poly);
+    obj = tmp;
+    texture = nullptr;
+}
+Ring::Ring(Points3D &&in_points, Points2D &&in_tex, PolyList &&in_poly)
+{
+    Obj tmp(in_points, in_tex, in_poly);
+    obj = tmp;
+    texture = nullptr;
+
+    in_points.clear();
+    in_tex.clear();
+    for (auto &x : in_poly)
+    {
+        x.clear();
+    }
+    in_poly.clear();
+}
+
+Ring::Ring(const Ring &in)
+{
+    *this = in;
+}
+Ring::Ring(Ring &&in)
+{
+    *this = in;
+    in.clear();
+}
+
+Ring::~Ring()
+{
+    clear();
+}
+
+Ring& Ring::operator = (const Ring& in)
+{
+    x = in.x;
+    y = in.y;
+    z = in.z;
+    x_ang = in.x_ang;
+    y_ang = in.y_ang;
+    z_ang = in.z_ang;
+    kd = in.kd;
+    ka = in.ka;
+    texture_path = in.texture_path;
+    texture = in.texture;
+
+    return (*this);
+}
+Ring& Ring::operator = (Ring&& in)
+{
+    x = in.x;
+    y = in.y;
+    z = in.z;
+    x_ang = in.x_ang;
+    y_ang = in.y_ang;
+    z_ang = in.z_ang;
+    kd = in.kd;
+    ka = in.ka;
+    texture = in.texture;
+    texture_path = in.texture_path;
+
+    in.clear();
+
+    return (*this);
+}
+
+Dot3D<double>& Ring::operator [] (int i) const
+{
+    return obj.points[i];
+}
+
+MathVector Ring::getPointNorm(int pt_n) const
+{
+    if (pt_n >= obj.points.size())
+    {
+        throw VecRangeErr("From getPointNorm() in obj.cpp");
+    }
+
+    if (pt_n < obj.points.size()/2)
+    {
+        return MathVector(0, -1, 0);
+    }
+
+    return MathVector(0, 1, 0);
+}
+std::vector<MathVector> Ring::getAllNorm() const
+{
+    std::vector<MathVector> ans;
+    for (int i = 0; i < obj.points.size(); i++)
+    {
+        ans.push_back(getPointNorm(i));
+    }
+
+    return ans;
+}
+
+void Ring::setTexture(const std::string &path)
+{
+    setTexture(path.c_str());
+}
+void Ring::setTexture(const char *path)
+{
+    if (texture)
+    {
+        delete texture;
+    }
+
+    texture = new QImage(QString(path));
+    if (texture->isNull())
+    {
+        setTexture("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/"
+                   "Sphere/Contents/textures/testcat.jpg");
+        throw ImgOpenErr("Sphere::setTexture() from obj.cpp\n");
+    }
+
+    texture_path = path;
+}
+void Ring::setTexture(QImage *image)
+{
+    if (texture)
+    {
+        delete texture;
+    }
+
+    texture = image;
+}
+
+Points3D Ring::getScaledPoints() const
+{
+    Points3D ans;
+
+    for (auto &x : obj.points)
+    {
+        ans.push_back(Dot3D<double>(x.x*scale, x.y*scale, x.z*scale));
+    }
+
+    return ans;
+}
+
+void Ring::clear()
+{
+    x = 0;
+    y = 0;
+    z = 0;
+    x_ang = 0;
+    y_ang = 0;
+    z_ang = 0;
+    ka = 0;
+    kd = 0;
+    texture_path.clear();
+    if (texture)
+    {
+        delete texture;
+    }
+}
+
+
 DotLight::DotLight() : BaseObject::BaseObject(), Id(250), Ia(250) { }
 DotLight::DotLight(Dot3D<double> &in, double in_Id, double in_Ia)
 {

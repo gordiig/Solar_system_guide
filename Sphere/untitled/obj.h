@@ -18,6 +18,7 @@
 class Obj
 {
     friend class Sphere;
+    friend class Ring;
     friend class Transformer;
 private:
     Points3D points;
@@ -141,8 +142,55 @@ public:
     virtual void setANG_PER_TICK_ROUND_ORBITE(double in) override { ANG_PER_TICK_ROUND_ORBITE = in; }
 
     virtual void clear() override;
+};
 
+class Ring : public VisibleObject
+{
+private:
+    double ANG_PER_TICK_ROUND_SUN;
+    double ANG_PER_TICK_ROUND_ORBITE;
 
+protected:
+    static Obj obj;
+    QImage* texture;
+
+public:
+    Ring();
+    Ring(const Ring&);
+    Ring(Ring&&);
+    Ring(const Points3D&, const Points2D&, const PolyList&);
+    Ring(Points3D&&, Points2D&&, PolyList&&);
+
+    ~Ring();
+
+    Ring& operator = (const Ring&);
+    Ring& operator = (Ring&&);
+
+    // Геттеры
+    virtual Obj& getObj() const override { return obj; }
+    virtual Points3D getPoints() const override { return obj.points; }
+    virtual Points3D getScaledPoints() const override;
+    virtual Points2D getTexCord() const override { return obj.texture_coord; }
+    virtual PolyList getPoly() const override { return obj.poly; }
+    virtual QImage* getTexture() const override { return texture; }
+    virtual MathVector getPointNorm(int) const override;
+    virtual std::vector<MathVector> getAllNorm() const override;
+    virtual double getANG_PER_TICK_ROUND_SUN() const override { return ANG_PER_TICK_ROUND_SUN; }
+    virtual double getANG_PER_TICK_ROUND_ORBITE() const override { return ANG_PER_TICK_ROUND_ORBITE; }
+
+    Dot3D<double>& operator [] (int i) const;
+
+    // Сеттеры
+    virtual void setObj(const Obj& in) override { obj = in; }
+    virtual void setPoints(const Points3D& in) override { obj.points = in; }
+    virtual void setPoly(const PolyList& in) override { obj.poly = in; }
+    virtual void setTexture(const std::string&) override;
+    virtual void setTexture(const char*) override;
+    virtual void setTexture(QImage *) override;
+    virtual void setANG_PER_TICK_ROUND_SUN(double in) override { ANG_PER_TICK_ROUND_SUN = in; }
+    virtual void setANG_PER_TICK_ROUND_ORBITE(double in) override { ANG_PER_TICK_ROUND_ORBITE = in; }
+
+    virtual void clear() override;
 };
 
 class DotLight : public BaseObject
