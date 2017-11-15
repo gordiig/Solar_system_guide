@@ -5,7 +5,7 @@ PlanetSystem::~PlanetSystem()
     clear();
 }
 
-void PlanetSystem::add(Sphere *in)
+void PlanetSystem::add(VisibleObject *in)
 {
     planet_system_object.push_back(in);
 }
@@ -29,16 +29,7 @@ void PlanetSystem::tickMove()
     }
 }
 
-std::vector<Sphere*>::iterator PlanetSystem::begin()
-{
-    return planet_system_object.begin();
-}
-std::vector<Sphere*>::iterator PlanetSystem::end()
-{
-    return planet_system_object.end();
-}
-
-Sphere* PlanetSystem::operator [](int i) const
+VisibleObject* PlanetSystem::operator [](int i) const
 {
     if (i >= planet_system_object.size() || i < 0)
     {
@@ -92,15 +83,6 @@ void SolarSystem::tickMove()
     {
         system->tickMove();
     }
-}
-
-std::vector<PlanetSystem*>::iterator SolarSystem::begin()
-{
-    return planet_systems.begin();
-}
-std::vector<PlanetSystem*>::iterator SolarSystem::end()
-{
-    return planet_systems.end();
 }
 
 PlanetSystem* SolarSystem::operator [](int i) const

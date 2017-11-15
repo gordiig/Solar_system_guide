@@ -21,20 +21,17 @@ public:
 class PlanetSystem : public BaseSystem
 {
 protected:
-    std::vector<Sphere*> planet_system_object;
+    std::vector<VisibleObject*> planet_system_object;
 
 public:
     ~PlanetSystem();
 
-    void add(Sphere*);
+    void add(VisibleObject*);
     virtual void remove(int) override;
 
     virtual void tickMove() override;
 
-    std::vector<Sphere*>::iterator begin();
-    std::vector<Sphere*>::iterator end();
-
-    Sphere* operator [] (int) const;
+    VisibleObject *operator [](int) const;
     virtual int size() const override;
 
     virtual void setObj(Obj&) override;
@@ -56,9 +53,6 @@ public:
     virtual void remove(int) override;
 
     virtual void tickMove() override;
-
-    std::vector<PlanetSystem*>::iterator begin();
-    std::vector<PlanetSystem*>::iterator end();
 
     PlanetSystem* operator [] (int) const;
     virtual int size() const override;
