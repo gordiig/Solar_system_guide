@@ -12,7 +12,7 @@ Transformer::~Transformer()
  * @brief Transformer::move -- Перемещение в пр-ве
  * @param obj -- Объект переноса
  */
-void Transformer::move(const Sphere &obj)
+void Transformer::move(const VisibleObject &obj)
 {
     for (int i = 0; i < points.size(); i++)
     {
@@ -26,7 +26,7 @@ void Transformer::move(const Sphere &obj)
  * @brief Transformer::turn -- Поворот в пр-ве
  * @param obj -- Объект поворота
  */
-void Transformer::turn(const Sphere &obj)
+void Transformer::turn(const VisibleObject &obj)
 {
     double x_ang = obj.x_ang*M_PI/180;
     double y_ang = obj.y_ang*M_PI/180;
@@ -48,7 +48,7 @@ void Transformer::turn(const Sphere &obj)
     }
 }
 
-void Transformer::scale(const Sphere &obj)
+void Transformer::scale(const VisibleObject &obj)
 {
     double sc = obj.scale;
     for (auto &x : points)
@@ -152,9 +152,9 @@ void Transformer::proectToCam(Dot3D<double> &in_dot, const Camera &cam)
  * @param obj -- Трансформирующийся объект
  * @return Массив преобразованных точек
  */
-Points3D& Transformer::transform(const Sphere &obj)
+Points3D& Transformer::transform(const VisibleObject &obj)
 {
-    points = obj.obj.getPoints();
+    points = obj.getPoints();
 
     scale(obj);
     move(obj);
