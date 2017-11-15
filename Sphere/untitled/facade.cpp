@@ -52,7 +52,7 @@ Facade::Facade()
 
     std::string path("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/textures");
     PlanetSystem* sys = nullptr;
-    Sphere* pl = nullptr;
+    VisibleObject* pl = nullptr;
     double base_orbit_ang = solar_system.getOrbitBaseAng();
     double base_sun_ang = solar_system.getSunBaseAng();
 
