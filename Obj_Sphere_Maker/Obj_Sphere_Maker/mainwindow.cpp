@@ -171,6 +171,7 @@ void MainWindow::fWriter(const int n, const int m)
 
 void MainWindow::ringVWriter(const double in_r, const double out_r, const int p_num)
 {
+    std::string vt;
     int count = 0;
     double alpha = ((double)360 / (double)p_num) * M_PI/180;
     double y = 0;
@@ -188,6 +189,15 @@ void MainWindow::ringVWriter(const double in_r, const double out_r, const int p_
             z = roundToN(in_r * sin(alpha*i));
             out_file << "v " << x << " " << y << " " << z << "\n";
 
+            if (alpha < 0)
+            {
+                vt = vt + "vt " + std::to_string(1 + (alpha*i)/2/M_PI) + " 1\n";
+            }
+            else
+            {
+                vt = vt + "vt " + std::to_string((alpha*i)/2/M_PI) + " 1\n";
+            }
+
             count++;
         }
 
@@ -199,11 +209,22 @@ void MainWindow::ringVWriter(const double in_r, const double out_r, const int p_
             z = roundToN(out_r * sin(alpha*i));
             out_file << "v " << x << " " << y << " " << z << "\n";
 
+            if (alpha < 0)
+            {
+                vt = vt + "vt " + std::to_string(1 + (alpha*i)/2/M_PI) + " 1\n";
+            }
+            else
+            {
+                vt = vt + "vt " + std::to_string((alpha*i)/2/M_PI) + " 1\n";
+            }
+
             count++;
         }
     }
 
+    vt = vt + "# " + std::to_string(count) + "dots\n";
     out_file << "# " << count << " dots \n";
+    out_file << "\n" << vt << "\n";
 }
 
 void MainWindow::ringFWriter(const int p_num)
