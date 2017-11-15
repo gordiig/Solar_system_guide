@@ -55,12 +55,18 @@ Facade::Facade()
     VisibleObject* pl = nullptr;
     double base_orbit_ang = solar_system.getOrbitBaseAng();
     double base_sun_ang = solar_system.getSunBaseAng();
+    reader.openFile("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/new.obj");
+    Obj sph = reader.read();
+    reader.openFile("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/ring.obj");
+    Obj rng = reader.read();
+
 
 
     ////////////////////////////// Солнце //////////////////////////////
     sys = new PlanetSystem;
 
     pl = new Sphere;
+    pl->setObj(sph);
     pl->setKa(0.95);
     pl->setKd(0);
     pl->setZAng(ang_axis_to_orbit['S']);
@@ -166,6 +172,17 @@ Facade::Facade()
     pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['s']*base_orbit_ang);
     pl->setTexture(path+std::string("/saturn/saturn.jpg"));
     sys->add(pl);
+
+    pl = new Ring;
+    pl->setObj(rng);
+    pl->setScale(radius_koef['s']*1.3);
+    pl->setZAng(ang_axis_to_orbit['s']);
+    pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['s']);
+    pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['s']*base_sun_ang);
+    pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['s']*base_orbit_ang);
+    pl->setTexture(path+std::string("/testcat.jpg"));
+    sys->add(pl);
+
 
     solar_system.add(sys);
     ////////////////////////////// !Сатурн //////////////////////////////

@@ -19,7 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsView->grabMouse();
 
     im.fill(Qt::black);
-    on_ButOpen_clicked();
+    tmr.start();
+    //on_ButOpen_clicked();
 
     /*
     try

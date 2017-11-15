@@ -20,6 +20,7 @@ struct GraphStruct
     GraphStruct(MyDisplay& in) : im(in) {}
 };
 
+
 class Facade
 {
 private:
