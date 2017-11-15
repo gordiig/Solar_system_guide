@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    file_dir = "/Users/gordiig/Desktop/new.obj";
+    file_dir = "/Users/gordiig/Desktop/";
     ui->tabWidget->setTabText(0, "Sphere");
     ui->tabWidget->setTabText(1, "Ring");
 }
@@ -18,20 +18,40 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_Start_Button_clicked()
 {
-    double radius = ui->Radius_SpinBox->value();
-    int n = ui->mer_SpinBox->value();
-    int m = ui->par_SpinBox->value() + 1;
-
-    if ((m % 2) == 1)
+    if (ui->tabWidget->currentIndex() == 0)
     {
-        ui->Err_Label->setText("Ошибка!\nНеверно указано количество параллелей!");
-        return;
+        double radius = ui->Radius_SpinBox->value();
+        int n = ui->mer_SpinBox->value();
+        int m = ui->par_SpinBox->value() + 1;
+
+        if ((m % 2) == 1)
+        {
+            ui->Err_Label->setText("Ошибка!\nНеверно указано количество параллелей!");
+            return;
+        }
+
+        out_file.open((file_dir + "new.obj").toStdString());
+
+        vWriter(n, m, radius);
+        fWriter(n+1, m);
     }
+    else if (ui->tabWidget->currentIndex() == 1)
+    {
+        double inner_radius = ui->Spin_Ring_Inner_Radius->value();
+        double outer_radius = ui->Spin_Ring_Outer_Radius->value();
+        int poly_num = ui->SpinRingPolys->value();
 
-    out_file.open(file_dir.toStdString());
+        if (inner_radius >= outer_radius)
+        {
+            ui->Err_Label->setText("Ошибка!\nНеверно указаны внешний и внутренний радиусы кольца!");
+            return;
+        }
 
-    vWriter(n, m, radius);
-    fWriter(n+1, m);
+        out_file.open((file_dir + "ring.obj").toStdString());
+
+        ringVWriter(inner_radius, outer_radius, poly_num);
+        ringFWriter(poly_num);
+    }
 
     out_file.close();
     ui->Err_Label->setText("Создание файла прошло успешно!");
@@ -147,6 +167,53 @@ void MainWindow::fWriter(const int n, const int m)
     */
 
     out_file << "# " << poly_cnt << " polygons\n";
+}
+
+void MainWindow::ringVWriter(const double in_r, const double out_r, const int p_num)
+{
+    int count = 0;
+    double alpha = ((double)360 / (double)p_num) * M_PI/180;
+    double y = 0;
+    double x = in_r;
+    double z = 0;
+
+    for (int i = 0; i <= p_num; i++)
+    {
+        x = roundToN(in_r * cos(alpha*i));
+        z = roundToN(in_r * sin(alpha*i));
+        out_file << "v " << x << " " << y << " " << z << "\n";
+
+        count++;
+    }
+
+    x = out_r;
+    z = 0;
+    for (int i = 0; i <= p_num; i++)
+    {
+        x = roundToN(out_r * cos(alpha*i));
+        z = roundToN(out_r * sin(alpha*i));
+        out_file << "v " << x << " " << y << " " << z << "\n";
+
+        count++;
+    }
+
+    out_file << "# " << count << " dots \n";
+}
+
+void MainWindow::ringFWriter(const int p_num)
+{
+    out_file << "\no Ring \n";
+
+    int cnt = 0;
+    int point_num = p_num + 1;
+
+    for (int i = 0; i < p_num; i++)
+    {
+        out_file << "f " << i+1 << " " << i+point_num+1 << " " << i+point_num+1+1 << " " << i+1+1 << "\n";
+        cnt++;
+    }
+
+    out_file << "# " << cnt << " polygons\n";
 }
 
 void MainWindow::on_Dir_Button_clicked()

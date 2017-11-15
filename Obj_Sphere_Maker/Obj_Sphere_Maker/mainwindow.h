@@ -39,6 +39,9 @@ private:
     void vWriter(const int, const int, const double);
     void fWriter(const int,  const int);
 
+    void ringVWriter(const double, const double, const int);
+    void ringFWriter(const int);
+
     double roundToN(double, int n = 4);
 };
 
