@@ -11,9 +11,9 @@
 
 //class MathVector;
 
-typedef std::vector<Dot3D<double> > Points3D;
-typedef std::vector<Dot2D<double> > Points2D;
-typedef std::vector<std::list<int> > PolyList;
+//typedef std::vector<Dot3D<double> > Points3D;
+//typedef std::vector<Dot2D<double> > Points2D;
+//typedef std::vector<std::list<int> > PolyList;
 
 class Obj
 {
@@ -119,28 +119,28 @@ public:
     Sphere& operator = (Sphere&&);
 
     // Геттеры
-    Obj& getObj() const { return obj; }
-    Points3D getPoints() const { return obj.points; }
-    Points3D getScaledPoints() const;
-    Points2D getTexCord() const { return obj.texture_coord; }
-    PolyList getPoly() const { return obj.poly; }
-    QImage* getTexture() const { return texture; }
-    MathVector getPointNorm(int) const;
-    std::vector<MathVector> getAllNorm() const;
-    double getANG_PER_TICK_ROUND_SUN() const { return ANG_PER_TICK_ROUND_SUN; }
-    double getANG_PER_TICK_ROUND_ORBITE() const { return ANG_PER_TICK_ROUND_ORBITE; }
+    virtual Obj& getObj() const override { return obj; }
+    virtual Points3D getPoints() const override { return obj.points; }
+    virtual Points3D getScaledPoints() const override;
+    virtual Points2D getTexCord() const override { return obj.texture_coord; }
+    virtual PolyList getPoly() const override { return obj.poly; }
+    virtual QImage* getTexture() const override { return texture; }
+    virtual MathVector getPointNorm(int) const override;
+    virtual std::vector<MathVector> getAllNorm() const override;
+    virtual double getANG_PER_TICK_ROUND_SUN() const override { return ANG_PER_TICK_ROUND_SUN; }
+    virtual double getANG_PER_TICK_ROUND_ORBITE() const override { return ANG_PER_TICK_ROUND_ORBITE; }
 
     Dot3D<double>& operator [] (int i) const;
 
     // Сеттеры
-    void setObj(const Obj& in) { obj = in; }
-    void setPoints(const Points3D& in) { obj.points = in; }
-    void setPoly(const PolyList& in) { obj.poly = in; }
-    void setTexture(const std::string&);
-    void setTexture(const char*);
-    void setTexture(QImage *);
-    void setANG_PER_TICK_ROUND_SUN(double in) { ANG_PER_TICK_ROUND_SUN = in; }
-    void setANG_PER_TICK_ROUND_ORBITE(double in) { ANG_PER_TICK_ROUND_ORBITE = in; }
+    virtual void setObj(const Obj& in) override { obj = in; }
+    virtual void setPoints(const Points3D& in) override { obj.points = in; }
+    virtual void setPoly(const PolyList& in) override { obj.poly = in; }
+    virtual void setTexture(const std::string&) override;
+    virtual void setTexture(const char*) override;
+    virtual void setTexture(QImage *) override;
+    virtual void setANG_PER_TICK_ROUND_SUN(double in) override { ANG_PER_TICK_ROUND_SUN = in; }
+    virtual void setANG_PER_TICK_ROUND_ORBITE(double in) override { ANG_PER_TICK_ROUND_ORBITE = in; }
 
     virtual void clear() override;
 

@@ -2,9 +2,14 @@
 #define BASEOBJECTS_H
 
 #include "errors.h"
+#include <list>
 
 #define BASE_KA 0.3
 #define BASE_KD 0.65
+
+class Obj;
+class QImage;
+class MathVector;
 
 template <typename T>
 struct Dot2D
@@ -125,6 +130,10 @@ struct Dot3D : public Dot2D<T>
     }
 };
 
+typedef std::vector<Dot3D<double> > Points3D;
+typedef std::vector<Dot2D<double> > Points2D;
+typedef std::vector<std::list<int> > PolyList;
+
 class BaseObject
 {
 protected:
@@ -208,6 +217,16 @@ public:
     double getKa() const { return ka; }
     double getScale() const { return scale; }
     std::string getTexturePath() const { return texture_path; }
+    virtual Obj& getObj() const = 0;
+    virtual Points3D getPoints() const = 0;
+    virtual Points3D getScaledPoints() const = 0;
+    virtual Points2D getTexCord() const = 0;
+    virtual PolyList getPoly() const = 0;
+    virtual QImage* getTexture() const = 0;
+    virtual MathVector getPointNorm(int) const = 0;
+    virtual std::vector<MathVector> getAllNorm() const = 0;
+    virtual double getANG_PER_TICK_ROUND_SUN() const = 0;
+    virtual double getANG_PER_TICK_ROUND_ORBITE() const = 0;
 
     // Сеттеры
     void setKd(double in) { kd = in; }
@@ -215,6 +234,14 @@ public:
     void setScale(double in) { scale = in; }
     void setTexturePath(const char* in) { texture_path = std::string(in); }
     void setTexturePath(const std::string& in) { texture_path = in; }
+    virtual void setObj(const Obj& in) = 0;
+    virtual void setPoints(const Points3D& in) = 0;
+    virtual void setPoly(const PolyList& in) = 0;
+    virtual void setTexture(const std::string&) = 0;
+    virtual void setTexture(const char*) = 0;
+    virtual void setTexture(QImage *) = 0;
+    virtual void setANG_PER_TICK_ROUND_SUN(double in) = 0;
+    virtual void setANG_PER_TICK_ROUND_ORBITE(double in) = 0;
 
     virtual void clear() override;
 };
