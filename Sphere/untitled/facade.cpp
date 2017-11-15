@@ -259,7 +259,7 @@ void Facade::draw(GraphStruct &gr)
     Transformer trans;
     gr.im.clrZBuf();
     gr.im.fill(Qt::black);
-    Sphere* planet = nullptr;
+    VisibleObject* planet = nullptr;
     Dot3D<double> pl_cent;
     for (int i = 0; i < solar_system.size(); i++)
     {
