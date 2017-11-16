@@ -55,7 +55,7 @@ void Drawer::drawSphere(GraphicsToDraw &gr)
 
     for (int i = 0; i < poly.size(); i++)
     {
-        if (gr.cam.isPolyViz(gr.obj.makeCut(i), gr.c_d))
+        if (gr.cam.isPolyViz(gr.obj.makeCut(i), gr.c_d, gr.is_planet))
         {
             PolyToDraw tmp(gr, i);
             drawPoly(tmp);

@@ -151,6 +151,8 @@ public:
 
     virtual std::vector<double> calcI(const DotLight&) const override;
 
+    virtual bool isPlanet() const override { return true; }
+
     virtual void clear() override;
 };
 
@@ -209,6 +211,8 @@ public:
     virtual void setANG_PER_TICK_ROUND_ORBITE(double in) override { ANG_PER_TICK_ROUND_ORBITE = in; }
 
     virtual std::vector<double> calcI(const DotLight&) const override;
+
+    virtual bool isPlanet() const override { return false; }
 
     virtual void clear() override;
 };

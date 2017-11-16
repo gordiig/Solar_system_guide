@@ -180,7 +180,7 @@ Facade::Facade()
     pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['s']);
     pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['s']*base_sun_ang);
     pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['s']*base_orbit_ang);
-    pl->setTexture(path+std::string("/testcat.jpg"));
+    pl->setTexture(path+std::string("/sun.jpg"));
     sys->add(pl);
 
 
@@ -286,7 +286,7 @@ void Facade::draw(GraphStruct &gr)
             pl_cent = planet->getPosDot();
 
             Obj draw_object = planet->getTransformedObj();
-            std::vector<double> I = planet->calcI(light);/*light.calcI(draw_object, pl_cent, planet->getKa(), planet->getKd())*/;
+            std::vector<double> I = planet->calcI(light);
             trans.proectToCam(draw_object, cam);
             trans.proectToCam(pl_cent, cam);
             if (pl_cent.z <= 0)
@@ -294,11 +294,9 @@ void Facade::draw(GraphStruct &gr)
                 continue;
             }
 
-            //DotLight draw_light(trans.transform(light, cam), 255, 255);
-
             texture = planet->getTexture();
 
-            Drwr::GraphicsToDraw gr_in(gr.im, cam, draw_object, texture, pl_cent, I);
+            Drwr::GraphicsToDraw gr_in(gr.im, cam, draw_object, texture, pl_cent, I, planet->isPlanet());
             dr.draw(gr_in);
 
             trans.clear();

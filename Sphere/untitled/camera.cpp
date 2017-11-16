@@ -314,8 +314,10 @@ bool Camera::isPolyViz(const Points3D &points) const
 {
     return true;
 }
-bool Camera::isPolyViz(const Points3D &points, Dot3D<double> &cent_dot) const
+bool Camera::isPolyViz(const Points3D &points, Dot3D<double> &cent_dot, bool is_planet) const
 {
+    if (!is_planet) return true;
+
     if (points.size() < 3)
     {
         throw NotEnoughPointsForPoly("\nIn file \"Camera.cpp\" in Camera::IsPolyVis()\n");

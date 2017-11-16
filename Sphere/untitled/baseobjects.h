@@ -11,6 +11,7 @@ class Obj;
 class QImage;
 class MathVector;
 class DotLight;
+class Camera;
 
 template <typename T>
 struct Dot2D
@@ -254,6 +255,8 @@ public:
     virtual void setANG_PER_TICK_ROUND_ORBITE(double in) = 0;
 
     virtual std::vector<double> calcI(const DotLight&) const = 0;
+
+    virtual bool isPlanet() const = 0;
 
     virtual void clear() override;
 };

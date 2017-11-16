@@ -17,10 +17,11 @@ namespace Drwr
         QImage* texture;
         Dot3D<double> c_d;
         std::vector<double> I;
+        bool is_planet;
 
         BaseGraphcsToDraw(MyDisplay& in_im, Camera& in_cam, QImage* in_tex, Dot3D<double>& in_c_d,
-                          std::vector<double>& in_I) :
-            im(in_im), cam(in_cam), texture(in_tex), c_d(in_c_d), I(in_I){ }
+                          std::vector<double>& in_I, bool in_is_planet) :
+            im(in_im), cam(in_cam), texture(in_tex), c_d(in_c_d), I(in_I), is_planet(in_is_planet){ }
 
         BaseGraphcsToDraw(MyDisplay& in_im, Camera& in_cam, QImage* in_tex, Dot3D<double>& in_c_d) :
             im(in_im), cam(in_cam), texture(in_tex), c_d(in_c_d){ }
@@ -30,8 +31,8 @@ namespace Drwr
         Obj& obj;
 
         GraphicsToDraw(MyDisplay& in_im, Camera& in_cam, Obj& in_obj, QImage* in_tex, Dot3D<double>& in_c_d,
-                       std::vector<double> in_I) :
-            BaseGraphcsToDraw::BaseGraphcsToDraw(in_im, in_cam, in_tex, in_c_d, in_I), obj(in_obj) { }
+                       std::vector<double> in_I, bool in_is_planet) :
+            BaseGraphcsToDraw::BaseGraphcsToDraw(in_im, in_cam, in_tex, in_c_d, in_I, in_is_planet), obj(in_obj) { }
     };
     struct PolyToDraw : public BaseGraphcsToDraw
     {
