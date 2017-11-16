@@ -190,6 +190,11 @@ protected:
     double kd;
     std::string texture_path;
 
+    virtual void transform() = 0;
+    virtual void move() = 0;
+    virtual void turn() = 0;
+    virtual void resize() = 0;
+
 public:
     VisibleObject();
     VisibleObject(const VisibleObject&);
@@ -220,6 +225,7 @@ public:
     double getScale() const { return scale; }
     std::string getTexturePath() const { return texture_path; }
     virtual Obj& getObj() const = 0;
+    virtual Obj& getTransformedObj() = 0;
     virtual Points3D getPoints() const = 0;
     virtual Points3D getScaledPoints() const = 0;
     virtual Points2D getTexCord() const = 0;
@@ -237,6 +243,7 @@ public:
     void setTexturePath(const char* in) { texture_path = std::string(in); }
     void setTexturePath(const std::string& in) { texture_path = in; }
     virtual void setObj(const Obj& in) = 0;
+    virtual void setTransformedObj(const Obj& in) = 0;
     virtual void setPoints(const Points3D& in) = 0;
     virtual void setPoly(const PolyList& in) = 0;
     virtual void setTexture(const std::string&) = 0;

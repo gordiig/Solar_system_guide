@@ -86,8 +86,14 @@ private:
     double ANG_PER_TICK_ROUND_SUN;
     double ANG_PER_TICK_ROUND_ORBITE;
 
+    virtual void transform() override;
+    virtual void move() override;
+    virtual void turn() override;
+    virtual void resize() override;
+
 protected:
     static Obj obj;
+    static Obj transformed_obj;
     QImage* texture;
 
 public:
@@ -119,6 +125,7 @@ public:
 
     // Геттеры
     virtual Obj& getObj() const override { return obj; }
+    virtual Obj& getTransformedObj() override { transform(); return transformed_obj; }
     virtual Points3D getPoints() const override { return obj.points; }
     virtual Points3D getScaledPoints() const override;
     virtual Points2D getTexCord() const override { return obj.texture_coord; }
@@ -133,6 +140,7 @@ public:
 
     // Сеттеры
     virtual void setObj(const Obj& in) override { obj = in; }
+    virtual void setTransformedObj(const Obj& in) override { transformed_obj = in; }
     virtual void setPoints(const Points3D& in) override { obj.points = in; }
     virtual void setPoly(const PolyList& in) override { obj.poly = in; }
     virtual void setTexture(const std::string&) override;
@@ -150,8 +158,14 @@ private:
     double ANG_PER_TICK_ROUND_SUN;
     double ANG_PER_TICK_ROUND_ORBITE;
 
+    virtual void transform() override;
+    virtual void move() override;
+    virtual void turn() override;
+    virtual void resize() override;
+
 protected:
     static Obj obj;
+    static Obj transformed_obj;
     QImage* texture;
 
 public:
@@ -168,6 +182,7 @@ public:
 
     // Геттеры
     virtual Obj& getObj() const override { return obj; }
+    virtual Obj& getTransformedObj() override { transform(); return transformed_obj; }
     virtual Points3D getPoints() const override { return obj.points; }
     virtual Points3D getScaledPoints() const override;
     virtual Points2D getTexCord() const override { return obj.texture_coord; }
@@ -182,6 +197,7 @@ public:
 
     // Сеттеры
     virtual void setObj(const Obj& in) override { obj = in; }
+    virtual void setTransformedObj(const Obj& in) override { transformed_obj = in; }
     virtual void setPoints(const Points3D& in) override { obj.points = in; }
     virtual void setPoly(const PolyList& in) override { obj.poly = in; }
     virtual void setTexture(const std::string&) override;

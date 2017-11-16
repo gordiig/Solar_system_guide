@@ -110,6 +110,7 @@ std::vector<MathVector> Obj::calcPointNorm(const int poly_num) const
 }
 
 Obj Sphere::obj;
+Obj Sphere::transformed_obj;
 
 Sphere::Sphere() : VisibleObject::VisibleObject(), texture(nullptr),
     ANG_PER_TICK_ROUND_SUN(1), ANG_PER_TICK_ROUND_ORBITE(1){ }
@@ -282,6 +283,53 @@ Points3D Sphere::getScaledPoints() const
     return ans;
 }
 
+void Sphere::transform()
+{
+    transformed_obj = obj;
+    resize();
+    move();
+    turn();
+}
+void Sphere::resize()
+{
+    for (int i = 0; i < transformed_obj.points.size(); i++)
+    {
+        transformed_obj.points[i].x *= scale;
+        transformed_obj.points[i].y *= scale;
+        transformed_obj.points[i].z *= scale;
+    }
+}
+void Sphere::turn()
+{
+    double _x_ang = x_ang*M_PI/180;
+    double _y_ang = y_ang*M_PI/180;
+    double _z_ang = z_ang*M_PI/180;
+
+    for (int i = 0; i < transformed_obj.points.size(); i++)
+    {
+        double y_pr = transformed_obj.points[i].y;
+        transformed_obj.points[i].y = y + (y_pr-y)*cos(_x_ang) + (transformed_obj.points[i].z-z)*sin(_x_ang);
+        transformed_obj.points[i].z = z - (y_pr-y)*sin(_x_ang) + (transformed_obj.points[i].z-z)*cos(_x_ang);
+
+        double x_pr = transformed_obj.points[i].x;
+        transformed_obj.points[i].x = x + (x_pr-x)*cos(_y_ang) - (transformed_obj.points[i].z-z)*sin(_y_ang);
+        transformed_obj.points[i].z = z + (x_pr-x)*sin(_y_ang) + (transformed_obj.points[i].z-z)*cos(_y_ang);
+
+        x_pr = transformed_obj.points[i].x;
+        transformed_obj.points[i].x = x + (x_pr-x)*cos(_z_ang) - (transformed_obj.points[i].y-y)*sin(_z_ang);
+        transformed_obj.points[i].y = y + (x_pr-x)*sin(_z_ang) + (transformed_obj.points[i].y-y)*cos(_z_ang);
+    }
+}
+void Sphere::move()
+{
+    for (int i = 0; i < transformed_obj.points.size(); i++)
+    {
+        transformed_obj.points[i].x += x;
+        transformed_obj.points[i].y += y;
+        transformed_obj.points[i].z += z;
+    }
+}
+
 void Sphere::clear()
 {
     x = 0;
@@ -301,6 +349,7 @@ void Sphere::clear()
 
 
 Obj Ring::obj;
+Obj Ring::transformed_obj;
 Ring::Ring() : VisibleObject::VisibleObject(), texture(nullptr) {}
 
 Ring::Ring(const Points3D &in_points, const Points2D &in_tex, const PolyList &in_poly)
@@ -443,6 +492,53 @@ Points3D Ring::getScaledPoints() const
     }
 
     return ans;
+}
+
+void Ring::transform()
+{
+    transformed_obj = obj;
+    resize();
+    move();
+    turn();
+}
+void Ring::resize()
+{
+    for (int i = 0; i < transformed_obj.points.size(); i++)
+    {
+        transformed_obj.points[i].x *= scale;
+        transformed_obj.points[i].y *= scale;
+        transformed_obj.points[i].z *= scale;
+    }
+}
+void Ring::turn()
+{
+    double _x_ang = x_ang*M_PI/180;
+    double _y_ang = y_ang*M_PI/180;
+    double _z_ang = z_ang*M_PI/180;
+
+    for (int i = 0; i < transformed_obj.points.size(); i++)
+    {
+        double y_pr = transformed_obj.points[i].y;
+        transformed_obj.points[i].y = y + (y_pr-y)*cos(_x_ang) + (transformed_obj.points[i].z-z)*sin(_x_ang);
+        transformed_obj.points[i].z = z - (y_pr-y)*sin(_x_ang) + (transformed_obj.points[i].z-z)*cos(_x_ang);
+
+        double x_pr = transformed_obj.points[i].x;
+        transformed_obj.points[i].x = x + (x_pr-x)*cos(_y_ang) - (transformed_obj.points[i].z-z)*sin(_y_ang);
+        transformed_obj.points[i].z = z + (x_pr-x)*sin(_y_ang) + (transformed_obj.points[i].z-z)*cos(_y_ang);
+
+        x_pr = transformed_obj.points[i].x;
+        transformed_obj.points[i].x = x + (x_pr-x)*cos(_z_ang) - (transformed_obj.points[i].y-y)*sin(_z_ang);
+        transformed_obj.points[i].y = y + (x_pr-x)*sin(_z_ang) + (transformed_obj.points[i].y-y)*cos(_z_ang);
+    }
+}
+void Ring::move()
+{
+    for (int i = 0; i < transformed_obj.points.size(); i++)
+    {
+        transformed_obj.points[i].x += x;
+        transformed_obj.points[i].y += y;
+        transformed_obj.points[i].z += z;
+    }
 }
 
 void Ring::clear()

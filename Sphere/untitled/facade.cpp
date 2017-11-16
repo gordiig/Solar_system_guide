@@ -285,7 +285,7 @@ void Facade::draw(GraphStruct &gr)
             planet = (*solar_system[i])[j];
             pl_cent = planet->getPosDot();
 
-            Obj draw_object(trans.transform(*planet), planet->getTexCord(), planet->getPoly());
+            Obj draw_object = planet->getTransformedObj();
             std::vector<double> I = light.calcI(draw_object, pl_cent, planet->getKa(), planet->getKd());
             trans.proectToCam(draw_object, cam);
             trans.proectToCam(pl_cent, cam);
