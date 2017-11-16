@@ -286,7 +286,7 @@ void Facade::draw(GraphStruct &gr)
             pl_cent = planet->getPosDot();
 
             Obj draw_object = planet->getTransformedObj();
-            std::vector<double> I = light.calcI(draw_object, pl_cent, planet->getKa(), planet->getKd());
+            std::vector<double> I = planet->calcI(light);/*light.calcI(draw_object, pl_cent, planet->getKa(), planet->getKd())*/;
             trans.proectToCam(draw_object, cam);
             trans.proectToCam(pl_cent, cam);
             if (pl_cent.z <= 0)

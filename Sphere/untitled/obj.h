@@ -149,6 +149,8 @@ public:
     virtual void setANG_PER_TICK_ROUND_SUN(double in) override { ANG_PER_TICK_ROUND_SUN = in; }
     virtual void setANG_PER_TICK_ROUND_ORBITE(double in) override { ANG_PER_TICK_ROUND_ORBITE = in; }
 
+    virtual std::vector<double> calcI(const DotLight&) const override;
+
     virtual void clear() override;
 };
 
@@ -205,6 +207,8 @@ public:
     virtual void setTexture(QImage *) override;
     virtual void setANG_PER_TICK_ROUND_SUN(double in) override { ANG_PER_TICK_ROUND_SUN = in; }
     virtual void setANG_PER_TICK_ROUND_ORBITE(double in) override { ANG_PER_TICK_ROUND_ORBITE = in; }
+
+    virtual std::vector<double> calcI(const DotLight&) const override;
 
     virtual void clear() override;
 };

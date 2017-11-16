@@ -227,7 +227,7 @@ MathVector Sphere::getPointNorm(int pt_n) const
         throw VecRangeErr("From getPointNorm() in obj.cpp");
     }
 
-    return MathVector(obj.points[pt_n].x-x, obj.points[pt_n].y-y, obj.points[pt_n].z-z);
+    return MathVector(transformed_obj.points[pt_n].x-x, transformed_obj.points[pt_n].y-y, transformed_obj.points[pt_n].z-z);
 }
 std::vector<MathVector> Sphere::getAllNorm() const
 {
@@ -328,6 +328,22 @@ void Sphere::move()
         transformed_obj.points[i].y += y;
         transformed_obj.points[i].z += z;
     }
+}
+
+std::vector<double> Sphere::calcI(const DotLight &light) const
+{
+    std::vector<double> ans;
+    Points3D points = transformed_obj.getPoints();
+    double I = 0;
+
+    for (int i = 0; i < points.size(); i++)
+    {
+        MathVector norm = getPointNorm(i);
+        I = light.getIa()*ka + light.calcDiffuse(points[i], norm.getEd())*kd;
+        ans.push_back(I);
+    }
+
+    return ans;
 }
 
 void Sphere::clear()
@@ -433,12 +449,29 @@ MathVector Ring::getPointNorm(int pt_n) const
         throw VecRangeErr("From getPointNorm() in obj.cpp");
     }
 
+    MathVector norm(0, -1, 0);
     if (pt_n < obj.points.size()/2)
     {
-        return MathVector(0, -1, 0);
+        norm.setY(1);
     }
 
-    return MathVector(0, 1, 0);
+    double _x_ang = x_ang*M_PI/180;
+    double _y_ang = y_ang*M_PI/180;
+    double _z_ang = z_ang*M_PI/180;
+
+    double y_pr = norm.getY();
+    norm.setY(y + (y_pr-y)*cos(_x_ang) + (norm.getZ()-z)*sin(_x_ang));
+    norm.setZ(z - (y_pr-y)*sin(_x_ang) + (norm.getZ()-z)*cos(_x_ang));
+
+    double x_pr = norm.getX();
+    norm.setX(x + (x_pr-x)*cos(_y_ang) - (norm.getZ()-z)*sin(_y_ang));
+    norm.setZ(z + (x_pr-x)*sin(_y_ang) + (norm.getZ()-z)*cos(_y_ang));
+
+    x_pr = norm.getX();
+    norm.setX(x + (x_pr-x)*cos(_z_ang) - (norm.getY()-y)*sin(_z_ang));
+    norm.setY(y + (x_pr-x)*sin(_z_ang) + (norm.getY()-y)*cos(_z_ang));
+
+    return norm;
 }
 std::vector<MathVector> Ring::getAllNorm() const
 {
@@ -539,6 +572,23 @@ void Ring::move()
         transformed_obj.points[i].y += y;
         transformed_obj.points[i].z += z;
     }
+}
+
+std::vector<double> Ring::calcI(const DotLight &light) const
+{
+    std::vector<double> ans;
+    Points3D points = transformed_obj.points;
+    double I = 0;
+
+    for (int i = 0; i < points.size(); i++)
+    {
+        MathVector norm = getPointNorm(i);
+
+        I = light.getIa()*ka + light.calcDiffuse(points[i], norm.getEd())*kd;
+        ans.push_back(I);
+    }
+
+    return ans;
 }
 
 void Ring::clear()
