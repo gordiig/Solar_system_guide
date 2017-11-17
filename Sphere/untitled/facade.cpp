@@ -2,53 +2,58 @@
 
 Facade::Facade()
 {
-    std::map<char, double> radius_koef = {{'m', 5.000},
-                                          {'v', 9.600},
-                                          {'e', 10.00},
-                                          {'M', 8.000},
-                                          {'j', 38.70},
-                                          {'s', 33.40},
-                                          {'u', 20.00},
-                                          {'n', 19.50},
-                                          {'S', 218.0}};
+    std::map<std::string, double> radius_koef = { {"mercury", 5.000},
+                                                  {"venus", 9.600},
+                                                  {"earth", 10.00},
+                                                  {"mars", 8.000},
+                                                  {"jupiter", 38.70},
+                                                  {"saturn", 33.40},
+                                                  {"uranus", 20.00},
+                                                  {"neptune", 19.50},
+                                                  {"sun", 218.0},
+                                                  {"moon", 2.5} };
 
-    std::map<char, double> distance_koef = {{'m', 0.387},
-                                            {'v', 0.723},
-                                            {'e', 1.000},
-                                            {'M', 1.524},
-                                            {'j', 3.004},
-                                            {'s', 5.252},
-                                            {'u', 7.19},
-                                            {'n', 9.07}};
+    std::map<std::string, double> distance_koef = { {"mercury", 0.387},
+                                                    {"venus", 0.723},
+                                                    {"earth", 1.000},
+                                                    {"mars", 1.524},
+                                                    {"jupiter", 3.004},
+                                                    {"saturn", 5.252},
+                                                    {"uranus", 7.19},
+                                                    {"neptune", 9.07},
+                                                    {"moon", 1.05} };
 
-    std::map<char, double> ang_axis_to_orbit = {{'m', 7.00},
-                                                {'v', 3.50},
-                                                {'e', 23.5},
-                                                {'M', 25.2},
-                                                {'j', 3.00},
-                                                {'s', 26.7},
-                                                {'u', 82.0},
-                                                {'n', 29.0},
-                                                {'S', 7.40}};
+    std::map<std::string, double> ang_axis_to_orbit = { {"mercury", 7.00},
+                                                        {"venus", 3.50},
+                                                        {"earth", 23.5},
+                                                        {"mars", 25.2},
+                                                        {"jupiter", 3.00},
+                                                        {"saturn", 26.7},
+                                                        {"uranus", 82.0},
+                                                        {"neptune", 29.0},
+                                                        {"sun", 7.40},
+                                                        {"moon", 1.54}};
 
-    std::map<char, double> period_of_orbit_rotation = {{'m', 1/58.8},
-                                                       {'v', 1/243},
-                                                       {'e', 1},
-                                                       {'M', 1},
-                                                       {'j', 24/10},
-                                                       {'s', 24/10},
-                                                       {'u', 24/10},
-                                                       {'n', 24/15},
-                                                       {'S', 1/24}};
+    std::map<std::string, double> period_of_orbit_rotation = { {"mercury", 1/58.8},
+                                                               {"venus", 1/243},
+                                                               {"earth", 1},
+                                                               {"mars", 1},
+                                                               {"jupiter", 24/10},
+                                                               {"saturn", 24/10},
+                                                               {"uranus", 24/10},
+                                                               {"neptune", 24/15},
+                                                               {"sun", 1/24},
+                                                               {"moon", 1/27}};
 
-    std::map<char, double> sidereal_period = {{'m', 365/88},
-                                              {'v', 365/225},
-                                              {'e', 1},
-                                              {'M', 1/1.88},
-                                              {'j', 1/11.9},
-                                              {'s', 1/29.5},
-                                              {'u', 1/84.0},
-                                              {'n', 1/164}};
+    std::map<std::string, double> sidereal_period = { {"mercury", 365/88},
+                                                      {"venus", 365/225},
+                                                      {"earth", 1},
+                                                      {"mars", 1/1.88},
+                                                      {"jupiter", 1/11.9},
+                                                      {"saturn", 1/29.5},
+                                                      {"uranus", 1/84.0},
+                                                      {"neptune", 1/164},
+                                                      {"moon", 10} };
 
     try
     {
@@ -62,6 +67,7 @@ Facade::Facade()
         Obj sph = reader.read();
         reader.openFile("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/ring.obj");
         Obj rng = reader.read();
+        Dot3D<double> pl_cent;
 
 
         ////////////////////////////// Солнце //////////////////////////////
@@ -71,10 +77,11 @@ Facade::Facade()
         pl->setObj(sph);
         pl->setKa(0.95);
         pl->setKd(0);
-        pl->setZAng(ang_axis_to_orbit['S']);
+        pl->setZAng(ang_axis_to_orbit["sun"]);
         pl->setANG_PER_TICK_ROUND_SUN(0);
-        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['S']*base_orbit_ang);
-        pl->setScale(radius_koef['S']);
+        pl->setANG_PER_TICK_ROUND_TURNCENT(0);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation["sun"]*base_orbit_ang);
+        pl->setScale(radius_koef["sun"]);
         pl->setTexture(path+std::string("/sun.jpg"));
         sys->add(pl);
 
@@ -86,11 +93,12 @@ Facade::Facade()
         sys = new PlanetSystem;
 
         pl = new Sphere;
-        pl->setScale(radius_koef['m']);
-        pl->setZAng(ang_axis_to_orbit['m']);
-        pl->setZ(-EARTH_DISTANCE_FROM_SUN*distance_koef['m']);
-        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['m']*base_sun_ang);
-        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['m']*base_orbit_ang);
+        pl->setScale(radius_koef["mercury"]);
+        pl->setZAng(ang_axis_to_orbit["mercury"]);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN*distance_koef["mercury"]);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period["mercury"]*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation["mercury"]*base_orbit_ang);
+        pl->setANG_PER_TICK_ROUND_TURNCENT(sidereal_period["mercury"]*base_sun_ang);
         //pl->setX(2000);
         pl->setTexture(path+std::string("/mercury/mercury.jpg"));
         sys->add(pl);
@@ -104,11 +112,12 @@ Facade::Facade()
         sys = new PlanetSystem;
 
         pl = new Sphere;
-        pl->setScale(radius_koef['v']);
-        pl->setZAng(ang_axis_to_orbit['v']);
-        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['v']);
-        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['v']*base_sun_ang);
-        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['v']*base_orbit_ang);
+        pl->setScale(radius_koef["venus"]);
+        pl->setZAng(ang_axis_to_orbit["venus"]);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef["venus"]);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period["venus"]*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation["venus"]*base_orbit_ang);
+        pl->setANG_PER_TICK_ROUND_TURNCENT(sidereal_period["venus"]*base_sun_ang);
         pl->setTexture(path+std::string("/venus/venus.jpg"));
         sys->add(pl);
 
@@ -120,12 +129,26 @@ Facade::Facade()
         sys = new PlanetSystem;
 
         pl = new Sphere;
-        pl->setScale(radius_koef['e']);
-        pl->setZAng(ang_axis_to_orbit['e']);
-        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['e']);
-        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['e']*base_sun_ang);
-        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['e']*base_orbit_ang);
+        pl->setScale(radius_koef["earth"]);
+        pl->setZAng(ang_axis_to_orbit["earth"]);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef["earth"]);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period["earth"]*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation["earth"]*base_orbit_ang);
+        pl->setANG_PER_TICK_ROUND_TURNCENT(sidereal_period["earth"]*base_sun_ang);
         pl->setTexture(path+std::string("/earth/earth.jpg"));
+        sys->add(pl);
+
+        pl_cent = pl->getPosDot();
+
+        // Луна
+        pl = new Sphere;
+        pl->setScale(radius_koef["moon"]);
+        pl->setTurningCent(pl_cent);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef["moon"]);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period["earth"]*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation["moon"]*base_orbit_ang);
+        pl->setANG_PER_TICK_ROUND_TURNCENT(sidereal_period["moon"]*base_sun_ang);
+        pl->setTexture(path+std::string("/earth/earth_moon.jpg"));
         sys->add(pl);
 
         solar_system.add(sys);
@@ -135,11 +158,12 @@ Facade::Facade()
         sys = new PlanetSystem;
 
         pl = new Sphere;
-        pl->setScale(radius_koef['M']);
-        pl->setZAng(ang_axis_to_orbit['M']);
-        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['M']);
-        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['M']*base_sun_ang);
-        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['M']*base_orbit_ang);
+        pl->setScale(radius_koef["mars"]);
+        pl->setZAng(ang_axis_to_orbit["mars"]);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef["mars"]);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period["mars"]*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation["mars"]*base_orbit_ang);
+        pl->setANG_PER_TICK_ROUND_TURNCENT(sidereal_period["mars"]*base_sun_ang);
         pl->setTexture(path+std::string("/mars/mars.jpg"));
         sys->add(pl);
 
@@ -151,11 +175,12 @@ Facade::Facade()
         sys = new PlanetSystem;
 
         pl = new Sphere;
-        pl->setScale(radius_koef['j']);
-        pl->setZAng(ang_axis_to_orbit['j']);
-        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['j']);
-        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['j']*base_sun_ang);
-        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['j']*base_orbit_ang);
+        pl->setScale(radius_koef["jupiter"]);
+        pl->setZAng(ang_axis_to_orbit["jupiter"]);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef["jupiter"]);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period["jupiter"]*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation["jupiter"]*base_orbit_ang);
+        pl->setANG_PER_TICK_ROUND_TURNCENT(sidereal_period["jupiter"]*base_sun_ang);
         pl->setTexture(path+std::string("/jupiter/jupiter.jpg"));
         sys->add(pl);
 
@@ -167,24 +192,26 @@ Facade::Facade()
         sys = new PlanetSystem;
 
         pl = new Sphere;
-        pl->setScale(radius_koef['s']);
-        pl->setZAng(ang_axis_to_orbit['s']);
-        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['s']);
-        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['s']*base_sun_ang);
-        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['s']*base_orbit_ang);
+        pl->setScale(radius_koef["saturn"]);
+        pl->setZAng(ang_axis_to_orbit["saturn"]);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef["saturn"]);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period["saturn"]*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation["saturn"]*base_orbit_ang);
+        pl->setANG_PER_TICK_ROUND_TURNCENT(sidereal_period["saturn"]*base_sun_ang);
         pl->setTexture(path+std::string("/saturn/saturn.jpg"));
         sys->add(pl);
 
+        // Кольца
         pl = new Ring;
         pl->setObj(rng);
-        pl->setScale(radius_koef['s']*1.3);
-        pl->setZAng(ang_axis_to_orbit['s']);
-        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['s']);
-        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['s']*base_sun_ang);
-        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['s']*base_orbit_ang);
+        pl->setScale(radius_koef["saturn"]*1.3);
+        pl->setZAng(ang_axis_to_orbit["saturn"]);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef["saturn"]);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period["saturn"]*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation["saturn"]*base_orbit_ang);
+        pl->setANG_PER_TICK_ROUND_TURNCENT(sidereal_period["saturn"]*base_sun_ang);
         pl->setTexture(path+std::string("/saturn/saturn_ring.jpg"));
         sys->add(pl);
-
 
         solar_system.add(sys);
         ////////////////////////////// !Сатурн //////////////////////////////
@@ -194,11 +221,12 @@ Facade::Facade()
         sys = new PlanetSystem;
 
         pl = new Sphere;
-        pl->setScale(radius_koef['u']);
-        pl->setZAng(ang_axis_to_orbit['u']);
-        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['u']);
-        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['u']*base_sun_ang);
-        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['u']*base_orbit_ang);
+        pl->setScale(radius_koef["uranus"]);
+        pl->setZAng(ang_axis_to_orbit["uranus"]);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef["uranus"]);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period["uranus"]*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation["uranus"]*base_orbit_ang);
+        pl->setANG_PER_TICK_ROUND_TURNCENT(sidereal_period["uranus"]*base_sun_ang);
         pl->setTexture(path+std::string("/uranus/uranus.jpg"));
         sys->add(pl);
 
@@ -210,11 +238,12 @@ Facade::Facade()
         sys = new PlanetSystem;
 
         pl = new Sphere;
-        pl->setScale(radius_koef['n']);
-        pl->setZAng(ang_axis_to_orbit['n']);
-        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['n']);
-        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['n']*base_sun_ang);
-        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['n']*base_orbit_ang);
+        pl->setScale(radius_koef["neptune"]);
+        pl->setZAng(ang_axis_to_orbit["neptune"]);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef["neptune"]);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period["neptune"]*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation["neptune"]*base_orbit_ang);
+        pl->setANG_PER_TICK_ROUND_TURNCENT(sidereal_period["neptune"]*base_sun_ang);
         pl->setTexture(path+std::string("/neptune/neptune.jpg"));
         sys->add(pl);
 
