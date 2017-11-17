@@ -22,9 +22,22 @@ void PlanetSystem::tickMove()
 
 
         Dot3D<double> cent = planet->getPosDot();
+        Dot3D<double> turning_cent = planet->getTurningCent();
         double a = planet->getANG_PER_TICK_ROUND_SUN()*M_PI/180;
-        planet->setX(cent.x*cos(a) - cent.z*sin(a));
-        planet->setZ(cent.z*cos(a) + cent.x*sin(a));
+        double b = planet->getANG_PER_TICK_ROUND_TURNCENT()*M_PI/180;
+
+        planet->setTurningCentX(turning_cent.x*cos(a) - turning_cent.z*sin(a));
+        planet->setTurningCentZ(turning_cent.z*cos(a) + turning_cent.x*sin(a));
+        if (fabs(a - b) > 1e-4)
+        {
+            planet->setX(cent.x*cos(a) - cent.z*sin(a));
+            planet->setZ(cent.z*cos(a) + cent.x*sin(a));
+            cent = planet->getPosDot();
+        }
+        turning_cent = planet->getTurningCent();
+
+        planet->setX(turning_cent.x + (cent.x-turning_cent.x)*cos(b) - (cent.z-turning_cent.z)*sin(b));
+        planet->setZ(turning_cent.z + (cent.z-turning_cent.z)*cos(b) + (cent.x-turning_cent.x)*sin(b));
 
     }
 }
