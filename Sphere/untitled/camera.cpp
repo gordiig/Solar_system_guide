@@ -9,6 +9,16 @@ Camera::Camera() : BaseObject::BaseObject()
     z = -700;
 }
 Camera::Camera(double in_x, double in_y, double in_z) : BaseObject::BaseObject(in_x, in_y, in_z) { }
+Camera::Camera(Dot3D<double> in_dot, double in_x_ang, double in_y_ang, double in_z_ang)
+{
+    x = in_dot.x;
+    y = in_dot.y;
+    z = in_dot.z;
+
+    x_ang = in_x_ang;
+    y_ang = in_y_ang;
+    z_ang = in_z_ang;
+}
 
 Camera::Camera(const Camera &in)
 {

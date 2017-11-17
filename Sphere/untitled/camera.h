@@ -17,6 +17,7 @@ public:
     Camera(const Camera&);
     Camera(Camera&&);
     Camera(double, double, double);
+    Camera(Dot3D<double> in_dot, double in_x_ang, double in_y_ang, double in_z_ang);
 
     Camera& operator = (const Camera&);
     Camera& operator = (Camera&&);
