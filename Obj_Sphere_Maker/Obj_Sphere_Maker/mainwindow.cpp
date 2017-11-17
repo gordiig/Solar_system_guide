@@ -191,11 +191,11 @@ void MainWindow::ringVWriter(const double in_r, const double out_r, const int p_
 
             if (alpha < 0)
             {
-                vt = vt + "vt " + std::to_string(1 + (alpha*i)/2/M_PI) + " 1\n";
+                vt = vt + "vt " + std::to_string(1 + (alpha*i)/2/M_PI) + " 0\n";
             }
             else
             {
-                vt = vt + "vt " + std::to_string((alpha*i)/2/M_PI) + " 1\n";
+                vt = vt + "vt " + std::to_string((alpha*i)/2/M_PI) + " 0\n";
             }
 
             count++;
