@@ -85,6 +85,7 @@ class Sphere : public VisibleObject
 private:
     double ANG_PER_TICK_ROUND_SUN;
     double ANG_PER_TICK_ROUND_ORBITE;
+    double ANG_PER_TICK_ROUND_TURNCENT;
 
     virtual void transform() override;
     virtual void move() override;
@@ -135,6 +136,7 @@ public:
     virtual std::vector<MathVector> getAllNorm() const override;
     virtual double getANG_PER_TICK_ROUND_SUN() const override { return ANG_PER_TICK_ROUND_SUN; }
     virtual double getANG_PER_TICK_ROUND_ORBITE() const override { return ANG_PER_TICK_ROUND_ORBITE; }
+    virtual double getANG_PER_TICK_ROUND_TURNCENT() const override { return ANG_PER_TICK_ROUND_TURNCENT; }
 
     Dot3D<double>& operator [] (int i) const;
 
@@ -148,6 +150,7 @@ public:
     virtual void setTexture(QImage *) override;
     virtual void setANG_PER_TICK_ROUND_SUN(double in) override { ANG_PER_TICK_ROUND_SUN = in; }
     virtual void setANG_PER_TICK_ROUND_ORBITE(double in) override { ANG_PER_TICK_ROUND_ORBITE = in; }
+    virtual void setANG_PER_TICK_ROUND_TURNCENT(double in) override { ANG_PER_TICK_ROUND_TURNCENT = in; }
 
     virtual std::vector<double> calcI(const DotLight&) const override;
 
@@ -161,6 +164,7 @@ class Ring : public VisibleObject
 private:
     double ANG_PER_TICK_ROUND_SUN;
     double ANG_PER_TICK_ROUND_ORBITE;
+    double ANG_PER_TICK_ROUND_TURNCENT;
 
     virtual void transform() override;
     virtual void move() override;
@@ -196,6 +200,7 @@ public:
     virtual std::vector<MathVector> getAllNorm() const override;
     virtual double getANG_PER_TICK_ROUND_SUN() const override { return ANG_PER_TICK_ROUND_SUN; }
     virtual double getANG_PER_TICK_ROUND_ORBITE() const override { return ANG_PER_TICK_ROUND_ORBITE; }
+    virtual double getANG_PER_TICK_ROUND_TURNCENT() const override { return ANG_PER_TICK_ROUND_TURNCENT; }
 
     Dot3D<double>& operator [] (int i) const;
 
@@ -209,6 +214,7 @@ public:
     virtual void setTexture(QImage *) override;
     virtual void setANG_PER_TICK_ROUND_SUN(double in) override { ANG_PER_TICK_ROUND_SUN = in; }
     virtual void setANG_PER_TICK_ROUND_ORBITE(double in) override { ANG_PER_TICK_ROUND_ORBITE = in; }
+    virtual void setANG_PER_TICK_ROUND_TURNCENT(double in) override { ANG_PER_TICK_ROUND_TURNCENT = in; }
 
     virtual std::vector<double> calcI(const DotLight&) const override;
 

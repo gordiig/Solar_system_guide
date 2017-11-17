@@ -147,6 +147,10 @@ protected:
     double y_ang;
     double z_ang;
 
+    double turning_cent_x;
+    double turning_cent_y;
+    double turning_cent_z;
+
 public:
     BaseObject();
     BaseObject(const BaseObject&);
@@ -169,6 +173,10 @@ public:
     double getXAng() const { return x_ang; }
     double getYAng() const { return y_ang; }
     double getZAng() const { return z_ang; }
+    double getTurningCentX() const { return turning_cent_x; }
+    double getTurningCentY() const { return turning_cent_y; }
+    double getTurningCentZ() const { return turning_cent_z; }
+    Dot3D<double> getTurningCent() const { return Dot3D<double>(turning_cent_x, turning_cent_y, turning_cent_z); }
 
     // Сеттеры
     void setX(const double in) { x = in; }
@@ -178,6 +186,10 @@ public:
     void setXAng(const double in) { x_ang = in; }
     void setYAng(const double in) { y_ang = in; }
     void setZAng(const double in) { z_ang = in; }
+    void setTurningCentX(const double in) { turning_cent_x = in; }
+    void setTurningCentY(const double in) { turning_cent_y = in; }
+    void setTurningCentZ(const double in) { turning_cent_z = in; }
+    void setTurningCent(const Dot3D<double>& in) { turning_cent_x = in.x; turning_cent_y = in.y; turning_cent_z = in.z; }
 
     virtual void clear();
 };
@@ -237,6 +249,7 @@ public:
     virtual std::vector<MathVector> getAllNorm() const = 0;
     virtual double getANG_PER_TICK_ROUND_SUN() const = 0;
     virtual double getANG_PER_TICK_ROUND_ORBITE() const = 0;
+    virtual double getANG_PER_TICK_ROUND_TURNCENT() const = 0;
 
     // Сеттеры
     void setKd(double in) { kd = in; }
@@ -253,6 +266,7 @@ public:
     virtual void setTexture(QImage *) = 0;
     virtual void setANG_PER_TICK_ROUND_SUN(double in) = 0;
     virtual void setANG_PER_TICK_ROUND_ORBITE(double in) = 0;
+    virtual void setANG_PER_TICK_ROUND_TURNCENT(double in) = 0;
 
     virtual std::vector<double> calcI(const DotLight&) const = 0;
 
