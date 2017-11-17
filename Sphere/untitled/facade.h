@@ -2,6 +2,7 @@
 #define FACADE_H
 
 #include <map>
+#include <QMessageBox>
 
 #include "errors.h"
 #include "obj.h"

@@ -50,179 +50,188 @@ Facade::Facade()
                                               {'u', 1/84.0},
                                               {'n', 1/164}};
 
-    std::string path("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/textures");
-    PlanetSystem* sys = nullptr;
-    VisibleObject* pl = nullptr;
-    double base_orbit_ang = solar_system.getOrbitBaseAng();
-    double base_sun_ang = solar_system.getSunBaseAng();
-    reader.openFile("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/new.obj");
-    Obj sph = reader.read();
-    reader.openFile("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/ring.obj");
-    Obj rng = reader.read();
+    try
+    {
+
+        std::string path("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/textures");
+        PlanetSystem* sys = nullptr;
+        VisibleObject* pl = nullptr;
+        double base_orbit_ang = solar_system.getOrbitBaseAng();
+        double base_sun_ang = solar_system.getSunBaseAng();
+        reader.openFile("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/new.obj");
+        Obj sph = reader.read();
+        reader.openFile("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/ring.obj");
+        Obj rng = reader.read();
+
+
+        ////////////////////////////// Солнце //////////////////////////////
+        sys = new PlanetSystem;
+
+        pl = new Sphere;
+        pl->setObj(sph);
+        pl->setKa(0.95);
+        pl->setKd(0);
+        pl->setZAng(ang_axis_to_orbit['S']);
+        pl->setANG_PER_TICK_ROUND_SUN(0);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['S']*base_orbit_ang);
+        pl->setScale(radius_koef['S']);
+        pl->setTexture(path+std::string("/sun.jpg"));
+        sys->add(pl);
+
+        solar_system.add(sys);
+        ////////////////////////////// !Солнце //////////////////////////////
+
+
+        ////////////////////////////// Меркурий //////////////////////////////
+        sys = new PlanetSystem;
+
+        pl = new Sphere;
+        pl->setScale(radius_koef['m']);
+        pl->setZAng(ang_axis_to_orbit['m']);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN*distance_koef['m']);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['m']*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['m']*base_orbit_ang);
+        //pl->setX(2000);
+        pl->setTexture(path+std::string("/mercury/mercury.jpg"));
+        sys->add(pl);
+
+        solar_system.add(sys);
+        ////////////////////////////// !Меркурий //////////////////////////////
 
 
 
-    ////////////////////////////// Солнце //////////////////////////////
-    sys = new PlanetSystem;
+        ////////////////////////////// Венера //////////////////////////////
+        sys = new PlanetSystem;
 
-    pl = new Sphere;
-    pl->setObj(sph);
-    pl->setKa(0.95);
-    pl->setKd(0);
-    pl->setZAng(ang_axis_to_orbit['S']);
-    pl->setANG_PER_TICK_ROUND_SUN(0);
-    pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['S']*base_orbit_ang);
-    pl->setScale(radius_koef['S']);
-    pl->setTexture(path+std::string("/sun.jpg"));
-    sys->add(pl);
+        pl = new Sphere;
+        pl->setScale(radius_koef['v']);
+        pl->setZAng(ang_axis_to_orbit['v']);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['v']);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['v']*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['v']*base_orbit_ang);
+        pl->setTexture(path+std::string("/venus/venus.jpg"));
+        sys->add(pl);
 
-    solar_system.add(sys);
-    ////////////////////////////// !Солнце //////////////////////////////
+        solar_system.add(sys);
+        ////////////////////////////// !Венера //////////////////////////////
 
 
-    ////////////////////////////// Меркурий //////////////////////////////
-    sys = new PlanetSystem;
+        ////////////////////////////// Земля //////////////////////////////
+        sys = new PlanetSystem;
 
-    pl = new Sphere;
-    pl->setScale(radius_koef['m']);
-    pl->setZAng(ang_axis_to_orbit['m']);
-    pl->setZ(-EARTH_DISTANCE_FROM_SUN*distance_koef['m']);
-    pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['m']*base_sun_ang);
-    pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['m']*base_orbit_ang);
-    //pl->setX(2000);
-    pl->setTexture(path+std::string("/mercury/mercury.jpg"));
-    sys->add(pl);
+        pl = new Sphere;
+        pl->setScale(radius_koef['e']);
+        pl->setZAng(ang_axis_to_orbit['e']);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['e']);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['e']*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['e']*base_orbit_ang);
+        pl->setTexture(path+std::string("/earth/earth.jpg"));
+        sys->add(pl);
 
-    solar_system.add(sys);
-    ////////////////////////////// !Меркурий //////////////////////////////
+        solar_system.add(sys);
+        ////////////////////////////// !Земля //////////////////////////////
 
+        ////////////////////////////// Марс //////////////////////////////
+        sys = new PlanetSystem;
 
+        pl = new Sphere;
+        pl->setScale(radius_koef['M']);
+        pl->setZAng(ang_axis_to_orbit['M']);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['M']);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['M']*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['M']*base_orbit_ang);
+        pl->setTexture(path+std::string("/mars/mars.jpg"));
+        sys->add(pl);
 
-    ////////////////////////////// Венера //////////////////////////////
-    sys = new PlanetSystem;
-
-    pl = new Sphere;
-    pl->setScale(radius_koef['v']);
-    pl->setZAng(ang_axis_to_orbit['v']);
-    pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['v']);
-    pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['v']*base_sun_ang);
-    pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['v']*base_orbit_ang);
-    pl->setTexture(path+std::string("/venus/venus.jpg"));
-    sys->add(pl);
-
-    solar_system.add(sys);
-    ////////////////////////////// !Венера //////////////////////////////
+        solar_system.add(sys);
+        ////////////////////////////// !Марс //////////////////////////////
 
 
-    ////////////////////////////// Земля //////////////////////////////
-    sys = new PlanetSystem;
+        ////////////////////////////// Юпитер //////////////////////////////
+        sys = new PlanetSystem;
 
-    pl = new Sphere;
-    pl->setScale(radius_koef['e']);
-    pl->setZAng(ang_axis_to_orbit['e']);
-    pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['e']);
-    pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['e']*base_sun_ang);
-    pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['e']*base_orbit_ang);
-    pl->setTexture(path+std::string("/earth/earth.jpg"));
-    sys->add(pl);
+        pl = new Sphere;
+        pl->setScale(radius_koef['j']);
+        pl->setZAng(ang_axis_to_orbit['j']);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['j']);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['j']*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['j']*base_orbit_ang);
+        pl->setTexture(path+std::string("/jupiter/jupiter.jpg"));
+        sys->add(pl);
 
-    solar_system.add(sys);
-    ////////////////////////////// !Земля //////////////////////////////
-
-    ////////////////////////////// Марс //////////////////////////////
-    sys = new PlanetSystem;
-
-    pl = new Sphere;
-    pl->setScale(radius_koef['M']);
-    pl->setZAng(ang_axis_to_orbit['M']);
-    pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['M']);
-    pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['M']*base_sun_ang);
-    pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['M']*base_orbit_ang);
-    pl->setTexture(path+std::string("/mars/mars.jpg"));
-    sys->add(pl);
-
-    solar_system.add(sys);
-    ////////////////////////////// !Марс //////////////////////////////
+        solar_system.add(sys);
+        ////////////////////////////// !Юпитер //////////////////////////////
 
 
-    ////////////////////////////// Юпитер //////////////////////////////
-    sys = new PlanetSystem;
+        ////////////////////////////// Сатурн //////////////////////////////
+        sys = new PlanetSystem;
 
-    pl = new Sphere;
-    pl->setScale(radius_koef['j']);
-    pl->setZAng(ang_axis_to_orbit['j']);
-    pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['j']);
-    pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['j']*base_sun_ang);
-    pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['j']*base_orbit_ang);
-    pl->setTexture(path+std::string("/jupiter/jupiter.jpg"));
-    sys->add(pl);
+        pl = new Sphere;
+        pl->setScale(radius_koef['s']);
+        pl->setZAng(ang_axis_to_orbit['s']);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['s']);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['s']*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['s']*base_orbit_ang);
+        pl->setTexture(path+std::string("/saturn/saturn.jpg"));
+        sys->add(pl);
 
-    solar_system.add(sys);
-    ////////////////////////////// !Юпитер //////////////////////////////
-
-
-    ////////////////////////////// Сатурн //////////////////////////////
-    sys = new PlanetSystem;
-
-    pl = new Sphere;
-    pl->setScale(radius_koef['s']);
-    pl->setZAng(ang_axis_to_orbit['s']);
-    pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['s']);
-    pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['s']*base_sun_ang);
-    pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['s']*base_orbit_ang);
-    pl->setTexture(path+std::string("/saturn/saturn.jpg"));
-    sys->add(pl);
-
-    pl = new Ring;
-    pl->setObj(rng);
-    pl->setScale(radius_koef['s']*1.3);
-    pl->setZAng(ang_axis_to_orbit['s']);
-    pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['s']);
-    pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['s']*base_sun_ang);
-    pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['s']*base_orbit_ang);
-    pl->setTexture(path+std::string("/sun.jpg"));
-    sys->add(pl);
+        pl = new Ring;
+        pl->setObj(rng);
+        pl->setScale(radius_koef['s']*1.3);
+        pl->setZAng(ang_axis_to_orbit['s']);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['s']);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['s']*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['s']*base_orbit_ang);
+        pl->setTexture(path+std::string("/saturn/saturn_ring.jpg"));
+        sys->add(pl);
 
 
-    solar_system.add(sys);
-    ////////////////////////////// !Сатурн //////////////////////////////
+        solar_system.add(sys);
+        ////////////////////////////// !Сатурн //////////////////////////////
 
 
-    ////////////////////////////// Уран //////////////////////////////
-    sys = new PlanetSystem;
+        ////////////////////////////// Уран //////////////////////////////
+        sys = new PlanetSystem;
 
-    pl = new Sphere;
-    pl->setScale(radius_koef['u']);
-    pl->setZAng(ang_axis_to_orbit['u']);
-    pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['u']);
-    pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['u']*base_sun_ang);
-    pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['u']*base_orbit_ang);
-    pl->setTexture(path+std::string("/uranus/uranus.jpg"));
-    sys->add(pl);
+        pl = new Sphere;
+        pl->setScale(radius_koef['u']);
+        pl->setZAng(ang_axis_to_orbit['u']);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['u']);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['u']*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['u']*base_orbit_ang);
+        pl->setTexture(path+std::string("/uranus/uranus.jpg"));
+        sys->add(pl);
 
-    solar_system.add(sys);
-    ////////////////////////////// !Уран //////////////////////////////
+        solar_system.add(sys);
+        ////////////////////////////// !Уран //////////////////////////////
 
 
-    ////////////////////////////// Нептун //////////////////////////////
-    sys = new PlanetSystem;
+        ////////////////////////////// Нептун //////////////////////////////
+        sys = new PlanetSystem;
 
-    pl = new Sphere;
-    pl->setScale(radius_koef['n']);
-    pl->setZAng(ang_axis_to_orbit['n']);
-    pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['n']);
-    pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['n']*base_sun_ang);
-    pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['n']*base_orbit_ang);
-    pl->setTexture(path+std::string("/neptune/neptune.jpg"));
-    sys->add(pl);
+        pl = new Sphere;
+        pl->setScale(radius_koef['n']);
+        pl->setZAng(ang_axis_to_orbit['n']);
+        pl->setZ(-EARTH_DISTANCE_FROM_SUN * distance_koef['n']);
+        pl->setANG_PER_TICK_ROUND_SUN(sidereal_period['n']*base_sun_ang);
+        pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation['n']*base_orbit_ang);
+        pl->setTexture(path+std::string("/neptune/neptune.jpg"));
+        sys->add(pl);
 
-    solar_system.add(sys);
-    ////////////////////////////// !Нептун //////////////////////////////
+        solar_system.add(sys);
+        ////////////////////////////// !Нептун //////////////////////////////
 
-    cam.setZ(-50000);
+        cam.setZ(-50000);
 
-    light.setIa(255);
-    light.setId(255);
+        light.setIa(255);
+        light.setId(255);
+    }
+    catch(BaseErr&)
+    {
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error","An error has occured while constructing Facade!");
+        messageBox.setFixedSize(500,200);
+    }
 
 
     /*
