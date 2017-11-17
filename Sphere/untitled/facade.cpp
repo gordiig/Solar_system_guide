@@ -53,7 +53,7 @@ Facade::Facade()
                                                       {"saturn", 1/29.5},
                                                       {"uranus", 1/84.0},
                                                       {"neptune", 1/164},
-                                                      {"moon", 10} };
+                                                      {"moon", 4} };
 
     try
     {
