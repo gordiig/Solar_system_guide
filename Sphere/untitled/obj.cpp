@@ -596,6 +596,15 @@ std::vector<MathVector> Sphere::getAllNorm() const
 
     return ans;
 }
+Camera* Sphere::getCam()
+{
+    if (!cam)
+    {
+        initCam();
+    }
+
+    return cam;
+}
 
 void Sphere::setTexture(const std::string &path)
 {
@@ -709,9 +718,12 @@ std::vector<double> Sphere::calcI(const DotLight &light) const
 
 void Sphere::recalcCamPos()
 {
-    cam->setX(x);
-    cam->setY(y);
-    cam->setZ(z + getRadius()*1.3);
+    if (cam)
+    {
+        cam->setX(x);
+        cam->setY(y);
+        cam->setZ(z + getRadius()*1.3);
+    }
 }
 
 void Sphere::clear()

@@ -21,6 +21,18 @@ struct GraphStruct
     GraphStruct(MyDisplay& in) : im(in) {}
 };
 
+enum CamForPlanet
+{
+    sun_cam = 0,
+    mercury_cam,
+    venus_cam,
+    earth_cam,
+    mars_cam,
+    jupiter_cam,
+    saturn_cam,
+    uranus_cam,
+    neptune_cam,
+};
 
 class Facade
 {
@@ -48,6 +60,7 @@ public:
 
     void draw(GraphStruct &gr);
     void read(const char *name = "new.obj");
+    void camChange(int cam_num);
 };
 
 #endif // FACADE_H

@@ -202,7 +202,7 @@ public:
     virtual double getANG_PER_TICK_ROUND_SUN() const override { return ANG_PER_TICK_ROUND_SUN; }
     virtual double getANG_PER_TICK_ROUND_ORBITE() const override { return ANG_PER_TICK_ROUND_ORBITE; }
     virtual double getANG_PER_TICK_ROUND_TURNCENT() const override { return ANG_PER_TICK_ROUND_TURNCENT; }
-    virtual Camera* getCam() const override { return cam; }
+    virtual Camera* getCam() override;
     double getRadius() const;
 
     Dot3D<double>& operator [] (int i) const;

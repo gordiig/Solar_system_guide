@@ -39,6 +39,7 @@ void PlanetSystem::tickMove()
         planet->setX(turning_cent.x + (cent.x-turning_cent.x)*cos(b) - (cent.z-turning_cent.z)*sin(b));
         planet->setZ(turning_cent.z + (cent.z-turning_cent.z)*cos(b) + (cent.x-turning_cent.x)*sin(b));
 
+        planet->recalcCamPos();
     }
 }
 

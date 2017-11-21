@@ -293,6 +293,18 @@ Facade::~Facade()
     reader.closeFile();
 }
 
+void Facade::camChange(int cam_num)
+{
+    if (cam_num == sun_cam)
+    {
+        cam = Camera(0, 0, -50000);
+    }
+    else
+    {
+        cam = *(*solar_system[cam_num])[0]->getCam();
+    }
+}
+
 void Facade::camMove(GraphStruct &gr, InterfaceCommand *caps)
 {
     if (caps)
@@ -304,7 +316,7 @@ void Facade::camMove(GraphStruct &gr, InterfaceCommand *caps)
 
 void Facade::planetMove(GraphStruct &gr)
 {
-    solar_system.tickMove();
+    solar_system.tickMove();    
     draw(gr);
 }
 
