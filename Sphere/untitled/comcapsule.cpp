@@ -2,6 +2,11 @@
 
 void DxCom::exec(Camera &in)
 {
+    if (in.getId() == fixed_cam)
+    {
+        return;
+    }
+
     double x = in.getRightAxisX();
     double y = in.getRightAxisY();
     double z = in.getRightAxisZ();
@@ -12,6 +17,11 @@ void DxCom::exec(Camera &in)
 }
 void DyCom::exec(Camera &in)
 {
+    if (in.getId() == fixed_cam)
+    {
+        return;
+    }
+
     double x = in.getUpAxisX();
     double y = in.getUpAxisY();
     double z = in.getUpAxisZ();
@@ -22,6 +32,11 @@ void DyCom::exec(Camera &in)
 }
 void DzCom::exec(Camera &in)
 {
+    if (in.getId() == fixed_cam)
+    {
+        return;
+    }
+
     double x = in.getViewAxisX();
     double y = in.getViewAxisY();
     double z = in.getViewAxisZ();
