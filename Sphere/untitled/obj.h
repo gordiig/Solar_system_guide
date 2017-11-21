@@ -163,6 +163,7 @@ protected:
     static Obj obj;
     static Obj transformed_obj;
     QImage* texture;
+    Camera* cam;
 
 public:
     Sphere();
@@ -176,15 +177,8 @@ public:
     Sphere(const double in_x, const double in_y, const double in_z,
                   const double in_x_ang, const double in_y_ang, const double in_z_ang,
                   const int in_kd, const int in_ka);
-    Sphere(const double in_x, const double in_y, const double in_z,
-                  const double in_x_ang, const double in_y_ang, const double in_z_ang,
-                  const int in_kd, const int in_ka, const char* in_path);
     Sphere(Dot3D<double>&);
-    Sphere(Dot3D<double>&, int, int);
-    Sphere(Dot3D<double>&, int, int, const char*);
     Sphere(Dot3D<int>&);
-    Sphere(Dot3D<int>&, int, int);
-    Sphere(Dot3D<int>&, int, int, const char*);
 
     ~Sphere();
 
