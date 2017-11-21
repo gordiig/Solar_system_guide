@@ -4,6 +4,8 @@
 #include "baseobjects.h"
 #include <math.h>
 
+#define SQR(x) (x)*(x)
+
 template <typename T>
 struct Line
 {
