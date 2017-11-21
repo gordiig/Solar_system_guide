@@ -120,7 +120,7 @@ Camera::Camera(int id) : BaseObject::BaseObject()
     z = -700;
 
 }
-Camera::Camera(double in_x, double in_y, double in_z, int id = free_cam) : BaseObject::BaseObject(in_x, in_y, in_z) { }
+Camera::Camera(double in_x, double in_y, double in_z, int id) : BaseObject::BaseObject(in_x, in_y, in_z) { }
 Camera::Camera(Dot3D<double> in_dot, double in_x_ang, double in_y_ang, double in_z_ang, int id)
 {
     x = in_dot.x;

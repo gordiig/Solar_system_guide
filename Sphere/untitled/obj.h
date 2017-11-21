@@ -92,7 +92,7 @@ public:
     Camera(int id = free_cam);
     Camera(const Camera&);
     Camera(Camera&&);
-    Camera(double, double, double, int);
+    Camera(double, double, double, int id = free_cam);
     Camera(Dot3D<double> in_dot, double in_x_ang, double in_y_ang, double in_z_ang, int id = free_cam);
 
     Camera& operator = (const Camera&);
