@@ -7,13 +7,12 @@
 #include "baseobjects.h"
 #include "math_abstracts.h"
 #include "errors.h"
-//#include "drawer.h"
 
-//class MathVector;
-
-//typedef std::vector<Dot3D<double> > Points3D;
-//typedef std::vector<Dot2D<double> > Points2D;
-//typedef std::vector<std::list<int> > PolyList;
+enum Cam_id
+{
+    free_cam = 0,
+    fixed_cam,
+};
 
 class Obj
 {
@@ -87,13 +86,14 @@ protected:
     MathVector right_axis;
     MathVector up_axis;
     double distance_to_screen;
+    int id;
 
 public:
-    Camera();
+    Camera(int id = free_cam);
     Camera(const Camera&);
     Camera(Camera&&);
-    Camera(double, double, double);
-    Camera(Dot3D<double> in_dot, double in_x_ang, double in_y_ang, double in_z_ang);
+    Camera(double, double, double, int);
+    Camera(Dot3D<double> in_dot, double in_x_ang, double in_y_ang, double in_z_ang, int id = free_cam);
 
     Camera& operator = (const Camera&);
     Camera& operator = (Camera&&);
@@ -115,6 +115,8 @@ public:
     double getUpAxisY() const;
     double getUpAxisZ() const;
     MathVector getUpAxis() const;
+
+    int getId() const { return id; }
 
     // Сеттеры
     void setDistanceToScreen(double in) { distance_to_screen = in; }
@@ -165,6 +167,8 @@ protected:
     QImage* texture;
     Camera* cam;
 
+    virtual void initCam();
+
 public:
     Sphere();
     Sphere(const Sphere&);
@@ -198,6 +202,8 @@ public:
     virtual double getANG_PER_TICK_ROUND_SUN() const override { return ANG_PER_TICK_ROUND_SUN; }
     virtual double getANG_PER_TICK_ROUND_ORBITE() const override { return ANG_PER_TICK_ROUND_ORBITE; }
     virtual double getANG_PER_TICK_ROUND_TURNCENT() const override { return ANG_PER_TICK_ROUND_TURNCENT; }
+    virtual Camera* getCam() const override { return cam; }
+    double getRadius() const;
 
     Dot3D<double>& operator [] (int i) const;
 
@@ -214,6 +220,8 @@ public:
     virtual void setANG_PER_TICK_ROUND_TURNCENT(double in) override { ANG_PER_TICK_ROUND_TURNCENT = in; }
 
     virtual std::vector<double> calcI(const DotLight&) const override;
+
+    virtual void recalcCamPos();
 
     virtual bool isPlanet() const override { return true; }
 

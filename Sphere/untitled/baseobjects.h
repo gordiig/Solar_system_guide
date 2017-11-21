@@ -208,6 +208,7 @@ protected:
     virtual void move() = 0;
     virtual void turn() = 0;
     virtual void resize() = 0;
+    virtual void recalcCamPos() { }
 
 public:
     VisibleObject();
@@ -250,6 +251,7 @@ public:
     virtual double getANG_PER_TICK_ROUND_SUN() const = 0;
     virtual double getANG_PER_TICK_ROUND_ORBITE() const = 0;
     virtual double getANG_PER_TICK_ROUND_TURNCENT() const = 0;
+    virtual Camera* getCam() const { return nullptr; }
 
     // Сеттеры
     void setKd(double in) { kd = in; }

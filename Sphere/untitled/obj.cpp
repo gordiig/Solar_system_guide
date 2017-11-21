@@ -111,16 +111,17 @@ std::vector<MathVector> Obj::calcPointNorm(const int poly_num) const
 
 
 
-Camera::Camera() : BaseObject::BaseObject()
+Camera::Camera(int id) : BaseObject::BaseObject()
 {
     view_axis.setZ(1);
     right_axis.setX(1);
     up_axis.setY(1);
     distance_to_screen = 500;
     z = -700;
+
 }
-Camera::Camera(double in_x, double in_y, double in_z) : BaseObject::BaseObject(in_x, in_y, in_z) { }
-Camera::Camera(Dot3D<double> in_dot, double in_x_ang, double in_y_ang, double in_z_ang)
+Camera::Camera(double in_x, double in_y, double in_z, int id = free_cam) : BaseObject::BaseObject(in_x, in_y, in_z) { }
+Camera::Camera(Dot3D<double> in_dot, double in_x_ang, double in_y_ang, double in_z_ang, int id)
 {
     x = in_dot.x;
     y = in_dot.y;
@@ -151,6 +152,7 @@ Camera& Camera::operator = (const Camera& in)
     x_ang = in.x_ang;
     y_ang = in.y_ang;
     z_ang = in.z_ang;
+    id = in.id;
 
     return (*this);
 }
@@ -165,6 +167,7 @@ Camera& Camera::operator = (Camera&& in)
     x_ang = in.x_ang;
     y_ang = in.y_ang;
     z_ang = in.z_ang;
+    id = in.id;
 
     in.clear();
     return (*this);
@@ -564,6 +567,11 @@ Sphere::~Sphere()
     clear();
 }
 
+void Sphere::initCam()
+{
+    cam = new Camera(x, y, z + getRadius()*1.3, fixed_cam);
+}
+
 Dot3D<double>& Sphere::operator [] (int i) const
 {
     return obj.points[i];
@@ -631,6 +639,10 @@ Points3D Sphere::getScaledPoints() const
 
     return ans;
 }
+double Sphere::getRadius() const
+{
+    return sqrt(SQR(obj.points[0].x*scale - x) + SQR(obj.points[0].y*scale - y) + SQR(obj.points[0].z*scale - z));
+}
 
 void Sphere::transform()
 {
@@ -695,6 +707,13 @@ std::vector<double> Sphere::calcI(const DotLight &light) const
     return ans;
 }
 
+void Sphere::recalcCamPos()
+{
+    cam->setX(x);
+    cam->setY(y);
+    cam->setZ(z + getRadius()*1.3);
+}
+
 void Sphere::clear()
 {
     x = 0;
@@ -709,6 +728,10 @@ void Sphere::clear()
     if (texture)
     {
         delete texture;
+    }
+    if (cam)
+    {
+        delete cam;
     }
 }
 
