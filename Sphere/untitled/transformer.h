@@ -2,7 +2,6 @@
 #define TRANSFORMER_H
 
 #include "obj.h"
-#include "camera.h"
 #include <math.h>
 
 class Transformer

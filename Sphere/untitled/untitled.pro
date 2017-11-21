@@ -23,7 +23,6 @@ SOURCES += main.cpp\
     drawer.cpp \
     logger.cpp \
     mydisplay.cpp \
-    camera.cpp \
     math_abstracts.cpp \
     baseobjects.cpp \
     spacesystems.cpp
@@ -38,7 +37,6 @@ HEADERS  += mainwindow.h \
     drawer.h \
     logger.h \
     mydisplay.h \
-    camera.h \
     math_abstracts.h \
     baseobjects.h \
     spacesystems.h

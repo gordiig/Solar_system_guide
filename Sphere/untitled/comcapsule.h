@@ -2,7 +2,7 @@
 #define COMCAPSULE_H
 
 #include "err.h"
-#include "camera.h"
+#include "obj.h"
 
 class InterfaceCommand
 {

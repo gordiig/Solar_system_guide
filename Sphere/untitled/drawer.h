@@ -4,7 +4,6 @@
 #include "obj.h"
 #include "logger.h"
 #include "mydisplay.h"
-#include "camera.h"
 #include "math_abstracts.h"
 #include <iterator>
 #include <math.h>
