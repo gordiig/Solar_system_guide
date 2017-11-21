@@ -89,11 +89,11 @@ protected:
     int id;
 
 public:
-    Camera(int id = free_cam);
+    Camera(int in_id = free_cam);
     Camera(const Camera&);
     Camera(Camera&&);
-    Camera(double, double, double, int id = free_cam);
-    Camera(Dot3D<double> in_dot, double in_x_ang, double in_y_ang, double in_z_ang, int id = free_cam);
+    Camera(double, double, double, int in_id = free_cam);
+    Camera(Dot3D<double> in_dot, double in_x_ang, double in_y_ang, double in_z_ang, int in_id = free_cam);
 
     Camera& operator = (const Camera&);
     Camera& operator = (Camera&&);

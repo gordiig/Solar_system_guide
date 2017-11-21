@@ -89,7 +89,52 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     double d = 5000;
     InterfaceCommand *caps = nullptr;
 
-    if (key == Qt::Key_W)
+    if (key == Qt::Key_0)
+    {
+        in_dot.camChange(0);
+        return;
+    }
+    else if (key == Qt::Key_1)
+    {
+        in_dot.camChange(1);
+        return;
+    }
+    else if (key == Qt::Key_2)
+    {
+        in_dot.camChange(2);
+        return;
+    }
+    else if (key == Qt::Key_3)
+    {
+        in_dot.camChange(3);
+        return;
+    }
+    else if (key == Qt::Key_4)
+    {
+        in_dot.camChange(4);
+        return;
+    }
+    else if (key == Qt::Key_5)
+    {
+        in_dot.camChange(5);
+        return;
+    }
+    else if (key == Qt::Key_6)
+    {
+        in_dot.camChange(6);
+        return;
+    }
+    else if (key == Qt::Key_7)
+    {
+        in_dot.camChange(7);
+        return;
+    }
+    else if (key == Qt::Key_8)
+    {
+        in_dot.camChange(8);
+        return;
+    }
+    else if (key == Qt::Key_W)
     {
         caps = new DzCom(d);
     }

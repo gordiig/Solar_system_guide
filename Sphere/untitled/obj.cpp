@@ -111,17 +111,25 @@ std::vector<MathVector> Obj::calcPointNorm(const int poly_num) const
 
 
 
-Camera::Camera(int id) : BaseObject::BaseObject()
+Camera::Camera(int in_id) : BaseObject::BaseObject()
 {
     view_axis.setZ(1);
     right_axis.setX(1);
     up_axis.setY(1);
     distance_to_screen = 500;
     z = -700;
+    id = in_id;
 
 }
-Camera::Camera(double in_x, double in_y, double in_z, int id) : BaseObject::BaseObject(in_x, in_y, in_z) { }
-Camera::Camera(Dot3D<double> in_dot, double in_x_ang, double in_y_ang, double in_z_ang, int id)
+Camera::Camera(double in_x, double in_y, double in_z, int in_id) : BaseObject::BaseObject(in_x, in_y, in_z)
+{
+    view_axis.setZ(1);
+    right_axis.setX(1);
+    up_axis.setY(1);
+    distance_to_screen = 500;
+    id = in_id;
+}
+Camera::Camera(Dot3D<double> in_dot, double in_x_ang, double in_y_ang, double in_z_ang, int in_id)
 {
     x = in_dot.x;
     y = in_dot.y;
@@ -130,6 +138,12 @@ Camera::Camera(Dot3D<double> in_dot, double in_x_ang, double in_y_ang, double in
     x_ang = in_x_ang;
     y_ang = in_y_ang;
     z_ang = in_z_ang;
+
+    view_axis.setZ(1);
+    right_axis.setX(1);
+    up_axis.setY(1);
+    distance_to_screen = 500;
+    id = in_id;
 }
 
 Camera::Camera(const Camera &in)

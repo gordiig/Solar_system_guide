@@ -3,7 +3,8 @@
 BaseObject::BaseObject() : x(0), y(0), z(0), x_ang(0), y_ang(0), z_ang(0),
     turning_cent_x(0), turning_cent_y(0), turning_cent_z(0){ }
 BaseObject::BaseObject(const double in_x, const double in_y, const double in_z) :
-    x(in_x), y(in_y), z(in_z), turning_cent_x(0), turning_cent_y(0), turning_cent_z(0) { }
+    x(in_x), y(in_y), z(in_z), turning_cent_x(0), turning_cent_y(0), turning_cent_z(0),
+    x_ang(0), y_ang(0), z_ang(0){ }
 BaseObject::BaseObject(const double in_x, const double in_y, const double in_z,
                        const double in_x_ang, const double in_y_ang, const double in_z_ang) :
     x(in_x), y(in_y), z(in_z) , x_ang(in_x_ang), y_ang(in_y_ang), z_ang(in_z_ang),
