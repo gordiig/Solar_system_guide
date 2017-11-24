@@ -139,7 +139,6 @@ public:
     void setUpAxis(double in_1, double in_2, double in_3) { setUpAxisX(in_1); setUpAxisY(in_2); setUpAxisZ(in_3); }
     void setUpAxis(MathVector &in) { up_axis = in; }
 
-
     void moveToWorldCenter();
     virtual void clear() override;
 
@@ -155,7 +154,7 @@ private:
     double ANG_PER_TICK_ROUND_SUN;
     double ANG_PER_TICK_ROUND_ORBITE;
     double ANG_PER_TICK_ROUND_TURNCENT;
-    const double CONST_FOR_CAMERA = 4;
+    const double CONST_FOR_CAMERA = 10;
 
     virtual void transform() override;
     virtual void move() override;
