@@ -104,7 +104,7 @@ struct Dot3D : public Dot2D<T>
     }
     Dot3D(const T& in_x, const T& in_y, const T& in_z) : Dot2D<T>::Dot2D(in_x, in_y), z(in_z) {}
 
-    Dot3D& operator = (const Dot3D& in)
+    Dot3D<T>& operator = (const Dot3D<T>& in)
     {
         this->x = in.x;
         this->y = in.y;
@@ -112,7 +112,7 @@ struct Dot3D : public Dot2D<T>
 
         return *this;
     }
-    Dot3D& operator = (Dot3D&& in)
+    Dot3D<T>& operator = (Dot3D<T>&& in)
     {
         this->x = in.x;
         this->y = in.y;
@@ -123,6 +123,23 @@ struct Dot3D : public Dot2D<T>
         in.z = 0;
 
         return *this;
+    }
+
+    bool operator == (const Dot3D<T>& in)
+    {
+        return (this->x == in.x) && (this->y = in.y) && (this->z == in.z);
+    }
+    bool operator == (Dot3D<T>&& in)
+    {
+        return (this->x == in.x) && (this->y = in.y) && (this->z == in.z);
+    }
+    bool operator != (const Dot3D<T>& in)
+    {
+        return !(*this == in);
+    }
+    bool operator != (Dot3D<T>&& in)
+    {
+        return !(*this == in);
     }
 
     operator DotForDrawer() const

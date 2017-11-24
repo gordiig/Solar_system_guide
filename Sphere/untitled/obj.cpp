@@ -122,15 +122,6 @@ Camera::Camera(int in_id) : BaseObject::BaseObject()
     cent_of_turn = Dot3D<double>(0, 0, 0);
 
 }
-Camera::Camera(double in_x, double in_y, double in_z, int in_id) : BaseObject::BaseObject(in_x, in_y, in_z)
-{
-    view_axis.setZ(1);
-    right_axis.setX(1);
-    up_axis.setY(1);
-    distance_to_screen = 500;
-    id = in_id;
-    cent_of_turn = Dot3D<double>(0, 0, 0);
-}
 Camera::Camera(double in_x, double in_y, double in_z, Dot3D<double> in_cent_of_turn, int in_id) :
     BaseObject::BaseObject(in_x, in_y, in_z)
 {
@@ -196,7 +187,7 @@ Camera& Camera::operator = (Camera&& in)
     y_ang = in.y_ang;
     z_ang = in.z_ang;
     id = in.id;
-    cent_of_turn = in.cent_of_turn
+    cent_of_turn = in.cent_of_turn;
 
     in.clear();
     return (*this);
