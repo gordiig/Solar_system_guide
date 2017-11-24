@@ -583,7 +583,7 @@ Sphere::~Sphere()
 
 void Sphere::initCam()
 {
-    cam = new Camera(x, y, z + getRadius()*1.3, fixed_cam);
+    cam = new Camera(x, y, z + getRadius()*1.3, Camera::fixed_cam);
 }
 
 Dot3D<double>& Sphere::operator [] (int i) const

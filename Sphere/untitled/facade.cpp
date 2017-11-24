@@ -57,7 +57,6 @@ Facade::Facade()
 
     try
     {
-
         std::string path("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/textures");
         PlanetSystem* sys = nullptr;
         VisibleObject* pl = nullptr;
@@ -250,7 +249,8 @@ Facade::Facade()
         solar_system.add(sys);
         ////////////////////////////// !Нептун //////////////////////////////
 
-        cam.setZ(-50000);
+        cam = new Camera(0, 0, -50000);
+        cam->setZ(-50000);
 
         light.setIa(255);
         light.setId(255);
@@ -291,17 +291,29 @@ Facade::~Facade()
 {
     solar_system.clear();
     reader.closeFile();
+
+    if (cam && (cam->getId() == Camera::free_cam))
+    {
+        delete cam;
+    }
 }
 
 void Facade::camChange(int cam_num)
 {
     if (cam_num == sun_cam)
     {
-        cam = Camera(0, 0, -50000);
+        if (cam->getId() == Camera::free_cam)
+        {
+            *cam = Camera(0, 0, -50000);
+        }
+        else
+        {
+            cam = new Camera(0, 0, -50000);
+        }
     }
     else
     {
-        cam = *(*solar_system[cam_num])[0]->getCam();
+        cam = (*solar_system[cam_num])[0]->getCam();
     }
 }
 
@@ -337,8 +349,8 @@ void Facade::draw(GraphStruct &gr)
 
             Obj draw_object = planet->getTransformedObj();
             std::vector<double> I = planet->calcI(light);
-            trans.proectToCam(draw_object, cam);
-            trans.proectToCam(pl_cent, cam);
+            trans.proectToCam(draw_object, *cam);
+            trans.proectToCam(pl_cent, *cam);
             if (pl_cent.z <= 0)
             {
                 continue;
@@ -346,7 +358,7 @@ void Facade::draw(GraphStruct &gr)
 
             texture = planet->getTexture();
 
-            Drwr::GraphicsToDraw gr_in(gr.im, cam, draw_object, texture, pl_cent, I, planet->isPlanet());
+            Drwr::GraphicsToDraw gr_in(gr.im, *cam, draw_object, texture, pl_cent, I, planet->isPlanet());
             dr.draw(gr_in);
 
             trans.clear();

@@ -8,12 +8,6 @@
 #include "math_abstracts.h"
 #include "errors.h"
 
-enum Cam_id
-{
-    free_cam = 0,
-    fixed_cam,
-};
-
 class Obj
 {
     friend class Sphere;
@@ -89,6 +83,12 @@ protected:
     int id;
 
 public:
+    enum Cam_id
+    {
+        free_cam = 0,
+        fixed_cam,
+    };
+
     Camera(int in_id = free_cam);
     Camera(const Camera&);
     Camera(Camera&&);
@@ -221,7 +221,7 @@ public:
 
     virtual std::vector<double> calcI(const DotLight&) const override;
 
-    virtual void recalcCamPos();
+    virtual void recalcCamPos() override;
 
     virtual bool isPlanet() const override { return true; }
 

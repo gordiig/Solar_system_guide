@@ -41,7 +41,7 @@ private:
     QImage* texture;
     Reader reader;
     DotLight light;
-    Camera cam;
+    Camera* cam;
 
     const double EARTH_DISTANCE_FROM_SUN = 90000;
     const double CAMERA_DISTANCE = 1353494.5;
