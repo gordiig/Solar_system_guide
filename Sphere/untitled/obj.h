@@ -155,7 +155,7 @@ private:
     double ANG_PER_TICK_ROUND_SUN;
     double ANG_PER_TICK_ROUND_ORBITE;
     double ANG_PER_TICK_ROUND_TURNCENT;
-    const double CONST_FOR_CAMERA = 1.2;
+    const double CONST_FOR_CAMERA = 4;
 
     virtual void transform() override;
     virtual void move() override;

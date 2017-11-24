@@ -665,7 +665,9 @@ Points3D Sphere::getScaledPoints() const
 }
 double Sphere::getRadius() const
 {
-    return sqrt(SQR(obj.points[0].x*scale - x) + SQR(obj.points[0].y*scale - y) + SQR(obj.points[0].z*scale - z));
+//    return sqrt(SQR(transformed_obj.points[0].x - x) + SQR(transformed_obj.points[0].y - y)
+//            + SQR(transformed_obj.points[0].z - z));
+    return 100*scale;
 }
 
 void Sphere::transform()
