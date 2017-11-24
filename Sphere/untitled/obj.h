@@ -81,7 +81,6 @@ protected:
     MathVector up_axis;
     double distance_to_screen;
     int id;
-    Dot3D<double> cent_of_turn;
 
 public:
     enum Cam_id
