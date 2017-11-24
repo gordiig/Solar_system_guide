@@ -119,6 +119,7 @@ Camera::Camera(int in_id) : BaseObject::BaseObject()
     distance_to_screen = 500;
     z = -700;
     id = in_id;
+    cent_of_turn = Dot3D<double>(0, 0, 0);
 
 }
 Camera::Camera(double in_x, double in_y, double in_z, int in_id) : BaseObject::BaseObject(in_x, in_y, in_z)
@@ -128,6 +129,17 @@ Camera::Camera(double in_x, double in_y, double in_z, int in_id) : BaseObject::B
     up_axis.setY(1);
     distance_to_screen = 500;
     id = in_id;
+    cent_of_turn = Dot3D<double>(0, 0, 0);
+}
+Camera::Camera(double in_x, double in_y, double in_z, Dot3D<double> in_cent_of_turn, int in_id) :
+    BaseObject::BaseObject(in_x, in_y, in_z)
+{
+    view_axis.setZ(1);
+    right_axis.setX(1);
+    up_axis.setY(1);
+    distance_to_screen = 500;
+    id = in_id;
+    cent_of_turn = in_cent_of_turn;
 }
 Camera::Camera(Dot3D<double> in_dot, double in_x_ang, double in_y_ang, double in_z_ang, int in_id)
 {
@@ -144,6 +156,7 @@ Camera::Camera(Dot3D<double> in_dot, double in_x_ang, double in_y_ang, double in
     up_axis.setY(1);
     distance_to_screen = 500;
     id = in_id;
+    cent_of_turn = Dot3D<double>(0, 0, 0);
 }
 
 Camera::Camera(const Camera &in)
@@ -167,6 +180,7 @@ Camera& Camera::operator = (const Camera& in)
     y_ang = in.y_ang;
     z_ang = in.z_ang;
     id = in.id;
+    cent_of_turn = in.cent_of_turn;
 
     return (*this);
 }
@@ -182,6 +196,7 @@ Camera& Camera::operator = (Camera&& in)
     y_ang = in.y_ang;
     z_ang = in.z_ang;
     id = in.id;
+    cent_of_turn = in.cent_of_turn
 
     in.clear();
     return (*this);
@@ -583,7 +598,7 @@ Sphere::~Sphere()
 
 void Sphere::initCam()
 {
-    cam = new Camera(x, y, z + getRadius()*1.3, Camera::fixed_cam);
+    cam = new Camera(x, y, z + getRadius()*CONST_FOR_CAMERA, Camera::fixed_cam);
 }
 
 Dot3D<double>& Sphere::operator [] (int i) const
@@ -736,7 +751,7 @@ void Sphere::recalcCamPos()
     {
         cam->setX(x);
         cam->setY(y);
-        cam->setZ(z + getRadius()*1.3);
+        cam->setZ(z + getRadius()*CONST_FOR_CAMERA);
     }
 }
 

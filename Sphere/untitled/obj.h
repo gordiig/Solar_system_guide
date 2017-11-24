@@ -81,6 +81,7 @@ protected:
     MathVector up_axis;
     double distance_to_screen;
     int id;
+    Dot3D<double> cent_of_turn;
 
 public:
     enum Cam_id
@@ -93,6 +94,7 @@ public:
     Camera(const Camera&);
     Camera(Camera&&);
     Camera(double, double, double, int in_id = free_cam);
+    Camera(double, double, double, Dot3D<double> in_cent_of_turn = Dot3D<double>(0, 0, 0), int in_id = free_cam);
     Camera(Dot3D<double> in_dot, double in_x_ang, double in_y_ang, double in_z_ang, int in_id = free_cam);
 
     Camera& operator = (const Camera&);
@@ -100,6 +102,7 @@ public:
 
     // Геттеры
     double getDistanceToScreen() const { return distance_to_screen; }
+    Dot3D<double> getCentOfTurn() const { return cent_of_turn; }
 
     double getViewAxisX() const;
     double getViewAxisY() const;
@@ -120,6 +123,7 @@ public:
 
     // Сеттеры
     void setDistanceToScreen(double in) { distance_to_screen = in; }
+    void setCentOfTurn(Dot3D<double> in) { cent_of_turn = in; }
 
     void setViewAxisX(double in) { view_axis.setX(in); }
     void setViewAxisY(double in) { view_axis.setY(in); }
@@ -155,6 +159,7 @@ private:
     double ANG_PER_TICK_ROUND_SUN;
     double ANG_PER_TICK_ROUND_ORBITE;
     double ANG_PER_TICK_ROUND_TURNCENT;
+    const double CONST_FOR_CAMERA = 1.2;
 
     virtual void transform() override;
     virtual void move() override;
