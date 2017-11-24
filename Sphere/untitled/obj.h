@@ -100,7 +100,6 @@ public:
 
     // Геттеры
     double getDistanceToScreen() const { return distance_to_screen; }
-    Dot3D<double> getCentOfTurn() const { return cent_of_turn; }
 
     double getViewAxisX() const;
     double getViewAxisY() const;
@@ -121,7 +120,6 @@ public:
 
     // Сеттеры
     void setDistanceToScreen(double in) { distance_to_screen = in; }
-    void setCentOfTurn(Dot3D<double> in) { cent_of_turn = in; }
 
     void setViewAxisX(double in) { view_axis.setX(in); }
     void setViewAxisY(double in) { view_axis.setY(in); }
