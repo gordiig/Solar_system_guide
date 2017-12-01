@@ -94,52 +94,60 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         in_dot.camChange(0);
         return;
     }
-    else if (key == Qt::Key_1)
+    else if (key == Qt::Key_1 || key == Qt::Key_F1)
     {
         in_dot.camChange(1);
-        system("open ../../../../Contents/infos/mercury/mercury.pages");
+        if (key == Qt::Key_F1)
+            system("open ../../../../Contents/infos/mercury/mercury.pages");
         return;
     }
-    else if (key == Qt::Key_2)
+    else if (key == Qt::Key_2 || key == Qt::Key_F2)
     {
         in_dot.camChange(2);
-        system("open ../../../../Contents/infos/venus/venus.pages");
+        if (key == Qt::Key_F2)
+            system("open ../../../../Contents/infos/venus/venus.pages");
         return;
     }
-    else if (key == Qt::Key_3)
+    else if (key == Qt::Key_3 || key == Qt::Key_F3)
     {
         in_dot.camChange(3);
-        system("open ../../../../Contents/infos/earth/earth.pages");
+        if (key == Qt::Key_F3)
+            system("open ../../../../Contents/infos/earth/earth.pages");
         return;
     }
-    else if (key == Qt::Key_4)
+    else if (key == Qt::Key_4 || key == Qt::Key_F4)
     {
         in_dot.camChange(4);
-        system("open ../../../../Contents/infos/mars/mars.pages");
+        if (key == Qt::Key_F4)
+            system("open ../../../../Contents/infos/mars/mars.pages");
         return;
     }
-    else if (key == Qt::Key_5)
+    else if (key == Qt::Key_5 || key == Qt::Key_F5)
     {
         in_dot.camChange(5);
-        system("open ../../../../Contents/infos/jupiter/jupiter.pages");
+        if (key == Qt::Key_F5)
+            system("open ../../../../Contents/infos/jupiter/jupiter.pages");
         return;
     }
-    else if (key == Qt::Key_6)
+    else if (key == Qt::Key_6 || key == Qt::Key_F6)
     {
         in_dot.camChange(6);
-        system("open ../../../../Contents/infos/saturn/saturn.pages");
+        if (key == Qt::Key_F6)
+            system("open ../../../../Contents/infos/saturn/saturn.pages");
         return;
     }
-    else if (key == Qt::Key_7)
+    else if (key == Qt::Key_7 || key == Qt::Key_F7)
     {
         in_dot.camChange(7);
-        system("open ../../../../Contents/infos/uranus/uranus.pages");
+        if (key == Qt::Key_F7)
+            system("open ../../../../Contents/infos/uranus/uranus.pages");
         return;
     }
-    else if (key == Qt::Key_8)
+    else if (key == Qt::Key_8 || key == Qt::Key_F8)
     {
         in_dot.camChange(8);
-        system("open ../../../../Contents/infos/neptune/neptune.pages");
+        if (key == Qt::Key_F8)
+            system("open ../../../../Contents/infos/neptune/neptune.pages");
         return;
     }
     else if (key == Qt::Key_W)
