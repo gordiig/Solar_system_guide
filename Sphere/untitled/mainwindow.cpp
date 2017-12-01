@@ -97,41 +97,49 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     else if (key == Qt::Key_1)
     {
         in_dot.camChange(1);
+        system("open ../../../../Contents/infos/mercury/mercury.pages");
         return;
     }
     else if (key == Qt::Key_2)
     {
         in_dot.camChange(2);
+        system("open ../../../../Contents/infos/venus/venus.pages");
         return;
     }
     else if (key == Qt::Key_3)
     {
         in_dot.camChange(3);
+        system("open ../../../../Contents/infos/earth/earth.pages");
         return;
     }
     else if (key == Qt::Key_4)
     {
         in_dot.camChange(4);
+        system("open ../../../../Contents/infos/mars/mars.pages");
         return;
     }
     else if (key == Qt::Key_5)
     {
         in_dot.camChange(5);
+        system("open ../../../../Contents/infos/jupiter/jupiter.pages");
         return;
     }
     else if (key == Qt::Key_6)
     {
         in_dot.camChange(6);
+        system("open ../../../../Contents/infos/saturn/saturn.pages");
         return;
     }
     else if (key == Qt::Key_7)
     {
         in_dot.camChange(7);
+        system("open ../../../../Contents/infos/uranus/uranus.pages");
         return;
     }
     else if (key == Qt::Key_8)
     {
         in_dot.camChange(8);
+        system("open ../../../../Contents/infos/neptune/neptune.pages");
         return;
     }
     else if (key == Qt::Key_W)
