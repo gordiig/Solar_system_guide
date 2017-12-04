@@ -31,11 +31,7 @@ protected:
     virtual void mouseMoveEvent(QMouseEvent *event);
 
 private slots:
-    void on_ButOpen_clicked();
-
     void tmrTick();
-
-    void on_LineEdit_returnPressed();
 
 private:
     Ui::MainWindow *ui;

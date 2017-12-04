@@ -6,70 +6,48 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1112</width>
+    <width>1366</width>
     <height>741</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1366</width>
+    <height>741</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>630</y>
-      <width>551</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Поле ошибок</string>
-    </property>
-    <property name="wordWrap">
-     <bool>true</bool>
-    </property>
-   </widget>
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>1091</width>
-      <height>621</height>
+      <x>0</x>
+      <y>0</y>
+      <width>1361</width>
+      <height>721</height>
      </rect>
     </property>
-   </widget>
-   <widget class="QLineEdit" name="LineEdit">
-    <property name="geometry">
-     <rect>
-      <x>820</x>
-      <y>660</y>
-      <width>151</width>
-      <height>24</height>
-     </rect>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
-    <property name="text">
-     <string>new.obj</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="ButOpen">
-    <property name="geometry">
-     <rect>
-      <x>989</x>
-      <y>660</y>
-      <width>91</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Открыть</string>
+    <property name="minimumSize">
+     <size>
+      <width>1361</width>
+      <height>721</height>
+     </size>
     </property>
    </widget>
-   <zorder>graphicsView</zorder>
-   <zorder>label</zorder>
-   <zorder>LineEdit</zorder>
-   <zorder>ButOpen</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
