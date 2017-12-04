@@ -1,6 +1,125 @@
 #include "drawer.h"
+#include <thread>
 
 using namespace Drwr;
+
+void SolidPainter::paint(PolyToDraw &gr, const RasteredPoly &sorted_rastr)
+{
+    MathVector norm = Obj::calcOutNorm(gr.poly);
+    norm.Ed();
+    double I_total = 0;
+    for (int i = 0; i < gr.I.size(); i++)
+    {
+        I_total += gr.I[i]/gr.poly.size();
+    }
+
+    if (I_total > 255)
+    {
+        I_total = 255;
+    }
+
+    for (int i = 0; i < sorted_rastr.size(); i++)
+    {
+        auto it_beg = sorted_rastr[i].begin();
+        auto it_end = sorted_rastr[i].end();
+        it_end--;
+
+        double z = it_beg->z;
+        double mz = ((it_end->x-it_beg->x) != 0) ?
+                    ((it_end->z - it_beg->z) / (it_end->x-it_beg->x)) : 0;
+
+        double l2 = sqrt((it_beg->x - it_end->x)*(it_beg->x - it_end->x) +
+                         (it_beg->z - it_end->z)*(it_beg->z - it_end->z));
+
+        for (int x = it_beg->x; x <= it_end->x; x++)
+        {
+            double l1 = sqrt((it_beg->x - x)*(it_beg->x - x) +
+                             (it_beg->z - z)*(it_beg->z - z));
+            double t = (l2 != 0) ? (l1/l2) : (1);
+
+            double x_for_tex = (it_beg->texture_coord.x*(1-t) + it_end->texture_coord.x*t) * (gr.texture->width()-1);
+            double y_for_tex = (it_beg->texture_coord.y*(1-t) + it_end->texture_coord.y*t) * (gr.texture->height()-1);
+
+            int r, g, b;
+            gr.texture->pixelColor(x_for_tex, y_for_tex).getRgb(&r, &g, &b);
+            r = (double)r/256 * I_total;
+            g = (double)g/256 * I_total;
+            b = (double)b/256 * I_total;
+
+            gr.im.putPixel(x, it_beg->y, z, QColor(r, g, b));
+
+//                gr.im.putPixel(x, it_beg->y, z,
+//                               QColor(I_total, I_total, I_total));
+            z += mz;
+
+        }
+    }
+}
+void GuroPainter::paint(PolyToDraw &gr, const RasteredPoly &sorted_rastr)
+{
+    for (int i = 0; i < sorted_rastr.size(); i++)
+    {
+        auto it_beg = sorted_rastr[i].begin();
+        auto it_end = sorted_rastr[i].end();
+        it_end--;
+
+        double z = it_beg->z;
+        double mz = ((it_end->x-it_beg->x) != 0) ?
+                    ((it_end->z - it_beg->z) / (it_end->x-it_beg->x)) : 0;
+
+        double l2 = sqrt((it_beg->x - it_end->x)*(it_beg->x - it_end->x) +
+                         (it_beg->z - it_end->z)*(it_beg->z - it_end->z));
+
+        for (int x = it_beg->x; x <= it_end->x; x++)
+        {
+            double l1 = sqrt((it_beg->x - x)*(it_beg->x - x) +
+                             (it_beg->z - z)*(it_beg->z - z));
+            double t = (l2 != 0) ? (l1/l2) : (1);
+
+            int I = it_beg->I*(1-t) + it_end->I*t;
+//            if (I < 0)
+//            {
+//                I = 0;
+//            }
+//            else if (I > 255)
+//            {
+//                I = 255;
+//            }
+
+            double x_for_tex = (it_beg->texture_coord.x*(1-t) + it_end->texture_coord.x*t) * (gr.texture->width()-1);
+            double y_for_tex = (it_beg->texture_coord.y*(1-t) + it_end->texture_coord.y*t) * (gr.texture->height()-1);
+
+            int r, g, b;
+            gr.texture->pixelColor(x_for_tex, y_for_tex).getRgb(&r, &g, &b);
+            r = (double)r/256 * I;
+            g = (double)g/256 * I;
+            b = (double)b/256 * I;
+
+            gr.im.putPixel(x, it_beg->y, z, QColor(r, g, b));
+            //gr.im.putPixel(x, it_beg->y, z, QColor(I, I, I));
+
+            z += mz;
+        }
+    }
+}
+
+void Drawer::changePainter(int painter_num)
+{
+    if (painter) { delete painter; }
+
+    if (painter_num == solid)
+    {
+        painter = new SolidPainter;
+    }
+    else if (painter_num == guro)
+    {
+        painter = new GuroPainter;
+    }
+    else
+    {
+        throw std::runtime_error("Wrong painter!!!\n");
+    }
+}
 
 void Drawer::drawDots(MyDisplay& im, const Points3D& dots)
 {
@@ -66,16 +185,13 @@ void Drawer::drawSphere(GraphicsToDraw &gr)
 void Drawer::drawPoly(PolyToDraw &gr)
 {
     RasteredPoly sorted_rastr = polyRasterization(gr);
-    if (sorted_rastr.empty())
-    {
-        return;
-    }
 
     // Рисовка
     try
     {
-        //solidPolyPainting(gr, sorted_rastr);
-        guroPolyPainting(gr, sorted_rastr);
+        painter->paint(gr, sorted_rastr);
+        // solidPolyPainting(gr, sorted_rastr);
+        // guroPolyPainting(gr, sorted_rastr);
     }
     catch(BaseErr&)
     {
@@ -176,102 +292,6 @@ RasteredPoly Drawer::polyRasterization(PolyToDraw &in)
     }
 
     return sorted_rastr;
-}
-
-void Drawer::solidPolyPainting(PolyToDraw &gr, const RasteredPoly &sorted_rastr)
-{
-    MathVector norm = Obj::calcOutNorm(gr.poly);
-    norm.Ed();
-    double x_c = 0, y_c = 0, z_c = 0;
-    for (int i = 0; i < gr.poly.size(); i++)
-    {
-        x_c += gr.poly[i].x / gr.poly.size();
-        y_c += gr.poly[i].y / gr.poly.size();
-        z_c += gr.poly[i].z / gr.poly.size();
-    }
-
-    //double Id = gr.light.calcDiffuse(Dot3D<double>(x_c, y_c, z_c), norm) * gr.kd;
-    double Id = 255;
-    if (Id < 0)
-    {
-        Id = 0;
-    }
-
-    //double I_total = Id + gr.light.getIa()*gr.ka;
-    double I_total = 255;
-    if (I_total > 255)
-    {
-        throw ColorIntenseErr("\nDrawer::drawPoly() in drawer.cpp");
-    }
-
-    for (int i = 0; i < sorted_rastr.size(); i++)
-    {
-        auto it_beg = sorted_rastr[i].begin();
-        auto it_end = sorted_rastr[i].end();
-        it_end--;
-
-        double z = it_beg->z;
-        double mz = ((it_end->x-it_beg->x) != 0) ?
-                    ((it_end->z - it_beg->z) / (it_end->x-it_beg->x)) : 0;
-
-        for (int x = it_beg->x; x <= it_end->x; x++)
-        {
-            z += mz;
-            if (gr.im.isOnDisplay(x-gr.im.width()/2, it_beg->y-gr.im.height()/2) &&
-                    gr.cam.isOnDisplay(z))
-            {
-                gr.im.putPixel(x, it_beg->y, z,
-                                     QColor(I_total, I_total, I_total));
-            }
-        }
-    }
-}
-void Drawer::guroPolyPainting(PolyToDraw &gr, const RasteredPoly &sorted_rastr)
-{
-    for (int i = 0; i < sorted_rastr.size(); i++)
-    {
-        auto it_beg = sorted_rastr[i].begin();
-        auto it_end = sorted_rastr[i].end();
-        it_end--;
-
-        double z = it_beg->z;
-        double mz = ((it_end->x-it_beg->x) != 0) ?
-                    ((it_end->z - it_beg->z) / (it_end->x-it_beg->x)) : 0;
-
-        for (int x = it_beg->x; x <= it_end->x; x++)
-        {
-            double l1 = sqrt((it_beg->x - x)*(it_beg->x - x) +
-                             (it_beg->z - z)*(it_beg->z - z));
-            double l2 = sqrt((it_beg->x - it_end->x)*(it_beg->x - it_end->x) +
-                             (it_beg->z - it_end->z)*(it_beg->z - it_end->z));
-            double t = (l2 != 0) ? (l1/l2) : (1);
-
-            int I = it_beg->I*(1-t) + it_end->I*t;
-            if (I < 0)
-            {
-                I = 0;
-            }
-            else if (I > 255)
-            {
-                I = 255;
-            }
-
-            double x_for_tex = (it_beg->texture_coord.x*(1-t) + it_end->texture_coord.x*t) * (gr.texture->width()-1);
-            double y_for_tex = (it_beg->texture_coord.y*(1-t) + it_end->texture_coord.y*t) * (gr.texture->height()-1);
-
-            int r, g, b;
-            gr.texture->pixelColor(x_for_tex, y_for_tex).getRgb(&r, &g, &b);
-            r = (double)r/256 * I;
-            g = (double)g/256 * I;
-            b = (double)b/256 * I;
-
-            gr.im.putPixel(x, it_beg->y, z, QColor(r, g, b));
-            //gr.im.putPixel(x, it_beg->y, z, QColor(I, I, I));
-
-
-            z += mz;
-        }
-    }
 }
 
 std::list<DotForDrawer> Drawer::lineRasterizationBrez(const DotForDrawer& st_dot,

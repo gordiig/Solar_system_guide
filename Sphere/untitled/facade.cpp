@@ -55,16 +55,19 @@ Facade::Facade()
                                                       {"neptune", 1/164},
                                                       {"moon", 4} };
 
+    change_painter = false;
+    prev_painter = guro;
+
     try
     {
-        std::string path("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/textures");
+        std::string path("../../../../Contents/textures");
         PlanetSystem* sys = nullptr;
         VisibleObject* pl = nullptr;
         double base_orbit_ang = solar_system.getOrbitBaseAng();
         double base_sun_ang = solar_system.getSunBaseAng();
-        reader.openFile("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/new.obj");
+        reader.openFile("../../../../Contents/new.obj");
         Obj sph = reader.read();
-        reader.openFile("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/Sphere/Contents/ring.obj");
+        reader.openFile("../../../../Contents/ring.obj");
         Obj rng = reader.read();
         Dot3D<double> pl_cent;
 
@@ -298,6 +301,34 @@ Facade::~Facade()
     }
 }
 
+void Facade::modelChange(int size)
+{
+    try
+    {
+        if (size == medium)
+        {
+            read("../../../../Contents/new_med.obj");
+        }
+        else if (size == normal)
+        {
+            read("../../../../Contents/new.obj");
+        }
+        else if (size == bad)
+        {
+            read("../../../../Contents/new_low.obj");
+        }
+    }
+    catch (BaseErr& err)
+    {
+        read("../../../../Contents/new_med.obj");
+    }
+}
+
+void Facade::painterChange()
+{
+    change_painter = true;
+}
+
 void Facade::camChange(int cam_num)
 {
     if (cam_num == sun_cam)
@@ -334,7 +365,21 @@ void Facade::planetMove(GraphStruct &gr)
 
 void Facade::draw(GraphStruct &gr)
 {
-    Drawer dr;
+    if (change_painter)
+    {
+        if (prev_painter == guro)
+        {
+            prev_painter = solid;
+            dr.changePainter(solid);
+        }
+        else
+        {
+            prev_painter = guro;
+            dr.changePainter(guro);
+        }
+        change_painter = false;
+    }
+
     Transformer trans;
     gr.im.clrZBuf();
     gr.im.fill(Qt::black);
@@ -359,7 +404,11 @@ void Facade::draw(GraphStruct &gr)
             texture = planet->getTexture();
 
             Drwr::GraphicsToDraw gr_in(gr.im, *cam, draw_object, texture, pl_cent, I, planet->isPlanet());
+
             dr.draw(gr_in);
+//            std::thread th(&Drawer::draw, &dr, std::ref(gr_in));
+//            th.join();
+
 
             trans.clear();
         }

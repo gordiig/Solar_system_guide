@@ -2,7 +2,6 @@
 #define DRAWER_H
 
 #include "obj.h"
-#include "logger.h"
 #include "mydisplay.h"
 #include "math_abstracts.h"
 #include <iterator>
@@ -53,13 +52,43 @@ namespace Drwr
     typedef std::vector<std::list<DotForDrawer> > RasteredPoly;
 }
 
+enum PainterNum
+{
+    guro = 0,
+    solid,
+};
+
+class Painter
+{
+public:
+    virtual void paint(Drwr::PolyToDraw&, const Drwr::RasteredPoly&) = 0;
+
+    virtual ~Painter(){}
+};
+class GuroPainter : public Painter
+{
+public:
+    virtual void paint(Drwr::PolyToDraw&, const Drwr::RasteredPoly&) override;
+};
+class SolidPainter : public Painter
+{
+public:
+    virtual void paint(Drwr::PolyToDraw&, const Drwr::RasteredPoly&) override;
+};
+
 class Drawer
 {
 public:
-    Drawer() { }
+    Drawer() { painter = new GuroPainter; }
     void draw(Drwr::GraphicsToDraw&);
 
+    void changePainter(int painter_num);
+
+    ~Drawer() { if (painter) { delete painter; } }
+
 private:
+    Painter* painter;
+
     void drawDots(MyDisplay&, const Points3D&);
     void drawScelet(MyDisplay&, const Obj&);
     void drawVizScelet(MyDisplay&, const Camera& cam, const Obj&);
@@ -67,9 +96,6 @@ private:
 
     void drawPoly(Drwr::PolyToDraw& gr);
     Drwr::RasteredPoly polyRasterization(Drwr::PolyToDraw &);
-
-    void solidPolyPainting(Drwr::PolyToDraw&, const Drwr::RasteredPoly&);
-    void guroPolyPainting(Drwr::PolyToDraw&, const Drwr::RasteredPoly&);
 
     std::list<DotForDrawer> lineRasterizationBrez(const DotForDrawer &,
                                                                 const DotForDrawer &);

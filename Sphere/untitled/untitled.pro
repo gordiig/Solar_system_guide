@@ -21,7 +21,6 @@ SOURCES += main.cpp\
     comcapsule.cpp \
     transformer.cpp \
     drawer.cpp \
-    logger.cpp \
     mydisplay.cpp \
     math_abstracts.cpp \
     baseobjects.cpp \
@@ -35,7 +34,6 @@ HEADERS  += mainwindow.h \
     comcapsule.h \
     transformer.h \
     drawer.h \
-    logger.h \
     mydisplay.h \
     math_abstracts.h \
     baseobjects.h \

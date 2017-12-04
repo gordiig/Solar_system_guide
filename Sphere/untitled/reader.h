@@ -6,8 +6,6 @@
 #include <string.h>
 #include "obj.h"
 #include "errors.h"
-#include "logger.h"
-
 
 class Reader
 {

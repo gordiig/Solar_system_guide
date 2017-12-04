@@ -1,6 +1,7 @@
 #ifndef FACADE_H
 #define FACADE_H
 
+#include <thread>
 #include <map>
 #include <QMessageBox>
 
@@ -34,6 +35,13 @@ enum CamForPlanet
     neptune_cam,
 };
 
+enum ModelSize
+{
+    normal = 0,
+    medium,
+    bad,
+};
+
 class Facade
 {
 private:
@@ -42,6 +50,10 @@ private:
     Reader reader;
     DotLight light;
     Camera* cam;
+    Drawer dr;
+
+    bool change_painter;
+    int prev_painter;
 
     const double EARTH_DISTANCE_FROM_SUN = 90000;
     const double CAMERA_DISTANCE = 1353494.5;
@@ -60,7 +72,10 @@ public:
 
     void draw(GraphStruct &gr);
     void read(const char *name = "new.obj");
+
     void camChange(int cam_num);
+    void painterChange();
+    void modelChange(int size);
 };
 
 #endif // FACADE_H

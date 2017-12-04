@@ -720,13 +720,12 @@ void Sphere::move()
 std::vector<double> Sphere::calcI(const DotLight &light) const
 {
     std::vector<double> ans;
-    Points3D points = transformed_obj.getPoints();
-    double I = 0;
+    Points3D& points = transformed_obj.points;
 
     for (int i = 0; i < points.size(); i++)
     {
         MathVector norm = getPointNorm(i);
-        I = light.getIa()*ka + light.calcDiffuse(points[i], norm.getEd())*kd;
+        double I = light.getIa()*ka + light.calcDiffuse(points[i], norm.getEd())*kd;
         ans.push_back(I);
     }
 
