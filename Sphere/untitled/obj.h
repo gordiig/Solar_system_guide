@@ -70,6 +70,8 @@ public:
         return calcOutNorm(pts).invert();
     }
 
+    int getPointsNum() { return points.size(); }
+
     std::vector<MathVector> calcPointNorm(const int) const;
 };
 
@@ -146,6 +148,8 @@ public:
     bool isPolyViz(const Points3D&) const;
     bool isOnDisplay(const DotForDrawer&) const;
     bool isOnDisplay(const double) const;
+
+    void lineCut(Line<double>& line) const;
 };
 
 class Sphere : public VisibleObject

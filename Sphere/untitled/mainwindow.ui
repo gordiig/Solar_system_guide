@@ -50,8 +50,492 @@
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1366</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::DefaultContextMenu</enum>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>О программе</string>
+    </property>
+    <addaction name="menu_info"/>
+    <addaction name="menu_instruction"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Управление</string>
+    </property>
+    <widget class="QMenu" name="menu_3">
+     <property name="title">
+      <string>Выбор скорости камеры</string>
+     </property>
+     <addaction name="Ctrl_speed_low"/>
+     <addaction name="Ctrl_speed_med"/>
+     <addaction name="Ctrl_speed_high"/>
+    </widget>
+    <widget class="QMenu" name="menu_4">
+     <property name="title">
+      <string>Поменять модели сфер</string>
+     </property>
+     <addaction name="Ctrl_model_low"/>
+     <addaction name="Ctrl_model_med"/>
+     <addaction name="Ctrl_model_high"/>
+    </widget>
+    <addaction name="menu_3"/>
+    <addaction name="Ctrl_orbites"/>
+    <addaction name="menu_4"/>
+    <addaction name="Ctrl_toning"/>
+   </widget>
+   <widget class="QMenu" name="menu_5">
+    <property name="title">
+     <string>Камеры</string>
+    </property>
+    <addaction name="Cam_free"/>
+    <addaction name="separator"/>
+    <addaction name="Cam_mercury"/>
+    <addaction name="Cam_venus"/>
+    <addaction name="Cam_earth"/>
+    <addaction name="Cam_mars"/>
+    <addaction name="Cam_jupiter"/>
+    <addaction name="Cam_saturn"/>
+    <addaction name="Cam_uranus"/>
+    <addaction name="Cam_neptune"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
+   <addaction name="menu_5"/>
+  </widget>
+  <action name="menu_info">
+   <property name="text">
+    <string>Информация</string>
+   </property>
+  </action>
+  <action name="menu_instruction">
+   <property name="text">
+    <string>Управление</string>
+   </property>
+  </action>
+  <action name="Ctrl_orbites">
+   <property name="text">
+    <string>Показать\убрать орбиты</string>
+   </property>
+  </action>
+  <action name="Ctrl_toning">
+   <property name="text">
+    <string>Изменить способ тонирования</string>
+   </property>
+  </action>
+  <action name="Ctrl_speed_low">
+   <property name="text">
+    <string>Низкая</string>
+   </property>
+  </action>
+  <action name="Ctrl_speed_med">
+   <property name="text">
+    <string>Средняя</string>
+   </property>
+  </action>
+  <action name="Ctrl_speed_high">
+   <property name="text">
+    <string>Высокая</string>
+   </property>
+  </action>
+  <action name="Ctrl_model_low">
+   <property name="text">
+    <string>Низкополигональная</string>
+   </property>
+  </action>
+  <action name="Ctrl_model_med">
+   <property name="text">
+    <string>Стандартная</string>
+   </property>
+  </action>
+  <action name="Ctrl_model_high">
+   <property name="text">
+    <string>Высокополигональная</string>
+   </property>
+  </action>
+  <action name="Cam_free">
+   <property name="text">
+    <string>Свободная</string>
+   </property>
+  </action>
+  <action name="Cam_mercury">
+   <property name="text">
+    <string>Меркурий</string>
+   </property>
+  </action>
+  <action name="Cam_venus">
+   <property name="text">
+    <string>Венера</string>
+   </property>
+  </action>
+  <action name="Cam_earth">
+   <property name="text">
+    <string>Земля</string>
+   </property>
+  </action>
+  <action name="Cam_mars">
+   <property name="text">
+    <string>Марс</string>
+   </property>
+  </action>
+  <action name="Cam_jupiter">
+   <property name="text">
+    <string>Юпитер</string>
+   </property>
+  </action>
+  <action name="Cam_saturn">
+   <property name="text">
+    <string>Сатурн</string>
+   </property>
+  </action>
+  <action name="Cam_uranus">
+   <property name="text">
+    <string>Уран</string>
+   </property>
+  </action>
+  <action name="Cam_neptune">
+   <property name="text">
+    <string>Нептун</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>menu_info</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuInfoPressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>menu_instruction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuInstructionsPressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Ctrl_model_low</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuModelLowPressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Ctrl_model_med</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuModelMedPressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Ctrl_model_high</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuModelHighPressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Ctrl_orbites</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuOrbitePressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Ctrl_speed_low</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuSpeedLowPressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Ctrl_speed_med</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuSpeedMedPressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Ctrl_speed_high</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuSpeedHighPressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Ctrl_toning</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuTonePressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Cam_free</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuCamFree()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Cam_earth</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuCamEarth()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Cam_jupiter</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuCamJupiter()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Cam_mars</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuCamMars()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Cam_mercury</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuCamMercury()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Cam_neptune</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuCamNeptune()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Cam_saturn</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuCamSaturn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Cam_uranus</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuCamUranus()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Cam_venus</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menuCamVenus()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>682</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>menuInfoPressed()</slot>
+  <slot>menuInstructionsPressed()</slot>
+  <slot>menuModelLowPressed()</slot>
+  <slot>menuModelMedPressed()</slot>
+  <slot>menuModelHighPressed()</slot>
+  <slot>menuSpeedLowPressed()</slot>
+  <slot>menuSpeedMedPressed()</slot>
+  <slot>menuSpeedHighPressed()</slot>
+  <slot>menuOrbitePressed()</slot>
+  <slot>menuTonePressed()</slot>
+  <slot>menuCamFree()</slot>
+  <slot>menuCamMercury()</slot>
+  <slot>menuCamVenus()</slot>
+  <slot>menuCamEarth()</slot>
+  <slot>menuCamMars()</slot>
+  <slot>menuCamJupiter()</slot>
+  <slot>menuCamSaturn()</slot>
+  <slot>menuCamUranus()</slot>
+  <slot>menuCamNeptune()</slot>
+ </slots>
 </ui>

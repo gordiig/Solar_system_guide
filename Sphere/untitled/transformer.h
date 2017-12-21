@@ -13,6 +13,9 @@ public:
     void proectToCam(Obj&, const Camera&);
     void proectToCam(Dot3D<double>&, const Camera&);
     Dot3D<double> transform(const DotLight&, const Camera &cam);
+    // void scale(Obj&, double);
+    Points3D scale(const Points3D&, double);
+    void proectToCam(Points3D &, const Camera&);
 
     void clear();
 

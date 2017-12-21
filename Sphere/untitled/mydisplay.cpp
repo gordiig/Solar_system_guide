@@ -87,6 +87,8 @@ void MyDisplay::screenCut(Points3D &in_poly, std::vector<double>& in_I, Points2D
                                   beg_dot.z + t*(end_dot.z - beg_dot.z));
             Dot2D<double> to_push_tex(fabs(beg_tex.x + t*(end_tex.x - beg_tex.x)),
                                       fabs(beg_tex.y + t*(end_tex.y - beg_tex.y)));
+            to_push_tex.x = (to_push_tex.x > 1) ? (1) : (to_push_tex.x);
+            to_push_tex.y = (to_push_tex.y > 1) ? (1) : (to_push_tex.y);
 
 
             ans.push_back(to_push);
@@ -101,6 +103,8 @@ void MyDisplay::screenCut(Points3D &in_poly, std::vector<double>& in_I, Points2D
                                   beg_dot.z + t*(end_dot.z - beg_dot.z));
             Dot2D<double> to_push_tex(fabs(beg_tex.x + t*(end_tex.x - beg_tex.x)),
                                       fabs(beg_tex.y + t*(end_tex.y - beg_tex.y)));
+            to_push_tex.x = (to_push_tex.x > 1) ? (1) : (to_push_tex.x);
+            to_push_tex.y = (to_push_tex.y > 1) ? (1) : (to_push_tex.y);
 
             ans.push_back(to_push);
             ans_tex.push_back(to_push_tex);
@@ -114,6 +118,125 @@ void MyDisplay::screenCut(Points3D &in_poly, std::vector<double>& in_I, Points2D
     in_poly = ans;
     in_tex_coords = ans_tex;
     in_I = ans_I;
+}
+
+short int MyDisplay::calcBits(Dot3D<double> in)
+{
+    return calcBits(Dot2D<int>(in.x+0.5, in.y+0.5));
+}
+short int MyDisplay::calcBits(Dot2D<int> in)
+{
+    short int ans = 0;
+
+    if (in.x < 0)
+    {
+        ans |= 1;   // 0001
+    }
+    else if (in.x > width()-1)
+    {
+        ans |= 2;   // 0010
+    }
+
+    if (in.y > height()-1)
+    {
+        ans |= 4;   // 0100
+    }
+    else if (in.y < 0)
+    {
+        ans |= 8;   // 1000
+    }
+
+    return ans;
+}
+
+void MyDisplay::screenCut(Line<double> &in_line)
+{
+    short int beg_bits = calcBits(in_line.beg);
+    short int end_bits = calcBits(in_line.end);
+
+    if ((beg_bits == 0) && (end_bits == 0))
+    {
+        return;
+    }
+    else if ((beg_bits & end_bits) != 0)
+    {
+        in_line.beg = Dot3D<double>(-1, -1, -1);
+        return;
+    }
+    else
+    {
+        return;
+    }
+
+    CuttingLine line(in_line.beg, in_line.end, beg_bits, end_bits);
+
+    for (int i = 0; i < 4; i++)
+    {
+        cutSazKoen(line, i);
+    }
+
+    in_line.beg = line.beg;
+    in_line.end = line.end;
+
+}
+void MyDisplay::cutSazKoen(CuttingLine &in_line, int side)
+{
+    CuttingLine ans = in_line;
+    Line<double> scr_line;
+    short int cur_bit = 0;
+    if (side == left)
+    {
+        scr_line.beg = Dot3D<double>(0, height()-1, 0);
+        scr_line.end = Dot3D<double>(0, 0, 0);
+        cur_bit |= 1;   // 0001
+    }
+    else if (side == top)
+    {
+        scr_line.beg = Dot3D<double>(0, 0, 0);
+        scr_line.end = Dot3D<double>(width()-1, 0, 0);
+        cur_bit |= 8;   // 1000
+    }
+    else if (side == right)
+    {
+        scr_line.beg = Dot3D<double>(width()-1, 0, 0);
+        scr_line.end = Dot3D<double>(width()-1, height()-1, 0);
+        cur_bit |= 2;   // 0010
+    }
+    else if (side == bottom)
+    {
+        scr_line.beg = Dot3D<double>(width()-1, height()-1, 0);
+        scr_line.end = Dot3D<double>(0, height()-1, 0);
+        cur_bit |= 4;   // 0100
+    }
+
+    if ((ans.beg_bits & cur_bit) == 0)
+    {
+        std::swap(ans.beg, ans.end);
+        std::swap(ans.beg_bits, ans.end_bits);
+        if ((ans.beg_bits & cur_bit) == 0)
+        {
+            return;
+        }
+    }
+
+    double t = MathFunctions::lineIntersection2D(Line<double>(ans.beg, ans.end),
+                                              Line<double>(scr_line.beg, scr_line.end));
+    if ((t == -1) || (t <= 0) || (t >= 1))
+    {
+        return;
+    }
+
+    ans.beg.x = fabs(ans.beg.x + t*(ans.end.x - ans.beg.x));
+    ans.beg.x = (ans.beg.x >= width()) ? (width()-1) : (ans.beg.x);
+
+    ans.beg.y = fabs(ans.beg.y + t*(ans.end.y - ans.beg.y));
+    ans.beg.y = (ans.beg.y >= height()) ? (height()-1) : (ans.beg.y);
+
+    ans.beg.z = fabs(ans.beg.z + t*(ans.end.z - ans.beg.z));
+
+    ans.beg_bits &= !cur_bit;
+
+    in_line = ans;
 }
 
 bool MyDisplay::isOnDisplay(const Dot2D<double> &left, const Dot2D<double> &right) const
@@ -132,14 +255,13 @@ bool MyDisplay::isOnDisplay(const DotForDrawer &point) const
 }
 bool MyDisplay::isOnDisplay(const int x, const int y) const
 {
-    bool ans = false;
-    if ((x + width()/2 < width()) && (x + width()/2 > 0) &&
-            (y + height()/2 < height()) && (y + height()/2 > 0))
+    if ((x < width()) && (x >= 0) &&
+            (y < height()) && (y >= 0))
     {
-        ans = true;
+        return true;
     }
 
-    return ans;
+    return false;;
 }
 
 bool MyDisplay::isDotOnScreen(const Dot3D<double> &in) const
@@ -181,7 +303,7 @@ void MyDisplay::putPixel(const DotForDrawer &dot, const QColor &col)
 }
 void MyDisplay::putPixel(const int x, const int y, const double z, const QColor &col)
 {
-    if (z <= z_buf[y][x])
+     if (z <= z_buf[y][x])
     {
         //setPixelColor(x, y, col);
         QRgb* pix = (QRgb*) this->bits();

@@ -410,10 +410,112 @@ void Drawer::drawLineBrez(MyDisplay &im, const Dot2D<double> &st, const Dot2D<do
     drawLineBrez(im, x_st, y_st, x_en, y_en);
 }
 
+void Drawer::drawLineBrez(MyDisplay &im, const Dot3D<double> &beg, const Dot3D<double> &end)
+{
+    DotForDrawer be(beg.x + 0.5, beg.y + 0.5, beg.z);
+    DotForDrawer en(end.x + 0.5, end.y + 0.5, end.z);
+
+    drawLineBrez(im, be, en);
+}
+void Drawer::drawLineBrez(MyDisplay &im, const DotForDrawer &beg, const DotForDrawer &end)
+{
+    int I = 100;
+    int x = beg.x;
+    int y = beg.y;
+    double z = beg.z;
+    int x_en = end.x;
+    int y_en = end.y;
+    double z_en = end.z;
+
+    int dx = x_en - x;
+    int dy = y_en - y;
+    double dz = z_en - z;
+    if (dx == 0 && dy == 0)
+    {
+        if (im.isOnDisplay(x, y))
+        {
+            im.putPixel(x, y, z, QColor(I, I, I));
+        }
+        return;
+    }
+
+    int sx = (dx >= 0) ? (1) : (-1);
+    int sy = (dy >= 0) ? (1) : (-1);
+    dx = abs(dx);
+    dy = abs(dy);
+
+    bool ob = false;
+    if (dy > dx)
+    {
+        ob = true;
+        std::swap(dx, dy);
+    }
+
+    int e = 2*dy - dx;
+    double mz = (dx == 0) ? (0) : (dz/dx);
+
+    for (int i = 0; i <= dx; i++)
+    {
+        if (im.isOnDisplay(x, y))
+        {
+            im.putPixel(x, y, z, QColor(I, I, I));
+        }
+
+        while (e >= 0)
+        {
+            (ob == false) ? (y += sy) : (x += sx);
+            e = e - 2*dx;
+        }
+
+        (ob == false) ? (x += sx) : (y += sy);
+        e = e + 2*dy;
+        z += mz;
+    }
+}
+
 void Drawer::draw(GraphicsToDraw& gr)
 {
     //drawScelet(gr.im, gr.obj);
     drawSphere(gr);
     //drawVizScelet(gr.im, gr.cam, gr.obj);
     //drawDots(gr.im, gr.obj.getPoints());
+}
+void Drawer::draw(LinesToDraw &gr)
+{
+    int size = gr.pts.size();
+    for (int i = 0; i < size; i++)
+    {
+        int j = (i == size-1) ? (0) : (i+1);
+
+        Line<double> line = Line<double>(gr.pts[i], gr.pts[j]);
+
+        gr.cam.lineCut(line);
+        if ((line.beg.x == -1) && (line.beg.y == -1) && (line.beg.z == -1))
+        {
+            continue;
+        }
+
+        if (line.beg.z != 0)
+        {
+            line.beg.x *= (gr.cam.getDistanceToScreen() / line.beg.z);
+            line.beg.y *= (gr.cam.getDistanceToScreen() / line.beg.z);
+        }
+        if (line.end.z != 0)
+        {
+            line.end.x *= (gr.cam.getDistanceToScreen() / line.end.z);
+            line.end.y *= (gr.cam.getDistanceToScreen() / line.end.z);
+        }
+        line.beg.x += gr.im.width()/2;
+        line.beg.y += gr.im.height()/2;
+        line.end.x += gr.im.width()/2;
+        line.end.y += gr.im.height()/2;
+
+        gr.im.screenCut(line);
+        if ((line.beg.x == -1) && (line.beg.y == -1) && (line.beg.z == -1))
+        {
+            continue;
+        }
+
+        drawLineBrez(gr.im, line.beg, line.end);
+    }
 }

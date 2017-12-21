@@ -1,6 +1,12 @@
 #ifndef FACADE_H
 #define FACADE_H
 
+// #define TIME_TEST
+ #define TONE_SIMPLE
+ #define MODEL_LOW
+// #define MODEL_MED
+// #define MODEL_HIGH
+
 #include <thread>
 #include <map>
 #include <QMessageBox>
@@ -51,9 +57,17 @@ private:
     DotLight light;
     Camera* cam;
     Drawer dr;
+    //Obj orbite;
+
+    std::map<std::string, double> distance_koef;
+    Points3D orbite;
 
     bool change_painter;
+    bool show_orbites;
     int prev_painter;
+
+    double tot_time;
+    unsigned long long cnt;
 
     const double EARTH_DISTANCE_FROM_SUN = 90000;
     const double CAMERA_DISTANCE = 1353494.5;
@@ -76,6 +90,7 @@ public:
     void camChange(int cam_num);
     void painterChange();
     void modelChange(int size);
+    void showOrbites();
 };
 
 #endif // FACADE_H

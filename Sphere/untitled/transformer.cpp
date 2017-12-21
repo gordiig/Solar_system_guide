@@ -8,6 +8,16 @@ Transformer::~Transformer()
     points.clear();
 }
 
+//void Transformer::scale(Obj &in, double sc)
+//{
+//    for (int i = 0; i < in.points.size(); i++)
+//    {
+//        in.points[i].x *= sc;
+//        in.points[i].y *= sc;
+//        in.points[i].z *= sc;
+//    }
+//}
+
 /**
  * @brief Transformer::move -- Перемещение в пр-ве
  * @param obj -- Объект переноса
@@ -57,6 +67,17 @@ void Transformer::scale(const VisibleObject &obj)
         x.y *= sc;
         x.z *= sc;
     }
+}
+
+Points3D Transformer::scale(const Points3D &in_dots, double sc)
+{
+    Points3D ans;
+    for (int i = 0; i < in_dots.size(); i++)
+    {
+        ans.push_back(Dot3D<double>(in_dots[i].x*sc, in_dots[i].y*sc, in_dots[i].z*sc));
+    }
+
+    return ans;
 }
 
 /*
@@ -133,6 +154,25 @@ void Transformer::proectToCam(Dot3D<double> &in_dot, const Camera &cam)
     in_dot.x = x*right_vector.getX() + y*right_vector.getY() + z*right_vector.getZ() - cam_dot.scalarMult(right_vector);
     in_dot.y = x*up_vector.getX() + y*up_vector.getY() + z*up_vector.getZ() - cam_dot.scalarMult(up_vector);
     in_dot.z = x*view_vector.getX() + y*view_vector.getY() + z*view_vector.getZ() - cam_dot.scalarMult(view_vector);
+}
+
+void Transformer::proectToCam(Points3D &pts, const Camera &cam)
+{
+    MathVector right_vector = cam.getRightAxis();
+    MathVector up_vector = cam.getUpAxis();
+    MathVector view_vector = cam.getViewAxis();
+    MathVector cam_dot(cam.getX(), cam.getY(), cam.getZ());
+
+    for (int i = 0; i < pts.size(); i++)
+    {
+        double x = pts[i].x;
+        double y = pts[i].y;
+        double z = pts[i].z;
+
+        pts[i].x = x*right_vector.getX() + y*right_vector.getY() + z*right_vector.getZ() - cam_dot.scalarMult(right_vector);
+        pts[i].y = x*up_vector.getX() + y*up_vector.getY() + z*up_vector.getZ() - cam_dot.scalarMult(up_vector);
+        pts[i].z = x*view_vector.getX() + y*view_vector.getY() + z*view_vector.getZ() - cam_dot.scalarMult(view_vector);
+    }
 }
 
 /**

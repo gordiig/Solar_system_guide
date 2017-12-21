@@ -33,6 +33,30 @@ protected:
 private slots:
     void tmrTick();
 
+    void menuInfoPressed();
+    void menuInstructionsPressed();
+
+    void menuModelLowPressed();
+    void menuModelMedPressed();
+    void menuModelHighPressed();
+
+    void menuSpeedLowPressed();
+    void menuSpeedMedPressed();
+    void menuSpeedHighPressed();
+
+    void menuTonePressed();
+    void menuOrbitePressed();
+
+    void menuCamFree();
+    void menuCamMercury();
+    void menuCamVenus();
+    void menuCamEarth();
+    void menuCamMars();
+    void menuCamJupiter();
+    void menuCamSaturn();
+    void menuCamUranus();
+    void menuCamNeptune();
+
 private:
     Ui::MainWindow *ui;
     Facade in_dot;
@@ -40,6 +64,8 @@ private:
     QGraphicsScene *scene;
     GraphStruct gr;
     QTimer tmr;
+
+    double d;   // cam speed
 
     int last_x;
     int last_y;

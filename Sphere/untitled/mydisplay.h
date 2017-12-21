@@ -24,6 +24,7 @@ public:
     void clrZBuf();
 
     void screenCut(Points3D&, std::vector<double>&, Points2D&);
+    void screenCut(Line<double>&);
 
     bool isOnDisplay(const Dot2D<double>&, const Dot2D<double>&) const;
     bool isOnDisplay(const DotForDrawer&) const;
@@ -44,8 +45,21 @@ private:
         bottom
     };
 
+    struct CuttingLine : Line<double>
+    {
+        short int beg_bits;
+        short int end_bits;
+
+        CuttingLine(const Dot3D<double> in_beg, const Dot3D<double> in_end,
+                    short int in_beg_bits, short int in_end_bits) :
+            Line::Line(in_beg, in_end), beg_bits(in_beg_bits), end_bits(in_end_bits){}
+    };
+
     void screenCut(Points3D&, std::vector<double>&, Points2D&, int);
     bool isDotInSide(const Dot3D<double>&, int) const;
+    short int calcBits(Dot3D<double>);
+    short int calcBits(Dot2D<int>);
+    void cutSazKoen(CuttingLine &, int);
 };
 
 #endif // MYDISPLAY_H

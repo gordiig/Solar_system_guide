@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
     gr(im)
 {
     ui->setupUi(this);
+    d = 5000;
 
     im = MyDisplay(ui->graphicsView->width()-2, ui->graphicsView->height()-2,
                 QImage::Format_RGB32);
@@ -61,7 +62,6 @@ void MainWindow::tmrTick()
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     int key = event->key();
-    double d = 5000;
     InterfaceCommand *caps = nullptr;
 
     if (key == Qt::Key_0)
@@ -165,6 +165,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     {
         in_dot.modelChange(bad);
     }
+    else if (key == Qt::Key_O)
+    {
+        in_dot.showOrbites();
+    }
 
     try
     {
@@ -227,4 +231,102 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
     delete caps;
     delete caps2;
+}
+
+void MainWindow::menuInfoPressed()
+{
+    QMessageBox msg;
+    msg.setText("Интерактивный справочник солнечной системы");
+    msg.setInformativeText("Горин Дмитрий, 2017");
+    msg.exec();
+}
+void MainWindow::menuInstructionsPressed()
+{
+    QString txt = "- Чтобы повернуть камеру, нажмите на левую кнопку мыши, и двигайте мышь в направлении, куда вы хотите повернуть камеру\n\n";
+    txt += "- Чтобы переместить камеру вперед, налево, назад, направо, нажмите клавишу \"W\", \"A\", \"S\", \"D\" соответственно\n\n";
+    txt += "- Чтобы переместить камеру выше, нажмите на пробел\n\n";
+    txt += "- Чтобы переместить камеру ниже, нажмите на ctrl (если у вас Mac, нажмите на cmd)\n\n";
+    txt += "- Чтобы переместиться на планетную камеру, нажмите номер планеты на клавиатуре (чтобы переместиться на камеру Меркурия, нажмите 1, на камеру Земли, нажмите 3)\n\n";
+    txt += "- Чтобы переместиться на планетную камеру и открыть информацию о планете, нажмите Fномер\_планеты (чтобы переместиться на камеру Меркурия и открыть информацию о нем, нажмите F1, на камеру Земли, нажмите F3)\n\n";
+    txt += "- Чтобы поменять метод тонирования (с Гуро на простой, и наоборот), нажмите клавишу \"P\"\n\n";
+    txt += "- Чтобы поменять модель сферы на низкополигональную, нажмите клавишу \"B\"\n\n";
+    txt += "- Чтобы поменять модель сферы на стандартную, нажмите клавишу \"N\"\n\n";
+    txt += "- Чтобы поменять модель сферы на высокополигональную, нажмите клавишу \"M\"\n\n";
+    txt += "- Чтобы показать или убрать орбиты планет, нажмите клавишу \"O\"\n\n";
+
+    QMessageBox msg;
+    msg.setText(txt);
+    msg.exec();
+}
+
+void MainWindow::menuModelLowPressed()
+{
+    in_dot.modelChange(bad);
+}
+void MainWindow::menuModelMedPressed()
+{
+    in_dot.modelChange(normal);
+}
+void MainWindow::menuModelHighPressed()
+{
+    in_dot.modelChange(medium);
+}
+
+void MainWindow::menuSpeedLowPressed()
+{
+    d = 500;
+}
+void MainWindow::menuSpeedMedPressed()
+{
+    d = 2500;
+}
+void MainWindow::menuSpeedHighPressed()
+{
+    d = 5000;
+}
+
+void MainWindow::menuTonePressed()
+{
+    in_dot.painterChange();
+}
+void MainWindow::menuOrbitePressed()
+{
+    in_dot.showOrbites();
+}
+
+void MainWindow::menuCamFree()
+{
+    in_dot.camChange(0);
+}
+void MainWindow::menuCamMercury()
+{
+    in_dot.camChange(1);
+}
+void MainWindow::menuCamVenus()
+{
+    in_dot.camChange(2);
+}
+void MainWindow::menuCamEarth()
+{
+    in_dot.camChange(3);
+}
+void MainWindow::menuCamMars()
+{
+    in_dot.camChange(4);
+}
+void MainWindow::menuCamJupiter()
+{
+    in_dot.camChange(5);
+}
+void MainWindow::menuCamSaturn()
+{
+    in_dot.camChange(6);
+}
+void MainWindow::menuCamUranus()
+{
+    in_dot.camChange(7);
+}
+void MainWindow::menuCamNeptune()
+{
+    in_dot.camChange(8);
 }

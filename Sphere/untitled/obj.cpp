@@ -484,9 +484,39 @@ bool Camera::isOnDisplay(const DotForDrawer &point) const
 }
 bool Camera::isOnDisplay(const double z) const
 {
-    return (z > 500 /*distance_to_screen*/) ? true : false;
+    return (z > distance_to_screen) ? true : false;
 }
 
+void Camera::lineCut(Line<double> &line) const
+{
+    if ((line.beg.z < distance_to_screen) && (line.end.z < distance_to_screen))
+    {
+        line.beg = Dot3D<double>(-1, -1, -1);
+        return;
+    }
+
+    if (line.beg.z < distance_to_screen)
+    {
+        double t = (distance_to_screen - line.beg.z) / (line.end.z - line.beg.z);
+        line.beg.z = distance_to_screen;
+        line.beg.x = line.beg.x + t*(line.end.x - line.beg.x);
+        line.beg.y = line.beg.y + t*(line.end.y - line.beg.y);
+        return;
+//        line.beg = Dot3D<double>(-1, -1, -1);
+//        return;
+    }
+
+    if (line.end.z < distance_to_screen)
+    {
+        double t = (distance_to_screen - line.beg.z) / (line.end.z - line.beg.z);
+        line.end.z = distance_to_screen;
+        line.end.x = line.beg.x + t*(line.end.x - line.beg.x);
+        line.end.y = line.beg.y + t*(line.end.y - line.beg.y);
+        return;
+//        line.beg = Dot3D<double>(-1, -1, -1);
+//        return;
+    }
+}
 
 
 Obj Sphere::obj;
@@ -637,7 +667,7 @@ void Sphere::setTexture(const char *path)
     {
         setTexture("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/"
                    "Sphere/Contents/textures/testcat.jpg");
-        throw ImgOpenErr("Sphere::setTexture() from obj.cpp\n");
+        //throw ImgOpenErr("Sphere::setTexture() from obj.cpp\n");
     }
 
     texture_path = path;
@@ -901,7 +931,7 @@ void Ring::setTexture(const char *path)
     {
         setTexture("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/"
                    "Sphere/Contents/textures/testcat.jpg");
-        throw ImgOpenErr("Sphere::setTexture() from obj.cpp\n");
+        //throw ImgOpenErr("Sphere::setTexture() from obj.cpp\n");
     }
 
     texture_path = path;

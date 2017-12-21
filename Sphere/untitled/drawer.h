@@ -17,6 +17,8 @@ namespace Drwr
         std::vector<double> I;
         bool is_planet;
 
+        virtual ~BaseGraphcsToDraw() {}
+
         BaseGraphcsToDraw(MyDisplay& in_im, Camera& in_cam, QImage* in_tex, Dot3D<double>& in_c_d,
                           std::vector<double>& in_I, bool in_is_planet) :
             im(in_im), cam(in_cam), texture(in_tex), c_d(in_c_d), I(in_I), is_planet(in_is_planet){ }
@@ -47,6 +49,16 @@ namespace Drwr
                 this->I.push_back(in_gr.I[pt_n-1]);
             }
         }
+    };
+
+    struct LinesToDraw
+    {
+        Points3D pts;
+        Camera& cam;
+        MyDisplay& im;
+
+        LinesToDraw(Points3D& in_pts, Camera& in_cam, MyDisplay& in_im) :
+            pts(in_pts), cam(in_cam), im(in_im) {}
     };
 
     typedef std::vector<std::list<DotForDrawer> > RasteredPoly;
@@ -81,6 +93,7 @@ class Drawer
 public:
     Drawer() { painter = new GuroPainter; }
     void draw(Drwr::GraphicsToDraw&);
+    void draw(Drwr::LinesToDraw&);
 
     void changePainter(int painter_num);
 
@@ -102,6 +115,9 @@ private:
 
     void drawLineBrez(MyDisplay&, const Dot2D<double>&, const Dot2D<double>&);
     void drawLineBrez(MyDisplay&, const int, const int, const int, const int);
+
+    void drawLineBrez(MyDisplay&, const Dot3D<double>&, const Dot3D<double>&);
+    void drawLineBrez(MyDisplay&, const DotForDrawer& beg, const DotForDrawer& end);
 };
 
 #endif // DRAWER_H
