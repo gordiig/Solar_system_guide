@@ -665,8 +665,7 @@ void Sphere::setTexture(const char *path)
     texture = new QImage(QString(path));
     if (texture->isNull())
     {
-        setTexture("/Users/gordiig/Desktop/Cur_Sem/Un_CourseProject_Graph/"
-                   "Sphere/Contents/textures/testcat.jpg");
+        setTexture("../../../../Contents/textures/testcat.jpg");
         //throw ImgOpenErr("Sphere::setTexture() from obj.cpp\n");
     }
 

@@ -392,7 +392,7 @@ Facade::Facade()
         pl->setANG_PER_TICK_ROUND_SUN(sidereal_period["uranus"]*base_sun_ang);
         pl->setANG_PER_TICK_ROUND_ORBITE(period_of_orbit_rotation["oberon"]*base_orbit_ang);
         pl->setANG_PER_TICK_ROUND_TURNCENT(sidereal_period["oberon"]*base_sun_ang);
-        pl->setTexture(path+std::string("/uranus/oberon.jpg"));
+        pl->setTexture(path+std::string("/uranus/oberon.jpeg"));
         sys->add(pl);
 
         solar_system.add(sys);
