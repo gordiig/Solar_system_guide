@@ -7,9 +7,9 @@
 // #define MODEL_MED
 // #define MODEL_HIGH
 
-#include <thread>
 #include <map>
 #include <QMessageBox>
+#include <thread>
 
 #include "errors.h"
 #include "obj.h"

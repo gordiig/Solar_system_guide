@@ -1,0 +1,3 @@
+Gouraud shading
+Low poly model
+0.0227969 sec

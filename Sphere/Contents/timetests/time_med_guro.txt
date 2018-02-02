@@ -1,0 +1,3 @@
+Gouraud shading
+Med poly model
+0.0447248 sec
